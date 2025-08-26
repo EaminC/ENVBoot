@@ -1,2 +1,13 @@
 .env
 CHI-*-openrc.sh
+
+__pycache__/
+*.pyc
+
+# Packaging / builds
+*.egg-info/
+.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/

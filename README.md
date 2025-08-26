@@ -121,29 +121,3 @@ envboot ping         # prints "pong"
 envboot auth-check   # prints your project if auth works
 ```
 
-## .env.example
-
-```ini
-# Chameleon CHI@UC (non-secret settings)
-OS_AUTH_URL=https://chi.uc.chameleoncloud.org:5000/v3
-OS_IDENTITY_API_VERSION=3
-OS_INTERFACE=public
-OS_REGION_NAME=CHI@UC
-
-# OIDC
-OS_AUTH_TYPE=v3oidcpassword
-OS_PROTOCOL=openid
-OS_IDENTITY_PROVIDER=chameleon
-OS_DISCOVERY_ENDPOINT=https://auth.chameleoncloud.org/auth/realms/chameleon/.well-known/openid-configuration
-OS_CLIENT_ID=keystone-uc-prod
-OS_CLIENT_SECRET=none
-OS_ACCESS_TOKEN_TYPE=access_token
-
-# Identity (per user)
-OS_USERNAME=you@example.edu
-
-# Project (team-shared)
-OS_PROJECT_ID=62f12f9c6a28478b976f680a6fa2fa9a
-
-# IMPORTANT: do NOT put OS_PASSWORD here
-```
