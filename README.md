@@ -39,3 +39,85 @@ openstack server add floating ip <server-id> <floating-ip>
 
 eg
 openstack server add floating ip 709a3f17-7730-45da-9c17-c9a63c3c1b44 129.114.108.114
+
+
+
+
+## Chris
+# ENVBoot (Phase 0)
+
+A tiny CLI to verify you can authenticate to **Chameleon Cloud’s OpenStack**.
+
+## What’s here now
+
+* `envboot ping` — sanity check
+* `envboot auth-check` — verifies your OpenStack credentials and prints your project
+
+> Later phases will add resource discovery, reservations (Blazar), and launching bare metal.
+
+## Requirements
+
+* Python **3.10+**
+* Chameleon account with access to your project (e.g. `CHI-251467`) at **CHI\@UC**
+* A **CLI password** (application password) created in the Chameleon portal
+
+## Install (one-time)
+
+```bash
+pip install -e .
+```
+
+## Authenticate (pick ONE per new terminal)
+
+### Option A — OpenRC (official)
+
+1. In Chameleon (project `CHI-251467`, site `CHI@UC`): **API Access → Download OpenStack RC File (v3)**
+2. In your terminal:
+
+   ```bash
+   source CHI-251467-openrc.sh   # paste your CLI password when prompted
+   envboot auth-check            # expect: OK project: CHI-251467 (...)
+   ```
+
+### Option B — `.env` (simple for this app)
+
+1. Create local config (non-secrets):
+
+   ```bash
+   cp .env.example .env
+   # edit .env → set OS_USERNAME=your_email@school.edu
+   ```
+2. Each new terminal:
+
+   ```bash
+   read -srp "Chameleon CLI password: " OS_PASSWORD; echo
+   export OS_PASSWORD
+   envboot auth-check
+   ```
+
+## Quickstart
+
+```bash
+# install once
+pip install -e .
+
+# EITHER: OpenRC
+source CHI-251467-openrc.sh
+envboot ping
+envboot auth-check
+
+# OR: .env
+cp .env.example .env
+read -srp "Chameleon CLI password: " OS_PASSWORD; echo
+export OS_PASSWORD
+envboot ping
+envboot auth-check
+```
+
+## Commands (Phase 0)
+
+```bash
+envboot ping         # prints "pong"
+envboot auth-check   # prints your project if auth works
+```
+

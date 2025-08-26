@@ -1,0 +1,14 @@
+[project]
+name = "envboot"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = [
+  "openstacksdk",
+  "typer",
+  "python-dotenv",
+  "keystoneauth1[oidc]",
+  "requests-oauthlib"
+]
+
+[project.scripts]
+envboot = "envboot.cli:main"
