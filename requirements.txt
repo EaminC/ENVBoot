@@ -1,0 +1,4 @@
+openstacksdk
+typer
+python-dotenv
+git+https://github.com/chameleoncloud/python-blazarclient@chameleoncloud/2023.1
