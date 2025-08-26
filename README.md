@@ -99,6 +99,7 @@ pip install -e .
 
 ```bash
 # install once
+pip install python-blazarclient
 pip install -e .
 
 # EITHER: OpenRC

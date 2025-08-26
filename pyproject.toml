@@ -7,7 +7,8 @@ dependencies = [
   "typer",
   "python-dotenv",
   "keystoneauth1[oidc]",
-  "requests-oauthlib"
+  "requests-oauthlib",
+  "python-blazarclient" 
 ]
 
 [project.scripts]

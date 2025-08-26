@@ -2,11 +2,9 @@
 import os
 from dotenv import load_dotenv
 from openstack import connection
-from openstack.config import OpenStackConfig  
 from keystoneauth1 import session as ks
 from keystoneauth1.identity.v3 import Password, OidcPassword
-
-from keystoneauth1.identity.v3 import Password, OidcPassword
+from blazarclient import client as blazar_client
 
 def _auth_from_env():
     auth_url = os.environ["OS_AUTH_URL"]
@@ -17,7 +15,12 @@ def _auth_from_env():
     project_name = os.environ.get("OS_PROJECT_NAME")
 
     if os.environ.get("OS_AUTH_TYPE", "") == "v3oidcpassword":
-        # OIDC (no user_domain_name / project_domain_name here)
+        client_secret = os.environ.get("OS_CLIENT_SECRET")
+        if client_secret in (None, "", "none", "None"):
+            client_secret = None  # public client
+
+        scope = os.environ.get("OS_OIDC_SCOPE", "openid profile email")
+
         return OidcPassword(
             auth_url=auth_url,
             identity_provider=os.environ["OS_IDENTITY_PROVIDER"],   # "chameleon"
@@ -30,6 +33,7 @@ def _auth_from_env():
             password=password,
             project_id=project_id,
             project_name=project_name,
+            scope=scope,   
         )
     else:
         # Legacy password flow (non-OIDC)
@@ -48,3 +52,10 @@ def conn():
     auth = _auth_from_env()
     sess = ks.Session(auth=auth)
     return connection.Connection(session=sess, region_name=os.environ.get("OS_REGION_NAME"), identity_interface="public")
+
+def blz():
+    """Return an authenticated Blazar client using the same Keystone session."""
+    load_dotenv(override=False)
+    auth = _auth_from_env()
+    sess = ks.Session(auth=auth)
+    return blazar_client.Client(1, session=sess)
