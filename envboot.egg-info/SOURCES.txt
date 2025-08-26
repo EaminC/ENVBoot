@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+envboot/__init__.py
+envboot/__main__.py
+envboot/cli.py
+envboot/osutil.py
+envboot.egg-info/PKG-INFO
+envboot.egg-info/SOURCES.txt
+envboot.egg-info/dependency_links.txt
+envboot.egg-info/entry_points.txt
+envboot.egg-info/requires.txt
+envboot.egg-info/top_level.txt
