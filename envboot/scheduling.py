@@ -188,7 +188,7 @@ def create_reservation(
         start=start_str,
         end=end_str,
         reservations=[{
-            "resource_type": "physical:host" if req.bare_metal else "virtual:instance",
+            "resource_type": "physical:host",  # Chameleon Blazar only supports physical:host
             "min": 1,
             "max": 1,
             "resource_properties": '[]',

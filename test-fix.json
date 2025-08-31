@@ -1,0 +1,24 @@
+{
+  "case": "base_case",
+  "inputs": {
+    "repo_path": ".",
+    "complexity_tier": "simple",
+    "resource_request": {
+      "vcpus": 2,
+      "ram_gb": 4,
+      "gpus": 0,
+      "bare_metal": false
+    },
+    "duration_hours": 1.0
+  },
+  "decisions": [],
+  "reservation": "ReservationPlan(zone='current', start=datetime.datetime(2025, 8, 31, 9, 7, 23, 89123, tzinfo=datetime.timezone.utc), end=datetime.datetime(2025, 8, 31, 10, 7, 23, 89123, tzinfo=datetime.timezone.utc), flavor='g1.kvm.2', count=1, reservation_id='475b20e5-084c-48de-8f16-f9974e2f8337', lease_id='aa7dbc00-0d08-4600-b3cd-f3b0cfdc6cc6')",
+  "su_estimate_per_hour": 0.041666666666666664,
+  "su_estimate_total": 0.041666666666666664,
+  "slo": {
+    "start_by": "2025-08-31T09:07:23.089123+00:00",
+    "met": true
+  },
+  "smoke_test": null,
+  "complexity_tier": "ComplexityTier.SIMPLE"
+}
