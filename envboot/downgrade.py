@@ -1,5 +1,6 @@
 import subprocess
 import time
+from dataclasses import replace
 from typing import Optional, Tuple
 from .models import ResourceRequest, DowngradePolicy, ComplexityTier
 
@@ -19,7 +20,10 @@ def try_downgrade(
             print("Policy prevents GPU to CPU downgrade for heavy/very_heavy repos")
             return req, False
     
-    downgraded = req
+    # downgraded = req
+    # changes_made = False
+    orig_vcpus, orig_ram, orig_gpus, orig_bm = req.vcpus, req.ram_gb, req.gpus, req.bare_metal
+    downgraded = replace(req)   # make a separate dataclass instance
     changes_made = False
     
     # Try vCPU reduction
@@ -57,6 +61,8 @@ def try_downgrade(
         print("Downgraded: bare metal → KVM")
     
     return downgraded, changes_made
+
+
 
 def run_smoke_test(
     command: str,
