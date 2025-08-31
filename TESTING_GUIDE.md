@@ -224,22 +224,6 @@ export ENVBOOT_LOOKAHEAD_HOURS=168  # 1 week
 envboot cases-limited . --output week-lookahead.json
 ```
 
-## 🔍 **8. Debug Mode**
-
-### **Enable Verbose Logging**
-```bash
-export ENVBOOT_DEBUG=true
-envboot cases-base . --output debug-output.json
-```
-
-### **Check OpenStack Connection**
-```bash
-# Test basic connectivity
-envboot auth-check
-
-# Test Blazar access
-envboot instances
-```
 
 ## 📋 **9. Testing Checklist**
 
@@ -265,57 +249,3 @@ envboot instances
 - [ ] Scheduling configs work
 - [ ] Step sizes handle edge cases
 
-## 🎯 **10. Common Issues & Solutions**
-
-### **Authentication Errors**
-```bash
-# Check environment variables
-env | grep OS_
-
-# Reload credentials
-source CHI-251467-openrc.sh
-
-# Verify project access
-envboot auth-check
-```
-
-### **Resource Not Found**
-```bash
-# Check available flavors
-envboot flavors
-
-# Check current instances
-envboot instances
-
-# Verify zone names
-# (May need to check Chameleon documentation)
-```
-
-### **Blazar Errors**
-```bash
-# Check Blazar service status
-# (May need to contact Chameleon support)
-
-# Verify reservation permissions
-# (Check project allocation limits)
-```
-
-## 🚀 **11. Next Steps After Testing**
-
-1. **Collect Results**: Run all case studies and save JSON outputs
-2. **Analyze Data**: Process results for research paper
-3. **Optimize Parameters**: Tune configuration based on results
-4. **Extend Functionality**: Add new case studies or features
-5. **Document Findings**: Update documentation with real-world results
-
-## 📚 **12. Testing Resources**
-
-- **Unit Tests**: `test_all.py` - Core functionality validation
-- **Integration Tests**: CLI commands - Real OpenStack testing
-- **Documentation**: `CASE_STUDIES.md` - Usage examples
-- **Configuration**: Environment variables - Policy customization
-- **Output**: JSON files - Data collection for analysis
-
----
-
-**Remember**: Start with unit tests, then move to integration testing with small repositories before testing with large, complex codebases.
