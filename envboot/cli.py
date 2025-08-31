@@ -346,7 +346,7 @@ def case_limited(
     
     overload_detected = detect_overload_in_zone(current_zone, req, start_time, end_time)
     
-    if overload_detected:
+    if overload_detected is True:
         typer.echo("❌ Resource overload detected in current zone")
         typer.echo("Searching for alternative time windows and zones...")
         
@@ -373,6 +373,76 @@ def case_limited(
             else:
                 time_shift = int((plan.start - start_time).total_seconds() / 60)
                 decisions.append({"type": "time_shift", "minutes": time_shift})
+            
+            result = CaseStudyResult(
+                case="limited_resources_subcase_A",
+                inputs={
+                    "repo_path": repo_path,
+                    "complexity_tier": complexity_tier.value,
+                    "resource_request": {
+                        "vcpus": req.vcpus,
+                        "ram_gb": req.ram_gb,
+                        "gpus": req.gpus,
+                        "bare_metal": req.bare_metal
+                    },
+                    "duration_hours": duration_hours,
+                    "scheduling_config": {
+                        "lookahead_hours": lookahead_hours,
+                        "alt_zones": zone_list
+                    }
+                },
+                decisions=decisions,
+                reservation=plan,
+                su_estimate_per_hour=su_per_hour,
+                su_estimate_total=su_total,
+                slo={"start_by": start_time.isoformat(), "met": True},
+                complexity_tier=complexity_tier
+            )
+            
+            # Output results
+            typer.echo("\n=== Results ===")
+            typer.echo(f"Reservation created: {plan.lease_id}")
+            typer.echo(f"Zone: {plan.zone}")
+            typer.echo(f"Start: {plan.start}")
+            typer.echo(f"End: {plan.end}")
+            typer.echo(f"Flavor: {plan.flavor}")
+            typer.echo(f"SU cost: {su_total:.4f}")
+            
+            if output_file:
+                with open(output_file, 'w') as f:
+                    json.dump(result.__dict__, f, indent=2, default=str)
+                typer.echo(f"Results saved to: {output_file}")
+        else:
+            typer.echo("❌ No available windows found in any zone")
+            raise typer.Exit(1)
+    elif overload_detected is None:
+        typer.echo("⚠️  Cannot determine overload status, attempting time/zone search optimistically...")
+        
+        # Try to find available window anyway
+        plan = find_available_window(req, duration_hours, config, current_zone)
+        
+        if plan:
+            typer.echo(f"✅ Found available window in zone: {plan.zone}")
+            typer.echo(f"   Start: {plan.start}")
+            typer.echo(f"   End: {plan.end}")
+            
+            # Create reservation
+            lease = create_reservation(plan, req, f"envboot-limited-{complexity_tier.value}")
+            
+            # Calculate SU estimates
+            host_caps = {"vcpus": 48, "gpus": 4}
+            su_per_hour = estimate_su_per_hour(req, host_caps)
+            su_total = su_per_hour * duration_hours
+            
+            # Determine decision type
+            decisions = []
+            if plan.zone != current_zone:
+                decisions.append({"type": "zone_change", "from": current_zone, "to": plan.zone})
+            else:
+                time_shift = int((plan.start - start_time).total_seconds() / 60)
+                decisions.append({"type": "time_shift", "minutes": time_shift})
+            
+            decisions.append({"type": "undetermined_overload_attempted_search"})
             
             result = CaseStudyResult(
                 case="limited_resources_subcase_A",

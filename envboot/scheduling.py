@@ -2,83 +2,115 @@ import time
 from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Any, Optional, Tuple
 from .models import ResourceRequest, ReservationPlan, SchedulingConfig
-from .osutil import blz
+from .osutil import blz, blazar_list_leases
+try:
+    from dateutil import parser as dtp
+except ImportError:
+    dtp = None
 
 def detect_overload_in_zone(
     zone: str, 
     req: ResourceRequest, 
     start_time: datetime, 
     end_time: datetime
-) -> bool:
-    """Detect if a zone has resource overload in the specified time window."""
-    blazar = blz()
+) -> Optional[bool]:
+    """Detect if a zone has resource overload in the specified time window.
     
-    # Get all hosts in the zone
+    Uses Blazar leases API to check for overlapping reservations as suggested by Yiming Cheng.
+    
+    Returns:
+        True: Overload detected (existing leases overlap our time window)
+        False: No overload (sufficient resources available)
+        None: Cannot determine (API error or insufficient data)
+    """
+    from .osutil import blazar_list_leases
+    
+    # Check existing leases in the time window using Blazar API
     try:
-        hosts = blazar.os_host.list()
+        leases = blazar_list_leases()
+        if not leases:
+            print(f"Warning: Could not list leases")
+            return None
     except Exception as e:
-        print(f"Warning: Could not list hosts in zone {zone}: {e}")
-        return False
+        print(f"Warning: Could not access Blazar leases API: {e}")
+        return None
     
-    # Filter hosts by zone (assuming zone info is in host properties)
-    zone_hosts = []
-    for host in hosts:
-        # This is a simplified approach - in practice, you'd need to map
-        # OpenStack availability zones to Blazar host properties
-        if hasattr(host, 'zone') and host.zone == zone:
-            zone_hosts.append(host)
+    # Track overlapping reservations
+    overlapping_reservations = []
     
-    if not zone_hosts:
-        print(f"No hosts found in zone {zone}")
-        return False
-    
-    # Check existing leases in the time window
-    start_str = start_time.strftime("%Y-%m-%d %H:%M")
-    end_str = end_time.strftime("%Y-%m-%d %H:%M")
-    
-    try:
-        leases = blazar.lease.list()
-    except Exception as e:
-        print(f"Warning: Could not list leases: {e}")
-        return False
-    
-    # Calculate resource requirements for the time period
-    total_needed_vcpus = req.vcpus
-    total_needed_gpus = req.gpus
-    
-    # Check if any host has insufficient free resources
-    for host in zone_hosts:
-        host_vcpus = getattr(host, 'vcpus', 48)  # Default assumption
-        host_gpus = getattr(host, 'gpus', 4)     # Default assumption
-        
-        # Calculate allocated resources during the time window
-        allocated_vcpus = 0
-        allocated_gpus = 0
-        
-        for lease in leases:
-            if lease.get('status') in ['ACTIVE', 'STARTED']:
-                # Check if lease overlaps with our time window
-                lease_start = datetime.strptime(lease['start'], "%Y-%m-%d %H:%M")
-                lease_end = datetime.strptime(lease['end'], "%Y-%m-%d %H:%M")
+    # Check each lease for time overlap
+    for lease in leases:
+        # Only consider active/started leases
+        if lease.get('status') not in ['ACTIVE', 'STARTED']:
+            continue
+            
+        # Parse lease times defensively using dateutil for robust parsing
+        try:
+            if dtp is None:
+                # Fallback to basic datetime parsing if dateutil not available
+                lease_start_str = lease.get('start') or lease.get('start_date')
+                lease_end_str = lease.get('end') or lease.get('end_date')
                 
-                if (start_time < lease_end and end_time > lease_start):
-                    # Time overlap detected
-                    for reservation in lease.get('reservations', []):
-                        if reservation.get('resource_type') == 'physical:host':
-                            # This is a simplified calculation
-                            allocated_vcpus += reservation.get('min', 1) * host_vcpus
-                            allocated_gpus += reservation.get('min', 1) * host_gpus
-        
-        free_vcpus = host_vcpus - allocated_vcpus
-        free_gpus = host_gpus - allocated_gpus
-        
-        if free_vcpus < total_needed_vcpus or free_gpus < total_needed_gpus:
-            print(f"Host {host.id} in zone {zone} has insufficient resources:")
-            print(f"  Need: {total_needed_vcpus} vCPUs, {total_needed_gpus} GPUs")
-            print(f"  Free: {free_vcpus} vCPUs, {free_gpus} GPUs")
-            return True
+                if not lease_start_str or not lease_end_str:
+                    continue
+                    
+                # Handle both formats: "YYYY-MM-DD HH:MM" and ISO8601
+                if 'T' in lease_start_str:
+                    # ISO8601 format
+                    lease_start = datetime.fromisoformat(lease_start_str.replace('Z', '+00:00'))
+                    lease_end = datetime.fromisoformat(lease_end_str.replace('Z', '+00:00'))
+                else:
+                    # "YYYY-MM-DD HH:MM" format
+                    lease_start = datetime.strptime(lease_start_str, "%Y-%m-%d %H:%M")
+                    lease_end = datetime.strptime(lease_end_str, "%Y-%m-%d %H:%M")
+            else:
+                # Use dateutil for maximum compatibility
+                lease_start_str = lease.get('start') or lease.get('start_date')
+                lease_end_str = lease.get('end') or lease.get('end_date')
+                
+                if not lease_start_str or not lease_end_str:
+                    continue
+                    
+                lease_start = dtp.parse(lease_start_str)
+                lease_end = dtp.parse(lease_end_str)
+            
+            # Ensure timezone awareness
+            if lease_start.tzinfo is None:
+                lease_start = lease_start.replace(tzinfo=timezone.utc)
+            if lease_end.tzinfo is None:
+                lease_end = lease_end.replace(tzinfo=timezone.utc)
+            
+            # Check if lease overlaps with our requested time window
+            if (start_time < lease_end and end_time > lease_start):
+                # Time overlap detected - check resource type
+                for reservation in lease.get('reservations', []):
+                    resource_type = reservation.get('resource_type')
+                    if resource_type == 'physical:host':
+                        # This is a physical host reservation that overlaps our window
+                        overlapping_reservations.append({
+                            'lease_id': lease.get('id'),
+                            'lease_name': lease.get('name'),
+                            'start': lease_start.isoformat(),
+                            'end': lease_end.isoformat(),
+                            'resource_type': resource_type,
+                            'count': reservation.get('min', 1)
+                        })
+                        
+        except Exception as e:
+            print(f"Warning: Could not parse lease {lease.get('id', 'unknown')} times: {e}")
+            continue
     
-    return False
+    # Determine overload status
+    if overlapping_reservations:
+        print(f"❌ Resource overload detected in zone {zone}:")
+        print(f"  Found {len(overlapping_reservations)} overlapping reservations:")
+        for res in overlapping_reservations:
+            print(f"    - {res['lease_name']} ({res['resource_type']} x{res['count']})")
+            print(f"      {res['start']} → {res['end']}")
+        return True
+    else:
+        print(f"✅ No overload detected in zone {zone}")
+        return False
 
 def find_available_window(
     req: ResourceRequest,
