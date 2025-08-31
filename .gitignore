@@ -33,6 +33,7 @@ wheels/
 
 # Testing
 *.json
+test-heavy/
 
 # Environment files
 .env
