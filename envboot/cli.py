@@ -760,6 +760,143 @@ def _parse_first_json_block(text: str) -> dict:
 
     return json.loads(raw)
 
+def _json_from_raw_text(raw: str):
+    """Try to parse JSON text robustly: JSON first, then python-ish dict via ast.literal_eval.
+    Returns a dict if possible, else raises.
+    """
+    # 1) Try strict JSON
+    try:
+        obj = json.loads(raw)
+        if isinstance(obj, dict):
+            return obj
+        raise ValueError("Parsed JSON is not an object")
+    except Exception:
+        pass
+
+    # 2) Try normalizing python-ish single quotes when double quotes absent
+    try:
+        if '"' not in raw and "'" in raw:
+            import re as _re
+            raw2 = raw.replace("False", "false").replace("True", "true").replace("None", "null")
+            raw2 = _re.sub(r"'", '"', raw2)
+            obj = json.loads(raw2)
+            if isinstance(obj, dict):
+                return obj
+    except Exception:
+        pass
+
+    # 3) Fallback to Python literal eval (handles single quotes/True/False/None)
+    try:
+        import ast
+        obj = ast.literal_eval(raw)
+        if isinstance(obj, dict):
+            return obj
+        raise ValueError("Literal is not a dict")
+    except Exception as e:
+        raise ValueError(f"Could not parse JSON/Python object: {e}")
+
+def _extract_json_after_anchor(anchor_regex: str, text: str):
+    """Find the first JSON object appearing after the given anchor pattern.
+    Uses brace matching to support multiline and nested braces inside strings.
+    Returns a dict if parsed, else None.
+    """
+    m = re.search(anchor_regex, text, re.IGNORECASE)
+    if not m:
+        return None
+    i = m.end()
+    n = len(text)
+    start = text.find('{', i)
+    if start == -1:
+        return None
+
+    depth = 0
+    in_str = False
+    str_quote = ''
+    escaped = False
+    end = -1
+
+    pos = start
+    while pos < n:
+        ch = text[pos]
+        if in_str:
+            if escaped:
+                escaped = False
+            else:
+                if ch == '\\':
+                    escaped = True
+                elif ch == str_quote:
+                    in_str = False
+        else:
+            if ch == '"' or ch == "'":
+                in_str = True
+                str_quote = ch
+            elif ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth == 0:
+                    end = pos + 1
+                    break
+        pos += 1
+
+    if end == -1:
+        return None
+
+    raw = text[start:end]
+    try:
+        return _json_from_raw_text(raw)
+    except Exception:
+        return None
+
+def _extract_last_json_in_text(text: str):
+    """Scan text for balanced JSON objects and return the last one that parses to a dict."""
+    i = 0
+    last = None
+    while True:
+        start = text.find('{', i)
+        if start == -1:
+            break
+        # Balanced parse starting at start
+        depth = 0
+        in_str = False
+        str_quote = ''
+        escaped = False
+        pos = start
+        end = -1
+        while pos < len(text):
+            ch = text[pos]
+            if in_str:
+                if escaped:
+                    escaped = False
+                else:
+                    if ch == '\\':
+                        escaped = True
+                    elif ch == str_quote:
+                        in_str = False
+            else:
+                if ch == '"' or ch == "'":
+                    in_str = True
+                    str_quote = ch
+                elif ch == '{':
+                    depth += 1
+                elif ch == '}':
+                    depth -= 1
+                    if depth == 0:
+                        end = pos + 1
+                        break
+            pos += 1
+        if end != -1:
+            raw = text[start:end]
+            try:
+                obj = _json_from_raw_text(raw)
+                last = obj
+            except Exception:
+                pass
+            i = end
+        else:
+            i = start + 1
+    return last
+
 def _extract_request_from_ai_bundle(bundle: dict, mode: str) -> Tuple[ResourceRequest, float, str]:
     """
     Given a bundle (e.g., parsed JSON from AI output) and a mode:
@@ -848,45 +985,46 @@ def _load_ai_bundle_from_source(source: str, mode: str) -> dict:
 
         if m == "downgrade":
             # Primary: full suggestion object with multiplier/why
-            block = _find_first(r"AI\s+Downgrade\s+Suggestion:\s*(\{.*?\})", out)
-            if block:
-                return _parse_first_json_block(block)
+            obj = _extract_json_after_anchor(r"AI\s+Downgrade\s+Suggestion:\s*", out)
+            if obj is not None:
+                return obj
 
             # Fallback 1: advisor variants, e.g. "AI Downgrade Advisor (looser RAM cuts): { ... }"
-            block = _find_first(r"AI\s+Downgrade\s+Advisor[^\n:]*:\s*(\{.*?\})", out)
-            if block:
-                return _parse_first_json_block(block)
+            obj = _extract_json_after_anchor(r"AI\s+Downgrade\s+Advisor[^\n:]*:\s*", out)
+            if obj is not None:
+                return obj
 
             # Fallback 2: plain downgraded request (note: no multiplier/why here)
-            block = _find_first(r"Downgraded\s+request:\s*(\{.*?\})", out)
-            if block:
-                return _parse_first_json_block(block)
+            obj = _extract_json_after_anchor(r"Downgraded\s+request:\s*", out)
+            if obj is not None:
+                return obj
 
             raise ValueError("Could not locate a downgrade block in forge output")
 
+
         if m == "complexity":
-            block = _find_first(r"AI\s+Complexity\s+Review:\s*(\{.*?\})", out)
-            if block:
-                return _parse_first_json_block(block)
+            obj = _extract_json_after_anchor(r"AI\s+Complexity\s+Review:\s*", out)
+            if obj is not None:
+                return obj
             raise ValueError("Could not locate 'AI Complexity Review' JSON in forge output")
 
         # default: final/plain request
         if m in ("final", "auto"):
             # Primary: “Complexity final request: {...}”
-            block = _find_first(r"Complexity\s+final\s+request:\s*(\{.*?\})", out)
-            if block:
-                return _parse_first_json_block(block)
+            obj = _extract_json_after_anchor(r"Complexity\s+final\s+request:\s*", out)
+            if obj is not None:
+                return obj
 
             # Fallback: accept a GPU-heavy final-like line as a plain request
-            block = _find_first(r"AI\s+Complexity\s+Review\s*\(GPU-heavy\):\s*(\{.*?\})", out)
-            if block:
-                return _parse_first_json_block(block)
+            obj = _extract_json_after_anchor(r"AI\s+Complexity\s+Review\s*\(GPU-heavy\):\s*", out)
+            if obj is not None:
+                return obj
 
-            # Last resort: take the LAST JSON-ish object in stdout
-            candidates = list(re.finditer(r"\{.*?\}", out, re.DOTALL))
-            if not candidates:
-                raise ValueError("Could not find any JSON block in forge output")
-            return _parse_first_json_block(candidates[-1].group(0))
+            # Last resort: take the LAST well-formed JSON object in stdout
+            obj = _extract_last_json_in_text(out)
+            if obj is not None:
+                return obj
+            raise ValueError("Could not find any JSON block in forge output")
 
         # Unknown mode
         raise ValueError(f"Unknown mode: {mode}")

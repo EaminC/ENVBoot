@@ -26,6 +26,7 @@ from envboot.prompt import build_prompt, prompt_downgrade_advisor, prompt_comple
 from envboot.llm_client import run_prompt, must_json_dict, validate_request_obj
 from envboot.analysis import analyze_repo_complexity_with_signals, map_complexity_to_request
 from envboot.ai_hooks import ai_complexity_review, ai_downgrade_advisor
+from envboot.models import ComplexityTier   
 
 
 if __name__ == "__main__":
@@ -91,8 +92,15 @@ CPU ~6 vCPUs. No GPU needed. Disk ~1 GB plus assets (~0.5 GB). Network minimal."
 
 
     # --- Test AI Complexity Review with signals ---
-    repo = "."
-    tier, signals = analyze_repo_complexity_with_signals(repo)
+    # Allow overriding repo path and/or faking GPU signals via env vars for testing.
+    repo = os.environ.get("ENVBOOT_REPO", ".")
+    fake_gpu = os.environ.get("ENVBOOT_FAKE_GPU", "").strip().lower() in {"1", "true", "yes", "on"}
+
+    if fake_gpu:
+        tier = ComplexityTier.HEAVY
+        signals = {"gpu_frameworks": ["torch"], "cuda_files": 1, "final_score": 5, "tier": "HEAVY"}
+    else:
+        tier, signals = analyze_repo_complexity_with_signals(repo)
     mapped = map_complexity_to_request(tier).__dict__
 
     final_request = ai_complexity_review(signals, mapped)
