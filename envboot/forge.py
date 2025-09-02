@@ -80,7 +80,7 @@ CPU ~6 vCPUs. No GPU needed. Disk ~1 GB plus assets (~0.5 GB). Network minimal."
     print("AI Downgrade Suggestion:", json.dumps(dg, indent=2))
 
 
-    # --- Test AI Complexity Review ---
+    # # --- Test AI Complexity Review ---
     signals = {"gpu_frameworks": ["torch"], "cuda_files": 0, "final_score": 5, "tier": "HEAVY"}
     mapped_request = {"vcpus": 8, "ram_gb": 32, "gpus": 1, "disk_gb": 80, "bare_metal": False}
 
@@ -98,7 +98,7 @@ CPU ~6 vCPUs. No GPU needed. Disk ~1 GB plus assets (~0.5 GB). Network minimal."
     final_request = ai_complexity_review(signals, mapped)
     print("Complexity final request:", final_request)
 
-    # Example downgrade
+    # # Example downgrade
     original_req = mapped
     policy = {"max_vcpu_reduction_ratio": 0.5, "max_ram_reduction_ratio": 0.2, "max_duration_increase_ratio": 2.0}
     tier_name = tier.value
@@ -106,6 +106,8 @@ CPU ~6 vCPUs. No GPU needed. Disk ~1 GB plus assets (~0.5 GB). Network minimal."
     print("Downgraded request:", downgraded)
 
 
+
+    # --- Test AI Complexity Review with signals ---
     # GPU-heavy repo
     signals = {"gpu_frameworks": ["torch"], "cuda_files": 0, "final_score": 5, "tier": "HEAVY"}
     mapped_request = {"vcpus": 8, "ram_gb": 32, "gpus": 1, "disk_gb": 80, "bare_metal": False}
