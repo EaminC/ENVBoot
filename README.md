@@ -122,3 +122,40 @@ envboot ping         # prints "pong"
 envboot auth-check   # prints your project if auth works
 ```
 
+
+## Mock Resource Availability API (demo)
+
+A minimal FastAPI server that simulates resource availability and reservations using in-memory data. Useful for demoing time-shift and zone-change decisions.
+
+Quickstart:
+
+1) Install deps
+
+```bash
+pip install -r requirements.txt
+```
+
+2) Run the server
+
+```bash
+uvicorn demo_api:app_ --reload --port 8000
+```
+
+3) Check availability (current blocked, zone-b free now)
+
+```bash
+curl "http://127.0.0.1:8000/availability?region=current&start=2025-09-02T00:10:00Z&duration_hours=4&threshold=1&alt_zones=zone-b&step_minutes=30&lookahead_hours=24"
+```
+
+Expected: decision="zone_change" with selection.zone="zone-b".
+
+4) Reserve the returned slot
+
+```bash
+curl -X POST http://127.0.0.1:8000/reserve \
+   -H 'Content-Type: application/json' \
+   -d '{"zone":"zone-b","start":"2025-09-02T00:10:00Z","end":"2025-09-02T04:10:00Z"}'
+```
+
+If capacity is exceeded, the endpoint returns 409.
+
