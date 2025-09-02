@@ -8,12 +8,24 @@ try:
 except ImportError:
     dtp = None
 
-def detect_overload_in_zone(
-    zone: str, 
-    req: ResourceRequest, 
-    start_time: datetime, 
-    end_time: datetime
+def capacity_available(
+    zone: str,
+    start_time: datetime,
+    end_time: datetime,
+    leases: Optional[List[Dict[str, Any]]],
+    zone_capacity: Optional[Dict[str, int]],
+    need: int = 1,
+    verbose: bool = False,
 ) -> Optional[bool]:
+    """Return True if requested capacity (need) fits in zone for [start,end),
+    False if not available, or None if indeterminate.
+
+    - Uses provided leases (fixture mode). If leases is None, attempts live API.
+    - Only counts reservations with status ACTIVE/STARTED that overlap window.
+    - Only counts reservations of resource_type 'physical:host' in the target zone.
+    - Zone capacity defaults to 1 when not provided.
+    """
+    from .osutil import blazar_list_leases
     """Detect if a zone has resource overload in the specified time window.
     
     Uses Blazar leases API to check for overlapping reservations as suggested by Yiming Cheng.
@@ -23,20 +35,39 @@ def detect_overload_in_zone(
         False: No overload (sufficient resources available)
         None: Cannot determine (API error or insufficient data)
     """
-    from .osutil import blazar_list_leases
-    
-    # Check existing leases in the time window using Blazar API
-    try:
-        leases = blazar_list_leases()
-        if not leases:
-            print(f"Warning: Could not list leases")
+    # Use injected leases if provided; otherwise query live Blazar API
+    if leases is None:
+        try:
+            leases = blazar_list_leases()
+            if not leases:
+                if verbose:
+                    print(f"Warning: Could not list leases")
+                return None
+        except Exception as e:
+            if verbose:
+                print(f"Warning: Could not access Blazar leases API: {e}")
             return None
-    except Exception as e:
-        print(f"Warning: Could not access Blazar leases API: {e}")
-        return None
+    else:
+        # Fixture mode: make sure it's a list
+        if not isinstance(leases, list):
+            if verbose:
+                print("Warning: leases fixture is not a list")
+            return None
+        if len(leases) == 0:
+            # Empty fixture -> cannot conclude capacity; caller may choose optimistic search
+            if verbose:
+                print(f"Warning: leases fixture empty; cannot determine capacity in zone {zone}")
+            return None
     
-    # Track overlapping reservations
-    overlapping_reservations = []
+    # Track overlapping reservations and total count vs capacity
+    overlapping_reservations: List[Dict[str, Any]] = []
+    overlapping_count = 0
+    cap = 1
+    if zone_capacity and isinstance(zone_capacity, dict):
+        try:
+            cap = int(zone_capacity.get(zone, 1))
+        except Exception:
+            cap = 1
     
     # Check each lease for time overlap
     for lease in leases:
@@ -85,89 +116,115 @@ def detect_overload_in_zone(
                 # Time overlap detected - check resource type
                 for reservation in lease.get('reservations', []):
                     resource_type = reservation.get('resource_type')
+                    # Determine reservation zone: reservation -> lease -> default 'current'
+                    res_zone = reservation.get('zone') or lease.get('zone') or 'current'
+                    # Only count reservations for the target zone
+                    if res_zone != zone:
+                        continue
                     if resource_type == 'physical:host':
                         # This is a physical host reservation that overlaps our window
+                        count = int(reservation.get('min', 1) or 1)
+                        overlapping_count += count
                         overlapping_reservations.append({
                             'lease_id': lease.get('id'),
                             'lease_name': lease.get('name'),
                             'start': lease_start.isoformat(),
                             'end': lease_end.isoformat(),
                             'resource_type': resource_type,
-                            'count': reservation.get('min', 1)
+                            'count': count,
+                            'zone': res_zone,
                         })
                         
         except Exception as e:
             print(f"Warning: Could not parse lease {lease.get('id', 'unknown')} times: {e}")
             continue
     
-    # Determine overload status
-    if overlapping_reservations:
-        print(f"❌ Resource overload detected in zone {zone}:")
-        print(f"  Found {len(overlapping_reservations)} overlapping reservations:")
-        for res in overlapping_reservations:
-            print(f"    - {res['lease_name']} ({res['resource_type']} x{res['count']})")
-            print(f"      {res['start']} → {res['end']}")
-        return True
-    else:
-        print(f"✅ No overload detected in zone {zone}")
-        return False
+    # Determine availability using capacity
+    if verbose:
+        if overlapping_reservations:
+            print(f"Found {len(overlapping_reservations)} overlapping reservations in zone {zone}:")
+            for res in overlapping_reservations:
+                print(f"  - {res['lease_name']} ({res['resource_type']} x{res['count']}) [{res['zone']}]")
+                print(f"    {res['start']} → {res['end']}")
+            print(f"Total overlapping count in zone {zone}: {overlapping_count} (capacity={cap})")
+        else:
+            print(f"✅ No overlapping reservations detected in zone {zone}")
+
+    # available if after adding need we do not exceed capacity
+    return (overlapping_count + need) <= cap
+
+
+def detect_overload_in_zone(
+    zone: str,
+    req: ResourceRequest,
+    start_time: datetime,
+    end_time: datetime,
+    leases: Optional[List[Dict[str, Any]]] = None,
+    zone_capacity: Optional[Dict[str, int]] = None,
+    verbose: bool = True,
+) -> Optional[bool]:
+    """Wrapper returning True if overloaded (i.e., not enough capacity for need=1)."""
+    avail = capacity_available(zone, start_time, end_time, leases, zone_capacity, need=1, verbose=verbose)
+    if avail is None:
+        return None
+    return not avail
 
 def find_available_window(
     req: ResourceRequest,
     duration_hours: float,
     config: SchedulingConfig,
-    current_zone: str
+    current_zone: str,
+    leases: Optional[List[Dict[str, Any]]] = None,
+    zone_capacity: Optional[Dict[str, int]] = None,
+    start_override: Optional[datetime] = None,
 ) -> Optional[ReservationPlan]:
     """Find an available time window, first in current zone, then in alternatives."""
     
     # Try current zone first with time shifting
-    start_time = datetime.now(timezone.utc) + timedelta(minutes=2)
+    start_time = start_override or (datetime.now(timezone.utc) + timedelta(minutes=2))
     end_time = start_time + timedelta(hours=duration_hours)
     
-    # Look ahead in current zone using timedelta-based iteration
-    cursor = start_time
+    # Build zone order: current first, then alternatives (deduped)
+    alt_zones = [z for z in (config.alt_zones or []) if z != current_zone]
+    zones_to_check = [current_zone] + alt_zones
+
+    # 1) Try desired start across zones: if primary is overloaded, check alts at same time
+    for z in zones_to_check:
+        if capacity_available(z, start_time, end_time, leases, zone_capacity, need=1, verbose=False):
+            return ReservationPlan(
+                zone=z,
+                start=start_time,
+                end=end_time,
+                flavor="auto",
+                count=1
+            )
+
+    # 2) Time-shift search: scan forward with step, checking all zones per step
+    cursor = start_time + timedelta(minutes=config.step_minutes)
     deadline = start_time + timedelta(hours=config.lookahead_hours)
     step = timedelta(minutes=config.step_minutes)
-    
+
     while cursor <= deadline:
         test_start = cursor
         test_end = test_start + timedelta(hours=duration_hours)
-        
+
         if config.start_by and test_start > config.start_by:
             break
-            
-        if not detect_overload_in_zone(current_zone, req, test_start, test_end):
-            # Found available window in current zone
-            return ReservationPlan(
-                zone=current_zone,
-                start=test_start,
-                end=test_end,
-                flavor="auto",  # Will be determined later
-                count=1
-            )
-        
-        cursor += step
-    
-    # If no window found in current zone, try alternative zones
-    if config.alt_zones:
-        for alt_zone in config.alt_zones:
-            if alt_zone == current_zone:
-                continue
-                
-            # Try immediate start in alternative zone
-            test_start = start_time
-            test_end = test_start + timedelta(hours=duration_hours)
-            
-            if not detect_overload_in_zone(alt_zone, req, test_start, test_end):
+
+        for z in zones_to_check:
+            if capacity_available(z, test_start, test_end, leases, zone_capacity, need=1, verbose=False):
                 return ReservationPlan(
-                    zone=alt_zone,
+                    zone=z,
                     start=test_start,
                     end=test_end,
                     flavor="auto",
                     count=1
                 )
-    
+
+        cursor += step
+
     return None
+
 
 def find_matching_flavor(
     req: ResourceRequest,

@@ -303,6 +303,10 @@ def case_limited(
     output_file: str = typer.Option(None, "--output", help="JSON output file path"),
     lookahead_hours: int = typer.Option(72, "--lookahead", help="Hours to look ahead for availability"),
     alt_zones: str = typer.Option("", "--alt-zones", help="Comma-separated alternative zones"),
+    leases_json: str = typer.Option(None, "--leases-json", help="Path to fake Blazar leases JSON (bypass live API)"),
+    step_minutes: int = typer.Option(60, "--step-minutes", help="Search step in minutes for time shifting"),
+    use_ai_final: bool = typer.Option(False, "--use-ai-final/--no-use-ai-final", help="Use AI final request from forge instead of rule-based mapping"),
+    zone_capacity_opt: str = typer.Option(None, "--zone-capacity", help='Per-zone capacity, e.g. "current=1,zone-b=1" for fixtures'),
 ):
     """Case 2: Limited resources - Agent detects resource shortage and reserves in different time/zone."""
     
@@ -311,7 +315,7 @@ def case_limited(
     # Parse alternative zones
     zone_list = [z.strip() for z in alt_zones.split(",")] if alt_zones else []
     
-    # Analyze repository complexity
+    # Analyze repository complexity and choose request
     if complexity:
         try:
             complexity_tier = ComplexityTier(complexity)
@@ -323,9 +327,20 @@ def case_limited(
         typer.echo(f"Analyzing repository complexity for: {repo_path}")
         complexity_tier = analyze_repo_complexity(repo_path)
         typer.echo(f"Detected complexity: {complexity_tier.value}")
-    
-    # Map to resource requirements
-    req = map_complexity_to_request(complexity_tier)
+
+    if use_ai_final:
+        try:
+            typer.echo("[info] Using AI final request from forge.py")
+            # Reuse the loader used by ai-reserve
+            from .cli import _load_ai_bundle_from_source, _extract_request_from_ai_bundle
+            bundle = _load_ai_bundle_from_source("forge", "final")
+            req, dur_mult, why = _extract_request_from_ai_bundle(bundle, "final")
+            typer.echo(f"[ok] AI final request selected: {req}")
+        except Exception as e:
+            typer.echo(f"[warn] Failed to get AI final request, falling back to rule-based: {e}")
+            req = map_complexity_to_request(complexity_tier)
+    else:
+        req = map_complexity_to_request(complexity_tier)
     duration_hours = get_default_duration_hours(complexity_tier)
     
     typer.echo(f"Resource requirements: {req.vcpus} vCPUs, {req.ram_gb} GB RAM, {req.gpus} GPUs")
@@ -334,6 +349,7 @@ def case_limited(
     # Configure scheduling
     config = SchedulingConfig(
         lookahead_hours=lookahead_hours,
+        step_minutes=step_minutes,
         alt_zones=zone_list
     )
     
@@ -344,151 +360,133 @@ def case_limited(
     start_time = datetime.now(timezone.utc) + timedelta(minutes=2)
     end_time = start_time + timedelta(hours=duration_hours)
     
-    overload_detected = detect_overload_in_zone(current_zone, req, start_time, end_time)
-    
+    # Load leases from JSON if provided
+    leases_data = None
+    if leases_json:
+        try:
+            with open(leases_json, 'r') as f:
+                leases_data = json.load(f)
+            if not isinstance(leases_data, list):
+                typer.echo("[warn] leases-json did not contain a list; ignoring")
+                leases_data = None
+            else:
+                typer.echo(f"[ok] Loaded leases from JSON: {len(leases_data)} items (fixture mode)")
+        except Exception as e:
+            typer.echo(f"[warn] Failed to load leases JSON: {e}")
+            leases_data = None
+
+    # Parse zone capacity if provided
+    zone_capacity: dict[str, int] | None = None
+    if zone_capacity_opt:
+        try:
+            zmap = {}
+            for part in zone_capacity_opt.split(','):
+                if not part.strip():
+                    continue
+                if '=' not in part:
+                    continue
+                k, v = part.split('=', 1)
+                zmap[k.strip()] = int(v.strip())
+            if zmap:
+                zone_capacity = zmap
+                typer.echo(f"[ok] Using zone capacity map: {zone_capacity}")
+        except Exception as e:
+            typer.echo(f"[warn] Failed to parse --zone-capacity: {e}")
+
+    overload_detected = detect_overload_in_zone(current_zone, req, start_time, end_time, leases=leases_data, zone_capacity=zone_capacity, verbose=False)
+
     if overload_detected is True:
         typer.echo("❌ Resource overload detected in current zone")
         typer.echo("Searching for alternative time windows and zones...")
-        
-        # Find available window
-        plan = find_available_window(req, duration_hours, config, current_zone)
-        
-        if plan:
-            typer.echo(f"✅ Found available window in zone: {plan.zone}")
-            typer.echo(f"   Start: {plan.start}")
-            typer.echo(f"   End: {plan.end}")
-            
-            # Create reservation
-            lease = create_reservation(plan, req, f"envboot-limited-{complexity_tier.value}")
-            
-            # Calculate SU estimates
-            host_caps = {"vcpus": 48, "gpus": 4}
-            su_per_hour = estimate_su_per_hour(req, host_caps)
-            su_total = su_per_hour * duration_hours
-            
-            # Determine decision type
-            decisions = []
-            if plan.zone != current_zone:
-                decisions.append({"type": "zone_change", "from": current_zone, "to": plan.zone})
-            else:
-                time_shift = int((plan.start - start_time).total_seconds() / 60)
-                decisions.append({"type": "time_shift", "minutes": time_shift})
-            
-            result = CaseStudyResult(
-                case="limited_resources_subcase_A",
-                inputs={
-                    "repo_path": repo_path,
-                    "complexity_tier": complexity_tier.value,
-                    "resource_request": {
-                        "vcpus": req.vcpus,
-                        "ram_gb": req.ram_gb,
-                        "gpus": req.gpus,
-                        "bare_metal": req.bare_metal
-                    },
-                    "duration_hours": duration_hours,
-                    "scheduling_config": {
-                        "lookahead_hours": lookahead_hours,
-                        "alt_zones": zone_list
-                    }
-                },
-                decisions=decisions,
-                reservation=plan,
-                su_estimate_per_hour=su_per_hour,
-                su_estimate_total=su_total,
-                slo={"start_by": start_time.isoformat(), "met": True},
-                complexity_tier=complexity_tier
-            )
-            
-            # Output results
-            typer.echo("\n=== Results ===")
-            typer.echo(f"Reservation created: {plan.lease_id}")
-            typer.echo(f"Zone: {plan.zone}")
-            typer.echo(f"Start: {plan.start}")
-            typer.echo(f"End: {plan.end}")
-            typer.echo(f"Flavor: {plan.flavor}")
-            typer.echo(f"SU cost: {su_total:.4f}")
-            
-            if output_file:
-                with open(output_file, 'w') as f:
-                    json.dump(result.__dict__, f, indent=2, default=str)
-                typer.echo(f"Results saved to: {output_file}")
-        else:
+
+        plan = find_available_window(
+            req, duration_hours, config, current_zone,
+            leases=leases_data, zone_capacity=zone_capacity, start_override=start_time
+        )
+
+        if not plan:
             typer.echo("❌ No available windows found in any zone")
             raise typer.Exit(1)
-    elif overload_detected is None:
+
+        if plan.zone == current_zone:
+            shift_min = int((plan.start - start_time).total_seconds() / 60)
+            typer.echo(f"✅ Found available window at {plan.start} (time shift +{shift_min} min) in zone {plan.zone}")
+        else:
+            typer.echo(f"✅ Found available window now in {plan.zone} (zone change from {current_zone})")
+
+        lease = create_reservation(plan, req, f"envboot-limited-{complexity_tier.value}")
+
+        host_caps = {"vcpus": 48, "gpus": 4}
+        su_per_hour = estimate_su_per_hour(req, host_caps)
+        su_total = su_per_hour * duration_hours
+
+        decisions = []
+        if plan.zone != current_zone:
+            decisions.append({"type": "zone_change", "from": current_zone, "to": plan.zone})
+        else:
+            time_shift = int((plan.start - start_time).total_seconds() / 60)
+            decisions.append({"type": "time_shift", "minutes": time_shift})
+
+        result = CaseStudyResult(
+            case="limited_resources_subcase_A",
+            inputs={
+                "repo_path": repo_path,
+                "complexity_tier": complexity_tier.value,
+                "resource_request": {
+                    "vcpus": req.vcpus,
+                    "ram_gb": req.ram_gb,
+                    "gpus": req.gpus,
+                    "bare_metal": req.bare_metal
+                },
+                "duration_hours": duration_hours,
+                "scheduling_config": {
+                    "lookahead_hours": lookahead_hours,
+                    "alt_zones": zone_list
+                }
+            },
+            decisions=decisions,
+            reservation=plan,
+            su_estimate_per_hour=su_per_hour,
+            su_estimate_total=su_total,
+            slo={"start_by": start_time.isoformat(), "met": True},
+            complexity_tier=complexity_tier
+        )
+
+        typer.echo("\n=== Results ===")
+        typer.echo(f"Reservation created: {plan.lease_id}")
+        typer.echo(f"Zone: {plan.zone}")
+        typer.echo(f"Start: {plan.start}")
+        typer.echo(f"End: {plan.end}")
+        typer.echo(f"Flavor: {plan.flavor}")
+        typer.echo(f"SU cost: {su_total:.4f}")
+
+        if output_file:
+            with open(output_file, 'w') as f:
+                json.dump(result.__dict__, f, indent=2, default=str)
+            typer.echo(f"Results saved to: {output_file}")
+        return
+
+    if overload_detected is None:
         typer.echo("⚠️  Cannot determine overload status, attempting time/zone search optimistically...")
-        
-        # Try to find available window anyway
-        plan = find_available_window(req, duration_hours, config, current_zone)
-        
-        if plan:
-            typer.echo(f"✅ Found available window in zone: {plan.zone}")
-            typer.echo(f"   Start: {plan.start}")
-            typer.echo(f"   End: {plan.end}")
-            
-            # Create reservation
-            lease = create_reservation(plan, req, f"envboot-limited-{complexity_tier.value}")
-            
-            # Calculate SU estimates
-            host_caps = {"vcpus": 48, "gpus": 4}
-            su_per_hour = estimate_su_per_hour(req, host_caps)
-            su_total = su_per_hour * duration_hours
-            
-            # Determine decision type
-            decisions = []
-            if plan.zone != current_zone:
-                decisions.append({"type": "zone_change", "from": current_zone, "to": plan.zone})
-            else:
-                time_shift = int((plan.start - start_time).total_seconds() / 60)
-                decisions.append({"type": "time_shift", "minutes": time_shift})
-            
-            decisions.append({"type": "undetermined_overload_attempted_search"})
-            
-            result = CaseStudyResult(
-                case="limited_resources_subcase_A",
-                inputs={
-                    "repo_path": repo_path,
-                    "complexity_tier": complexity_tier.value,
-                    "resource_request": {
-                        "vcpus": req.vcpus,
-                        "ram_gb": req.ram_gb,
-                        "gpus": req.gpus,
-                        "bare_metal": req.bare_metal
-                    },
-                    "duration_hours": duration_hours,
-                    "scheduling_config": {
-                        "lookahead_hours": lookahead_hours,
-                        "alt_zones": zone_list
-                    }
-                },
-                decisions=decisions,
-                reservation=plan,
-                su_estimate_per_hour=su_per_hour,
-                su_estimate_total=su_total,
-                slo={"start_by": start_time.isoformat(), "met": True},
-                complexity_tier=complexity_tier
-            )
-            
-            # Output results
-            typer.echo("\n=== Results ===")
-            typer.echo(f"Reservation created: {plan.lease_id}")
-            typer.echo(f"Zone: {plan.zone}")
-            typer.echo(f"Start: {plan.start}")
-            typer.echo(f"End: {plan.end}")
-            typer.echo(f"Flavor: {plan.flavor}")
-            typer.echo(f"SU cost: {su_total:.4f}")
-            
-            if output_file:
-                with open(output_file, 'w') as f:
-                    json.dump(result.__dict__, f, indent=2, default=str)
-                typer.echo(f"Results saved to: {output_file}")
-        else:
+        plan = find_available_window(
+            req, duration_hours, config, current_zone,
+            leases=leases_data, zone_capacity=zone_capacity, start_override=start_time
+        )
+        if not plan:
             typer.echo("❌ No available windows found in any zone")
             raise typer.Exit(1)
-    else:
-        typer.echo("✅ No overload detected, proceeding with base case")
-        # Fall back to base case logic
-        case_base(repo_path, complexity, key_name, output_file)
+
+        if plan.zone == current_zone:
+            shift_min = int((plan.start - start_time).total_seconds() / 60)
+            typer.echo(f"✅ Found available window at {plan.start} (time shift +{shift_min} min) in zone {plan.zone}")
+        else:
+            typer.echo(f"✅ Found available window now in {plan.zone} (zone change from {current_zone})")
+        # Do not create a real reservation in indeterminate mode; just display
+        return
+
+    # No overload: proceed with base case
+    typer.echo("✅ No overload detected, proceeding with base case")
+    case_base(repo_path, complexity, key_name, output_file)
 
 @app.command("cases-downgrade")
 def case_downgrade(
