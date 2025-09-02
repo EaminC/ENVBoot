@@ -8,7 +8,7 @@ dependencies = [
   "python-dotenv",
   "keystoneauth1[oidc]",
   "requests-oauthlib",
-  "python-blazarclient" 
+  "python-blazarclient",
 ]
 
 [project.scripts]

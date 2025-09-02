@@ -4,6 +4,72 @@ from pathlib import Path
 from typing import Dict, Any, Tuple
 from .models import ComplexityTier, ResourceRequest
 
+
+def analyze_repo_complexity_with_signals(repo_path: str) -> Tuple[ComplexityTier, Dict[str, Any]]:
+    """Same logic as analyze_repo_complexity, but also returns the signals dict."""
+    tier = analyze_repo_complexity(repo_path)
+    repo_path = Path(repo_path)
+    signals: Dict[str, Any] = {}
+    score = 0
+
+    # GPU frameworks
+    for req_file in ["requirements.txt", "pyproject.toml"]:
+        req_path = repo_path / req_file
+        if req_path.exists():
+            content = req_path.read_text().lower()
+            gpu_frameworks = ["torch", "tensorflow", "jax", "cuda", "cupy", "pytorch-lightning"]
+            found = [f for f in gpu_frameworks if f in content]
+            if found:
+                score += 3
+                signals["gpu_frameworks"] = found
+
+    # CUDA files
+    cuda_files = list(repo_path.rglob("*.cu"))
+    if cuda_files:
+        score += 2
+        signals["cuda_files"] = len(cuda_files)
+
+    # Build system files
+    build_files = ["Dockerfile", "Makefile", "CMakeLists.txt"]
+    found_build = [f for f in build_files if (repo_path / f).exists()]
+    if found_build:
+        score += 1
+        signals["build_files"] = found_build
+
+    # NVIDIA base image in Dockerfile
+    dockerfile_path = repo_path / "Dockerfile"
+    if dockerfile_path.exists() and "nvidia" in dockerfile_path.read_text().lower():
+        score += 2
+        signals["nvidia_docker"] = True
+
+    # File/LOC counts
+    total_files = 0
+    total_loc = 0
+    for file_path in repo_path.rglob("*"):
+        if file_path.is_file() and not file_path.name.startswith('.'):
+            total_files += 1
+            try:
+                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    total_loc += len(f.readlines())
+            except:
+                pass
+    if total_files > 500 or total_loc > 50000:
+        score += 1
+        signals["large_codebase"] = {"files": total_files, "loc": total_loc}
+
+    # Test footprint
+    test_files = list(repo_path.rglob("*test*.py")) + list(repo_path.rglob("tests/*"))
+    ci_files = list(repo_path.rglob(".github/*")) + list(repo_path.rglob(".gitlab-ci*")) + list(repo_path.rglob("*.yml"))
+    total_tests = len(test_files) + len(ci_files)
+    if total_tests > 50:
+        score += 1
+        signals["test_footprint"] = total_tests
+
+    signals["final_score"] = score
+    signals["tier"] = tier.value
+    return tier, signals
+
+
 def analyze_repo_complexity(repo_path: str) -> ComplexityTier:
     """Analyze repository complexity using deterministic scoring."""
     repo_path = Path(repo_path)
