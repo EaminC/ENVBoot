@@ -129,3 +129,65 @@ def build_prompt(task: str, **kwargs) -> str:
     if task == "analysis":
         return prompt_ai_analysis(kwargs["report_text"])
     raise ValueError(f"Unknown task: {task}")
+
+
+
+# ---------- NEW PROMPTS FOR DOWNGRADE + COMPLEXITY ----------
+
+def prompt_downgrade_advisor(original_req_json: str, policy_json: str, tier: str) -> str:
+    return f"""You are a downgrading advisor. Return ONLY JSON. First char MUST be '{{'.
+
+Goal: propose a downgraded ResourceRequest that RESPECTS the policy caps.
+
+INPUT:
+- complexity_tier: {tier}
+- original_request: {original_req_json}
+- policy: {policy_json}
+
+Rules:
+- Do NOT reduce below 1 vCPU or 1 GB RAM.
+- Respect policy caps exactly:
+  vCPU cut ≤ max_vcpu_reduction_ratio; RAM cut ≤ max_ram_reduction_ratio.
+- If complexity_tier ∈ ["HEAVY","VERY_HEAVY"] and original_request.gpus>0 and policy.allow_gpu_to_cpu is false -> keep GPUs.
+- If policy.require_pass_smoketest is false, you MAY switch bare_metal -> false.
+- Keep changes minimal; explain briefly.
+
+Attention:
+- After applying reduction ratios, round RAM up to the nearest integer (ceiling).
+- Aim for a target that maps cleanly to available SKUs (e.g., 384/400/420/430/512). If uncertain, round up toward the next SKU.”
+
+Return ONLY:
+{{
+  "downgraded_request": {{"vcpus": int, "ram_gb": int, "gpus": int, "disk_gb": int, "bare_metal": bool}},
+  "respect_policy": 0 or 1,
+  "expected_duration_multiplier": number,   // ≤ policy.max_duration_increase_ratio
+  "why": "short string"
+}}
+"""
+
+def prompt_complexity_review(signals_json: str, mapped_req_json: str) -> str:
+    return f"""You are a reviewer. Return ONLY JSON. First char MUST be '{{'.
+
+Task: Review deterministic complexity signals and the mapped request. Optionally suggest an override.
+
+INPUT:
+- signals: {signals_json}
+- mapped_request: {mapped_req_json}
+
+Guidelines:
+- Override ONLY if signals clearly indicate under/over-provisioning.
+- Keep numbers modest (e.g., +/- 25%) unless GPU/cuda signals are present.
+- If unsure, do not override.
+
+Attention:
+- If large_codebase or test_footprint signals are present, consider bumping vCPUs or RAM even if base mapping looks OK.
+- If confidence is <0.6, always return null override.
+
+Return ONLY:
+{{
+  "tier_override": "SIMPLE" | "MODERATE" | "HEAVY" | "VERY_HEAVY" | null,
+  "request_override": null or {{"vcpus": int, "ram_gb": int, "gpus": int, "disk_gb": int, "bare_metal": bool}},
+  "why": "short string",
+  "confidence": number   // 0..1
+}}
+"""
