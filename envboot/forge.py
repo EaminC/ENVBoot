@@ -26,6 +26,7 @@ from envboot.prompt import build_prompt, prompt_downgrade_advisor, prompt_comple
 from envboot.llm_client import run_prompt, must_json_dict, validate_request_obj
 from envboot.analysis import analyze_repo_complexity_with_signals, map_complexity_to_request
 from envboot.ai_hooks import ai_complexity_review, ai_downgrade_advisor
+from envboot.models import ComplexityTier   
 
 
 if __name__ == "__main__":
@@ -80,7 +81,7 @@ CPU ~6 vCPUs. No GPU needed. Disk ~1 GB plus assets (~0.5 GB). Network minimal."
     print("AI Downgrade Suggestion:", json.dumps(dg, indent=2))
 
 
-    # --- Test AI Complexity Review ---
+    # # --- Test AI Complexity Review ---
     signals = {"gpu_frameworks": ["torch"], "cuda_files": 0, "final_score": 5, "tier": "HEAVY"}
     mapped_request = {"vcpus": 8, "ram_gb": 32, "gpus": 1, "disk_gb": 80, "bare_metal": False}
 
@@ -91,14 +92,21 @@ CPU ~6 vCPUs. No GPU needed. Disk ~1 GB plus assets (~0.5 GB). Network minimal."
 
 
     # --- Test AI Complexity Review with signals ---
-    repo = "."
-    tier, signals = analyze_repo_complexity_with_signals(repo)
+    # Allow overriding repo path and/or faking GPU signals via env vars for testing.
+    repo = os.environ.get("ENVBOOT_REPO", ".")
+    fake_gpu = os.environ.get("ENVBOOT_FAKE_GPU", "").strip().lower() in {"1", "true", "yes", "on"}
+
+    if fake_gpu:
+        tier = ComplexityTier.HEAVY
+        signals = {"gpu_frameworks": ["torch"], "cuda_files": 1, "final_score": 5, "tier": "HEAVY"}
+    else:
+        tier, signals = analyze_repo_complexity_with_signals(repo)
     mapped = map_complexity_to_request(tier).__dict__
 
     final_request = ai_complexity_review(signals, mapped)
     print("Complexity final request:", final_request)
 
-    # Example downgrade
+    # # Example downgrade
     original_req = mapped
     policy = {"max_vcpu_reduction_ratio": 0.5, "max_ram_reduction_ratio": 0.2, "max_duration_increase_ratio": 2.0}
     tier_name = tier.value
@@ -106,6 +114,8 @@ CPU ~6 vCPUs. No GPU needed. Disk ~1 GB plus assets (~0.5 GB). Network minimal."
     print("Downgraded request:", downgraded)
 
 
+
+    # --- Test AI Complexity Review with signals ---
     # GPU-heavy repo
     signals = {"gpu_frameworks": ["torch"], "cuda_files": 0, "final_score": 5, "tier": "HEAVY"}
     mapped_request = {"vcpus": 8, "ram_gb": 32, "gpus": 1, "disk_gb": 80, "bare_metal": False}

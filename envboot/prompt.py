@@ -66,7 +66,10 @@ Return ONLY a JSON object with this exact schema.
 
 def prompt_mock_api(resource_json: str) -> str:
     # resource_json should already be valid JSON string
-    return f"""You are an allocation agent. Return ONLY JSON. The first character MUST be '{{'.
+    return f"""You are an allocation agent. Return ONLY JSON. Format: output 
+**one single-line, minified JSON object** (no newlines or indentation; no spaces 
+after commas/colons); use double quotes for all keys/strings; JSON booleans `true/false` 
+and `null`; numeric fields must be numbers. The first character MUST be '{{'.
 
 INPUT mock API (current node + optional alternatives):
 {resource_json}
@@ -96,7 +99,10 @@ Return ONLY JSON with this schema:
 """
 
 def prompt_ai_analysis(report_text: str) -> str:
-    return f"""You are an analyzer. Return ONLY JSON. The first character MUST be '{{'.
+    return f"""You are an analyzer. Return ONLY JSON. Format: output 
+**one single-line, minified JSON object** (no newlines or indentation; no spaces 
+after commas/colons); use double quotes for all keys/strings; JSON booleans `true/false` 
+and `null`; numeric fields must be numbers. The first character MUST be '{{'.
 
 Analyze the text and infer minimum hardware plus a small safety headroom.
 
@@ -135,7 +141,10 @@ def build_prompt(task: str, **kwargs) -> str:
 # ---------- NEW PROMPTS FOR DOWNGRADE + COMPLEXITY ----------
 
 def prompt_downgrade_advisor(original_req_json: str, policy_json: str, tier: str) -> str:
-    return f"""You are a downgrading advisor. Return ONLY JSON. First char MUST be '{{'.
+    return f"""You are a downgrading advisor. Return ONLY JSON. Format: output 
+**one single-line, minified JSON object** (no newlines or indentation; no spaces 
+after commas/colons); use double quotes for all keys/strings; JSON booleans `true/false` 
+and `null`; numeric fields must be numbers. First char MUST be '{{'.
 
 Goal: propose a downgraded ResourceRequest that RESPECTS the policy caps.
 
@@ -166,7 +175,10 @@ Return ONLY:
 """
 
 def prompt_complexity_review(signals_json: str, mapped_req_json: str) -> str:
-    return f"""You are a reviewer. Return ONLY JSON. First char MUST be '{{'.
+    return f"""You are a reviewer. Return ONLY JSON. Format: output 
+**one single-line, minified JSON object** (no newlines or indentation; no spaces 
+after commas/colons); use double quotes for all keys/strings; JSON booleans `true/false` 
+and `null`; numeric fields must be numbers. First char MUST be '{{'.
 
 Task: Review deterministic complexity signals and the mapped request. Optionally suggest an override.
 

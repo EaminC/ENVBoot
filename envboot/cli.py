@@ -733,5 +733,415 @@ def case_complexity(
         typer.echo(f"Results saved to: {output_file}")
 
 
+# ==== Testing AI Reserve Cli ===== 
+# ==== AI Reserve integration helpers ====
+import sys, subprocess, re
+from typing import Tuple
+
+def _parse_first_json_block(text: str) -> dict:
+    """
+    Grab the first top-level JSON object from text.
+    Works for lines like:
+      AI Downgrade Suggestion: { ... }
+      AI Complexity Review: { ... }
+      Complexity final request: {'vcpus': 2, ...}  # single quotes -> we'll normalize
+    """
+    # Try to find a {...} block
+    m = re.search(r'\{.*\}', text, re.DOTALL)
+    if not m:
+        raise ValueError("No JSON object found in input")
+    raw = m.group(0).strip()
+
+    # Normalize single quotes to double quotes if needed (best-effort)
+    # Only do this if it looks like Python dicts (contains single quotes but not double quotes)
+    if "'" in raw and '"' not in raw:
+        raw = raw.replace("False", "false").replace("True", "true").replace("None", "null")
+        raw = re.sub(r"'", '"', raw)
+
+    return json.loads(raw)
+
+def _json_from_raw_text(raw: str):
+    """Try to parse JSON text robustly: JSON first, then python-ish dict via ast.literal_eval.
+    Returns a dict if possible, else raises.
+    """
+    # 1) Try strict JSON
+    try:
+        obj = json.loads(raw)
+        if isinstance(obj, dict):
+            return obj
+        raise ValueError("Parsed JSON is not an object")
+    except Exception:
+        pass
+
+    # 2) Try normalizing python-ish single quotes when double quotes absent
+    try:
+        if '"' not in raw and "'" in raw:
+            import re as _re
+            raw2 = raw.replace("False", "false").replace("True", "true").replace("None", "null")
+            raw2 = _re.sub(r"'", '"', raw2)
+            obj = json.loads(raw2)
+            if isinstance(obj, dict):
+                return obj
+    except Exception:
+        pass
+
+    # 3) Fallback to Python literal eval (handles single quotes/True/False/None)
+    try:
+        import ast
+        obj = ast.literal_eval(raw)
+        if isinstance(obj, dict):
+            return obj
+        raise ValueError("Literal is not a dict")
+    except Exception as e:
+        raise ValueError(f"Could not parse JSON/Python object: {e}")
+
+def _extract_json_after_anchor(anchor_regex: str, text: str):
+    """Find the first JSON object appearing after the given anchor pattern.
+    Uses brace matching to support multiline and nested braces inside strings.
+    Returns a dict if parsed, else None.
+    """
+    m = re.search(anchor_regex, text, re.IGNORECASE)
+    if not m:
+        return None
+    i = m.end()
+    n = len(text)
+    start = text.find('{', i)
+    if start == -1:
+        return None
+
+    depth = 0
+    in_str = False
+    str_quote = ''
+    escaped = False
+    end = -1
+
+    pos = start
+    while pos < n:
+        ch = text[pos]
+        if in_str:
+            if escaped:
+                escaped = False
+            else:
+                if ch == '\\':
+                    escaped = True
+                elif ch == str_quote:
+                    in_str = False
+        else:
+            if ch == '"' or ch == "'":
+                in_str = True
+                str_quote = ch
+            elif ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth == 0:
+                    end = pos + 1
+                    break
+        pos += 1
+
+    if end == -1:
+        return None
+
+    raw = text[start:end]
+    try:
+        return _json_from_raw_text(raw)
+    except Exception:
+        return None
+
+def _extract_last_json_in_text(text: str):
+    """Scan text for balanced JSON objects and return the last one that parses to a dict."""
+    i = 0
+    last = None
+    while True:
+        start = text.find('{', i)
+        if start == -1:
+            break
+        # Balanced parse starting at start
+        depth = 0
+        in_str = False
+        str_quote = ''
+        escaped = False
+        pos = start
+        end = -1
+        while pos < len(text):
+            ch = text[pos]
+            if in_str:
+                if escaped:
+                    escaped = False
+                else:
+                    if ch == '\\':
+                        escaped = True
+                    elif ch == str_quote:
+                        in_str = False
+            else:
+                if ch == '"' or ch == "'":
+                    in_str = True
+                    str_quote = ch
+                elif ch == '{':
+                    depth += 1
+                elif ch == '}':
+                    depth -= 1
+                    if depth == 0:
+                        end = pos + 1
+                        break
+            pos += 1
+        if end != -1:
+            raw = text[start:end]
+            try:
+                obj = _json_from_raw_text(raw)
+                last = obj
+            except Exception:
+                pass
+            i = end
+        else:
+            i = start + 1
+    return last
+
+def _extract_request_from_ai_bundle(bundle: dict, mode: str) -> Tuple[ResourceRequest, float, str]:
+    """
+    Given a bundle (e.g., parsed JSON from AI output) and a mode:
+      - 'auto'      : try downgraded_request, then request_override, then mapped request-like object
+      - 'downgrade' : expect { 'downgraded_request': {...}, 'expected_duration_multiplier': (opt) }
+      - 'complexity': expect a review-like object with 'request_override' or similar
+      - 'final'     : expect a final plain request dict (vcpus, ram_gb, gpus, disk_gb?, bare_metal?)
+    Returns (ResourceRequest, duration_multiplier, why/explanation string)
+    """
+    mode = mode.lower()
+
+    def to_req(d: dict) -> ResourceRequest:
+        return ResourceRequest(
+            vcpus=int(d.get("vcpus", 2)),
+            ram_gb=int(d.get("ram_gb", 4)),
+            gpus=int(d.get("gpus", 0)),
+            disk_gb=int(d.get("disk_gb", 20)),
+            bare_metal=bool(d.get("bare_metal", False)),
+        )
+
+    # If it's the Downgrade Advisor JSON
+    if mode in ("auto", "downgrade") and "downgraded_request" in bundle:
+        req = to_req(bundle["downgraded_request"])
+        dur_mult = float(bundle.get("expected_duration_multiplier", 1.0))
+        why = bundle.get("why", "AI Downgrade Advisor output")
+        return req, dur_mult, why
+
+    # If it's a Complexity Review JSON
+    if mode in ("auto", "complexity") and ("request_override" in bundle or "tier_override" in bundle):
+        chosen = bundle.get("request_override")
+        if chosen is None:
+            # Fall back to something that looks like a request (some variants return the original mapping)
+            # This is permissive on purpose.
+            for k in ("final_request", "mapped_request", "suggested_request"):
+                if k in bundle:
+                    chosen = bundle[k]
+                    break
+        if chosen is None:
+            raise ValueError("No request_override/final/mapped request found in complexity bundle")
+        req = to_req(chosen)
+        dur_mult = 1.0
+        why = bundle.get("why", "AI Complexity Review output")
+        return req, dur_mult, why
+
+    # If it's just a final/plain request dict (e.g., from a line: Complexity final request: {...})
+    if mode in ("auto", "final"):
+        # Heuristic: if the object itself looks like a request
+        keys = set(bundle.keys())
+        if {"vcpus", "ram_gb", "gpus"} <= keys:
+            req = to_req(bundle)
+            return req, 1.0, "Final request (plain)"
+        # Or nested under a known field name
+        for k in ("final_request", "request", "mapped_request", "downgraded_request"):
+            if isinstance(bundle.get(k), dict) and {"vcpus", "ram_gb", "gpus"} <= set(bundle[k].keys()):
+                req = to_req(bundle[k])
+                # If we pulled a downgraded_request here, try to honor duration multiplier if present
+                dur_mult = float(bundle.get("expected_duration_multiplier", 1.0))
+                why = f"Final ({k})"
+                return req, dur_mult, why
+
+    # If we reach here, we couldn't recognize shape
+    raise ValueError("Unrecognized AI bundle structure for mode=" + mode)
+
+def _load_ai_bundle_from_source(source: str, mode: str) -> dict:
+    """
+    Load AI bundle either by running forge.py (stdout parsing) or from a JSON file path.
+    Anchors per mode:
+      downgrade : "AI Downgrade Suggestion:"  (fallbacks: "AI Downgrade Advisor", "Downgraded request:")
+      final     : "Complexity final request:" (fallbacks: "AI Complexity Review (GPU-heavy):", last JSON-ish block)
+      complexity: "AI Complexity Review:"     (diagnostic; may have request_override = null)
+    """
+    def _find_first(pattern: str, text: str) -> str | None:
+        m = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+        return m.group(1) if m else None
+
+    if source == "forge":
+        proc = subprocess.run(
+            [sys.executable, "envboot/forge.py"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+        out = proc.stdout
+
+        m = mode.lower()
+
+        if m == "downgrade":
+            # Primary: full suggestion object with multiplier/why
+            obj = _extract_json_after_anchor(r"AI\s+Downgrade\s+Suggestion:\s*", out)
+            if obj is not None:
+                return obj
+
+            # Fallback 1: advisor variants, e.g. "AI Downgrade Advisor (looser RAM cuts): { ... }"
+            obj = _extract_json_after_anchor(r"AI\s+Downgrade\s+Advisor[^\n:]*:\s*", out)
+            if obj is not None:
+                return obj
+
+            # Fallback 2: plain downgraded request (note: no multiplier/why here)
+            obj = _extract_json_after_anchor(r"Downgraded\s+request:\s*", out)
+            if obj is not None:
+                return obj
+
+            raise ValueError("Could not locate a downgrade block in forge output")
+
+
+        if m == "complexity":
+            obj = _extract_json_after_anchor(r"AI\s+Complexity\s+Review:\s*", out)
+            if obj is not None:
+                return obj
+            raise ValueError("Could not locate 'AI Complexity Review' JSON in forge output")
+
+        # default: final/plain request
+        if m in ("final", "auto"):
+            # Primary: “Complexity final request: {...}”
+            obj = _extract_json_after_anchor(r"Complexity\s+final\s+request:\s*", out)
+            if obj is not None:
+                return obj
+
+            # Fallback: accept a GPU-heavy final-like line as a plain request
+            obj = _extract_json_after_anchor(r"AI\s+Complexity\s+Review\s*\(GPU-heavy\):\s*", out)
+            if obj is not None:
+                return obj
+
+            # Last resort: take the LAST well-formed JSON object in stdout
+            obj = _extract_last_json_in_text(out)
+            if obj is not None:
+                return obj
+            raise ValueError("Could not find any JSON block in forge output")
+
+        # Unknown mode
+        raise ValueError(f"Unknown mode: {mode}")
+
+    # Otherwise, JSON file path
+    with open(source, "r") as f:
+        return json.load(f)
+
+
+@app.command("ai-reserve")
+def ai_reserve(
+    source: str = typer.Option("forge", help="Source of AI output: 'forge' to run envboot/forge.py, or path to a JSON file"),
+    mode: str = typer.Option("final", help="Which AI output to consume: 'final', 'downgrade', or 'complexity' (or 'auto')"),
+    name: str = typer.Option("envboot-ai", help="Lease name prefix"),
+    repo_path: str = typer.Option(".", help="Repo path (only used for default duration if AI doesn't specify)"),
+    duration_hours: float = typer.Option(None, help="Override reservation duration in hours"),
+    start_in_minutes: int = typer.Option(2, help="Start the reservation in N minutes"),
+    lookahead_hours: int = typer.Option(72, help="For parity with other flows; unused here but kept for symmetry"),
+    output_file: str = typer.Option(None, "--output", help="JSON output file path"),
+):
+    """
+    Create a lease directly from AI-produced JSON (either by running forge.py or reading a file).
+    - Chooses a ResourceRequest from the AI bundle (downgraded_request / request_override / final request).
+    - Applies expected_duration_multiplier if present (for downgrade outputs).
+    - Falls back to repo-derived default duration when not provided.
+    """
+    typer.echo("=== AI Reserve ===")
+    try:
+        bundle = _load_ai_bundle_from_source(source, mode.lower())
+        typer.echo(f"[ok] Loaded AI bundle from {source} in mode={mode}")
+    except Exception as e:
+        typer.echo(f"Failed to load AI bundle: {e}")
+        raise typer.Exit(1)
+
+    try:
+        req, dur_mult, why = _extract_request_from_ai_bundle(bundle, mode.lower())
+        typer.echo(f"[ok] Extracted request: {req} (multiplier={dur_mult})")
+    except Exception as e:
+        typer.echo(f"Failed to interpret AI bundle: {e}")
+        raise typer.Exit(1)
+
+    typer.echo(f"AI chose: {req.vcpus} vCPUs, {req.ram_gb} GB RAM, {req.gpus} GPUs, disk {req.disk_gb} GB, bare_metal={req.bare_metal}")
+    typer.echo(f"Why: {why}")
+
+    # Decide duration
+    if duration_hours is not None:
+        base_duration = float(duration_hours)
+    else:
+        # Use your existing complexity-derived default as a fallback
+        try:
+            from .analysis import analyze_repo_complexity, get_default_duration_hours
+            tier = analyze_repo_complexity(repo_path)
+            base_duration = get_default_duration_hours(tier)
+        except Exception:
+            base_duration = 4.0  # safe default
+    adjusted_duration = max(0.5, base_duration * float(dur_mult))
+
+    start_time = datetime.now(timezone.utc) + timedelta(minutes=start_in_minutes)
+    end_time = start_time + timedelta(hours=adjusted_duration)
+
+    plan = ReservationPlan(
+        zone="current",
+        start=start_time,
+        end=end_time,
+        flavor="auto",
+        count=1
+    )
+
+    typer.echo("Creating Blazar reservation...")
+    try:
+        lease = create_reservation(plan, req, f"{name}-{int(time.time())}")
+        typer.echo(f"[ok] Reservation call returned lease id={plan.lease_id}")
+    except Exception as e:
+        typer.echo(f"Reservation failed: {e}")
+        raise typer.Exit(1)
+
+    # SU estimates (reusing your heuristic host caps)
+    host_caps = {"vcpus": 48, "gpus": 4}
+    su_per_hour = estimate_su_per_hour(req, host_caps)
+    su_total = su_per_hour * adjusted_duration
+
+    # Output
+    typer.echo("\n=== Results ===")
+    typer.echo(f"Reservation created: {plan.lease_id}")
+    typer.echo(f"Zone: {plan.zone}")
+    typer.echo(f"Start: {plan.start}")
+    typer.echo(f"End: {plan.end}")
+    typer.echo(f"Flavor: {plan.flavor}")
+    typer.echo(f"Duration: {adjusted_duration:.2f} h (base {base_duration:.2f} h × multiplier {dur_mult:.2f})")
+    typer.echo(f"SU cost: {su_total:.4f}")
+
+    if output_file:
+        result = {
+            "case": "ai_reserve",
+            "ai_mode": mode,
+            "ai_source": source,
+            "ai_why": why,
+            "request": req.__dict__,
+            "reservation": {
+                "lease_id": plan.lease_id,
+                "reservation_id": plan.reservation_id,
+                "zone": plan.zone,
+                "start": plan.start.isoformat(),
+                "end": plan.end.isoformat(),
+                "flavor": plan.flavor,
+            },
+            "duration_hours": adjusted_duration,
+            "su_estimate_per_hour": su_per_hour,
+            "su_estimate_total": su_total,
+        }
+        with open(output_file, "w") as f:
+            json.dump(result, f, indent=2, default=str)
+        typer.echo(f"Results saved to: {output_file}")
+
+
 def main():
     app()
+    
+if __name__ == "__main__":
+    main()
