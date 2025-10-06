@@ -55,4 +55,7 @@ Thumbs.db
 venv/
 .venv/
 env/
-.env/
+.env/.python-version
+
+.python-version
+openrc
