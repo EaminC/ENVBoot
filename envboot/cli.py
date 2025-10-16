@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from keystoneauth1 import session as ks
 from pathlib import Path
 import typer
+from .api_live import get_real_zone_capacities
 from .osutil import conn, blz
 from .models import (
     ComplexityTier, ResourceRequest, DowngradePolicy, 
@@ -307,6 +308,7 @@ def case_limited(
     step_minutes: int = typer.Option(60, "--step-minutes", help="Search step in minutes for time shifting"),
     use_ai_final: bool = typer.Option(False, "--use-ai-final/--no-use-ai-final", help="Use AI final request from forge instead of rule-based mapping"),
     zone_capacity_opt: str = typer.Option(None, "--zone-capacity", help='Per-zone capacity, e.g. "current=1,zone-b=1" for fixtures'),
+    zone_capacity_live: bool = typer.Option(False, "--zone-capacity-live", help="Use real Chameleon API data for zone capacity"),
 ):
     """Case 2: Limited resources - Agent detects resource shortage and reserves in different time/zone."""
     
@@ -374,6 +376,15 @@ def case_limited(
         except Exception as e:
             typer.echo(f"[warn] Failed to load leases JSON: {e}")
             leases_data = None
+
+    if zone_capacity_live:
+        try:
+            typer.echo("[info] Fetching real zone capacities from Chameleon API...")
+            zone_capacity = get_real_zone_capacities()
+            typer.echo(f"[ok] Loaded live zone capacity map: {zone_capacity}")
+        except Exception as e:
+            typer.echo(f"[warn] Failed to load live API capacities: {e}")
+            zone_capacity = None
 
     # Parse zone capacity if provided
     zone_capacity: dict[str, int] | None = None
