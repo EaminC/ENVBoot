@@ -1,0 +1,52 @@
+[
+  {
+    "id": "A-overlap-current",
+    "name": "A-overlap-current",
+    "status": "ACTIVE",
+    "start": "2025-10-01T00:00:00Z",
+    "end":   "2025-10-31T23:59:59Z",
+    "reservations": [
+      { "id": "res-A1", "resource_type": "physical:host", "min": 1, "max": 1, "zone": "current" }
+    ]
+  },
+  {
+    "id": "B-non-overlap-current",
+    "name": "B-non-overlap-current",
+    "status": "ACTIVE",
+    "start": "2025-11-01T00:00:00Z",
+    "end":   "2025-11-01T04:00:00Z",
+    "reservations": [
+      { "id": "res-B1", "resource_type": "physical:host", "min": 1, "max": 1, "zone": "current" }
+    ]
+  },
+  {
+    "id": "C-overlap-zone-b",
+    "name": "C-overlap-zone-b",
+    "status": "ACTIVE",
+    "start": "2025-10-01T00:00:00Z",
+    "end":   "2025-10-31T23:59:59Z",
+    "reservations": [
+      { "id": "res-C1", "resource_type": "physical:host", "min": 1, "max": 1, "zone": "zone-b" }
+    ]
+  },
+  {
+    "id": "D-ignored-pending",
+    "name": "D-ignored-pending",
+    "status": "PENDING",
+    "start": "2025-10-10T00:00:00Z",
+    "end":   "2025-10-10T02:00:00Z",
+    "reservations": [
+      { "id": "res-D1", "resource_type": "physical:host", "min": 1, "max": 1, "zone": "current" }
+    ]
+  },
+  {
+    "id": "D-ignored-type",
+    "name": "D-ignored-type",
+    "status": "ACTIVE",
+    "start": "2025-10-10T00:00:00Z",
+    "end":   "2025-10-10T02:00:00Z",
+    "reservations": [
+      { "id": "res-D2", "resource_type": "virtual:disk", "min": 1, "max": 1, "zone": "current" }
+    ]
+  }
+]

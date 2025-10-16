@@ -1,0 +1,5 @@
+{
+  "current": { "max_nodes": 1, "max_cores": 64, "max_memory_GB": 256 },
+  "zone-b":  { "max_nodes": 1, "max_cores": 64, "max_memory_GB": 256 },
+  "zone-c":  { "max_nodes": 1, "max_cores": 64, "max_memory_GB": 256 }
+}

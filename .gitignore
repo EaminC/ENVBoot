@@ -32,7 +32,6 @@ wheels/
 *.egg
 
 # Testing
-*.json
 test-heavy/
 
 # Environment files
