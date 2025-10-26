@@ -1117,7 +1117,17 @@
   },
   {
     "resource_id": "3328",
-    "reservations": []
+    "reservations": [
+      {
+        "id": "4d64b69c-9078-438d-9245-5f22b2cae7e4",
+        "lease_id": "862127c6-31d2-401e-a08c-817b64c58360",
+        "start_date": "2025-10-26T00:59:00.000000",
+        "end_date": "2025-11-01T01:08:00.000000",
+        "extras": {
+          "user_name": "ibarous@ucsc.edu"
+        }
+      }
+    ]
   },
   {
     "resource_id": "3329",
@@ -1223,17 +1233,7 @@
   },
   {
     "resource_id": "3337",
-    "reservations": [
-      {
-        "id": "c22fa765-153f-4d29-80b0-c95f0b81871b",
-        "lease_id": "a6402450-ac1a-49f5-b62f-2e1264a0c67c",
-        "start_date": "2025-10-25T23:38:00.000000",
-        "end_date": "2025-10-26T01:48:00.000000",
-        "extras": {
-          "user_name": "chrislowzhengxi@uchicago.edu"
-        }
-      }
-    ]
+    "reservations": []
   },
   {
     "resource_id": "3338",
@@ -1522,7 +1522,17 @@
   },
   {
     "resource_id": "5c7b2c26-1c35-40e5-a499-c62960b3052d",
-    "reservations": []
+    "reservations": [
+      {
+        "id": "2e8d8439-3eba-4786-abbd-5c8592591928",
+        "lease_id": "75d724de-1972-41a9-b0e2-89f44680c545",
+        "start_date": "2025-10-26T01:33:00.000000",
+        "end_date": "2025-11-01T00:35:00.000000",
+        "extras": {
+          "user_name": "rt822@georgetown.edu"
+        }
+      }
+    ]
   },
   {
     "resource_id": "674c1d71-d4d1-4376-b6e4-f2188a676914",
