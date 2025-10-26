@@ -28,9 +28,19 @@ def save_json(obj: Any, path: str) -> None:
 
 def normalize_iso_utc(dt_str: str) -> str:
     """Convert various datetime formats to UTC ISO 8601 without fractional seconds."""
+    if not dt_str:
+        raise ValueError("Empty datetime string")
+        
     try:
-        # Handle various input formats
-        for fmt in ("%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%d %H:%M:%S"):
+        # Handle various input formats including Blazar allocation format with microseconds
+        formats = [
+            "%Y-%m-%dT%H:%M:%S.%f",  # Blazar format
+            "%Y-%m-%dT%H:%M:%S.%fZ",
+            "%Y-%m-%dT%H:%M:%SZ",
+            "%Y-%m-%d %H:%M:%S"
+        ]
+        
+        for fmt in formats:
             try:
                 dt = datetime.strptime(dt_str, fmt)
                 break
@@ -93,27 +103,40 @@ def get_allocations() -> Tuple[List[dict], str]:
           file=sys.stderr)
     sys.exit(1)
 
-def join_allocations_to_nodes(allocations: List[dict], node_index: Dict[str, dict]) -> Tuple[dict, list, dict]:
+def join_allocations_to_nodes(allocations: List[dict], node_index: Dict[str, dict], resource_map: Optional[Dict[str, str]] = None) -> Tuple[dict, list, dict]:
     """Join allocations to nodes and track statistics."""
     mapped_nodes = defaultdict(lambda: {'reservations': []})
     unmatched = []
     stats = {
         'total_nodes': len(set().union(*[set(idx.keys()) for idx in node_index.values()])),
         'nodes_with_allocations': 0,
-        'total_allocations': len(allocations)
+        'total_allocations': 0
     }
     
     for alloc in allocations:
         resource_id = str(alloc.get('resource_id', ''))
+        reservations = alloc.get('reservations', [])  # Blazar API returns reservations array
+        stats['total_allocations'] += len(reservations)
         node = None
         
-        # Try matching by resource_id, uuid, then hostname
-        if resource_id in node_index['by_resource_id']:
-            node = node_index['by_resource_id'][resource_id]
-        elif resource_id in node_index['by_uuid']:
-            node = node_index['by_uuid'][resource_id]
-        elif resource_id in node_index['by_hostname']:
-            node = node_index['by_hostname'][resource_id]
+        # First try mapping via provided resource_map (preferred)
+        if resource_map and resource_id in resource_map:
+            mapped_val = resource_map[resource_id]
+            # mapped_val may be a node UUID or hostname
+            if isinstance(mapped_val, str):
+                if mapped_val in node_index['by_uuid']:
+                    node = node_index['by_uuid'][mapped_val]
+                elif mapped_val in node_index['by_hostname']:
+                    node = node_index['by_hostname'][mapped_val]
+
+        # Fallback: Try matching by resource_id, uuid, then hostname
+        if not node:
+            if resource_id in node_index['by_resource_id']:
+                node = node_index['by_resource_id'][resource_id]
+            elif resource_id in node_index['by_uuid']:
+                node = node_index['by_uuid'][resource_id]
+            elif resource_id in node_index['by_hostname']:
+                node = node_index['by_hostname'][resource_id]
         
         if node:
             node_key = node['uid']
@@ -125,29 +148,56 @@ def join_allocations_to_nodes(allocations: List[dict], node_index: Dict[str, dic
                     'cluster_id': node.get('cluster', 'unknown')  # Adding cluster_id for grouping
                 }
             
-            # Normalize reservation data
-            reservation = {
-                'reservation_id': alloc.get('reservation_id', ''),
-                'lease_id': alloc.get('lease_id', ''),
-                'start': normalize_iso_utc(alloc.get('start_date', '')),
-                'end': normalize_iso_utc(alloc.get('end_date', ''))
-            }
-            
-            # Add optional user_name if present in extras
-            if 'extras' in alloc and 'user_name' in alloc['extras']:
-                reservation['user_name'] = alloc['extras']['user_name']
+            # Process each reservation in the array
+            for res in reservations:
+                # Normalize reservation data
+                    # Only process reservation if dates are present
+                start_date = res.get('start_date')
+                end_date = res.get('end_date')
+                
+                if start_date and end_date:
+                    try:
+                        # Normalize reservation data
+                        reservation = {
+                            'reservation_id': res.get('id', ''),
+                            'lease_id': res.get('lease_id', ''),
+                            'start': normalize_iso_utc(start_date),
+                            'end': normalize_iso_utc(end_date)
+                        }
+                        
+                        # Add optional user_name if present in extras
+                        if 'extras' in res and 'user_name' in res['extras']:
+                            reservation['user_name'] = res['extras']['user_name']
+                            
+                        # Add the valid reservation
+                        mapped_nodes[node_key]['reservations'].append(reservation)
+                    except ValueError as e:
+                        print(f"Skipping invalid reservation: {e}", file=sys.stderr)
             
             mapped_nodes[node_key]['reservations'].append(reservation)
         else:
-            unmatched.append({
-                'resource_id': resource_id,
-                'reservations': [{
-                    'reservation_id': alloc.get('reservation_id', ''),
-                    'lease_id': alloc.get('lease_id', ''),
-                    'start': normalize_iso_utc(alloc.get('start_date', '')),
-                    'end': normalize_iso_utc(alloc.get('end_date', ''))
-                }]
-            })
+            # Add unmatched reservations with proper error handling
+            unmapped_reservations = []
+            for res in reservations:
+                start_date = res.get('start_date')
+                end_date = res.get('end_date')
+                
+                if start_date and end_date:
+                    try:
+                        unmapped_reservations.append({
+                            'reservation_id': res.get('id', ''),
+                            'lease_id': res.get('lease_id', ''),
+                            'start': normalize_iso_utc(start_date),
+                            'end': normalize_iso_utc(end_date)
+                        })
+                    except ValueError as e:
+                        print(f"Skipping invalid unmatched reservation: {e}", file=sys.stderr)
+            
+            if unmapped_reservations:
+                unmatched.append({
+                    'resource_id': resource_id,
+                    'reservations': unmapped_reservations
+                })
     
     # Sort reservations by start time
     for node in mapped_nodes.values():
@@ -256,12 +306,24 @@ def main():
     
     # Get node indices
     node_index = index_nodes(nodes.get('items', []))
+    # Load optional resource map (resource_id -> node_uuid or hostname)
+    resource_map_path = os.getenv('RESOURCE_MAP_PATH', './resource_map.json')
+    resource_map = {}
+    if os.path.exists(resource_map_path):
+        try:
+            with open(resource_map_path, 'r') as rmf:
+                resource_map = json.load(rmf)
+            print(f"Loaded resource map from {resource_map_path}")
+        except Exception as e:
+            print(f"Error loading resource map {resource_map_path}: {e}", file=sys.stderr)
+    else:
+        print(f"No resource map found at {resource_map_path}; proceeding without it")
     
     # Get allocations
     allocations, source = get_allocations()
     
     # Join allocations with nodes
-    mapped_nodes, unmatched, stats = join_allocations_to_nodes(allocations, node_index)
+    mapped_nodes, unmatched, stats = join_allocations_to_nodes(allocations, node_index, resource_map)
     
     # Group by site and cluster
     site_summaries = group_by_site_and_cluster(mapped_nodes, clusters, sites)
