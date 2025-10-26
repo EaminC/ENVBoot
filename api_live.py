@@ -242,9 +242,17 @@ def group_by_site_and_cluster(mapped_nodes: dict, clusters: dict, sites: dict) -
 def main():
     """Main entry point for the script."""
     # Load static data
-    nodes = load_json(os.getenv('NODES_PATH', './uc_chameleon_nodes.json'))
-    clusters = load_json(os.getenv('CLUSTERS_PATH', './uc_clusters.json'))
-    sites = load_json(os.getenv('SITES_PATH', './sites.json'))
+    print("Loading input files...")
+    nodes_path = os.getenv('NODES_PATH', './uc_chameleon_nodes.json')
+    clusters_path = os.getenv('CLUSTERS_PATH', './uc_clusters.json')
+    sites_path = os.getenv('SITES_PATH', './sites.json')
+    
+    print(f"Loading nodes from {nodes_path}")
+    nodes = load_json(nodes_path)
+    print(f"Loading clusters from {clusters_path}")
+    clusters = load_json(clusters_path)
+    print(f"Loading sites from {sites_path}")
+    sites = load_json(sites_path)
     
     # Get node indices
     node_index = index_nodes(nodes.get('items', []))

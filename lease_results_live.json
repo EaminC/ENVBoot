@@ -1,0 +1,38 @@
+{
+  "fetched_at": "2025-10-26T00:18:45Z",
+  "site_summaries": [
+    {
+      "clusters": [
+        {
+          "cluster_id": "unknown",
+          "name": "unknown",
+          "nodes": [
+            {
+              "hostname": "nc35",
+              "node_uuid": "03129bbe-330c-4591-bc17-96d7e15d3e74",
+              "reservations": [
+                {
+                  "end": "2025-10-26T23:59:59Z",
+                  "lease_id": "lease-1",
+                  "reservation_id": "test-1",
+                  "start": "2025-10-26T00:00:00Z",
+                  "user_name": "test_user"
+                }
+              ],
+              "resource_id": "03129bbe-330c-4591-bc17-96d7e15d3e74"
+            }
+          ]
+        }
+      ],
+      "display_name": "Unknown Site",
+      "site_id": "unknown"
+    }
+  ],
+  "source": "allocations_file",
+  "stats": {
+    "nodes_with_allocations": 1,
+    "total_allocations": 1,
+    "total_nodes": 264
+  },
+  "unmatched_allocations": []
+}

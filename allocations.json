@@ -1,0 +1,12 @@
+[
+  {
+    "resource_id": "03129bbe-330c-4591-bc17-96d7e15d3e74",
+    "reservation_id": "test-1",
+    "lease_id": "lease-1",
+    "start_date": "2025-10-26T00:00:00Z",
+    "end_date": "2025-10-26T23:59:59Z",
+    "extras": {
+      "user_name": "test_user"
+    }
+  }
+]
