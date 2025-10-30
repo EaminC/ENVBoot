@@ -273,7 +273,12 @@ def create_lease(
         )
         
         return lease["id"]
-        
+    except KeyError as e:
+        missing = str(e).strip("'")
+        print("Error creating lease: Missing required OpenStack environment variable:", missing)
+        print("Hint: Source your OpenRC or set OS_* variables, e.g.:")
+        print("  source CHI-<project>-openrc.sh  # or ensure a .env with OS_* vars is present")
+        return None
     except Exception as e:
         print(f"Error creating lease: {e}")
         return None
