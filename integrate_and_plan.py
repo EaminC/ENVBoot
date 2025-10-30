@@ -28,22 +28,24 @@ def load_json(path: str, description: str = "JSON") -> dict:
 def refresh_allocations() -> bool:
     """Refresh allocations.json from OpenStack. Return True if successful."""
     try:
+        # Execute the exact CLI with shell redirection as requested
+        cmd = "openstack reservation allocation list host -f json > allocations.json"
         result = subprocess.run(
-            ["openstack", "reservation", "allocation", "list", "host", "-f", "json"],
-            capture_output=True,
+            cmd,
+            shell=True,
+            check=True,
             text=True,
-            check=True
+            capture_output=True,
         )
-        with open("allocations.json", "w") as f:
-            f.write(result.stdout)
-        print("Successfully refreshed allocations from OpenStack")
+        print("Pulled latest allocations.json from OpenStack")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"Error running OpenStack command: {e}")
-        print("stderr:", e.stderr)
+        print("Warning: Failed to pull latest allocations.json from OpenStack; continuing with existing file.")
+        if e.stderr:
+            print("stderr:", e.stderr)
         return False
     except Exception as e:
-        print(f"Error refreshing allocations: {e}")
+        print(f"Warning: Unexpected error refreshing allocations: {e}. Continuing with existing file.")
         return False
 
 def normalize_datetime(dt_str: str) -> str:
@@ -97,31 +99,42 @@ def build_node_map(
     sites_json: dict,
     resource_map: dict
 ) -> Tuple[Dict[str, Any], Dict[str, str]]:
-    """Build a map of nodes by UUID and zone."""
+    """Build a map of nodes by UUID and zone (site)."""
     node_map = {}  # uuid → node info
-    zone_map = {}  # uuid → zone
+    zone_map = {}  # uuid → zone (site ID)
     
-    # Extract zones from sites
-    site_zones = {}  # site_id → list of zones
-    for site in sites_json.get("items", []):
-        site_zones[site["uid"]] = []
-        # TODO: Extract zones for this site
+    # Helper function to extract site ID from node links
+    def extract_site_from_links(links: list) -> Optional[str]:
+        """Extract site ID from links array (e.g., /sites/uc/clusters/...)"""
+        for link in links:
+            href = link.get("href", "")
+            # Pattern: /sites/{site_id}/...
+            if href.startswith("/sites/"):
+                parts = href.split("/")
+                if len(parts) >= 3:
+                    return parts[2]  # site_id is at index 2
+        return None
     
     # Index nodes with their cluster/site info
     for node in nodes_json.get("items", []):
         uuid = node["uid"]
+        
+        # Extract site from node's links
+        site_id = extract_site_from_links(node.get("links", []))
+        
         node_info = {
             "uuid": uuid,
             "hostname": node["node_name"],
             "cluster": node.get("cluster", "unknown"),
+            "site": site_id or "unknown",
             # Add resource_id if we have it in the map
             "resource_id": next((rid for rid, val in resource_map.items() 
                                if val == uuid or val == node["node_name"]), None)
         }
         node_map[uuid] = node_info
         
-        # TODO: Determine zone based on cluster/site mapping
-        zone_map[uuid] = "current"  # Default for now
+        # Map UUID to site (zone)
+        zone_map[uuid] = site_id or "unknown"
     
     return node_map, zone_map
 
@@ -175,6 +188,55 @@ def find_available_nodes(
             free_nodes.append(node)
     
     return free_nodes
+
+def find_earliest_available_slot(
+    node_map: Dict[str, Any],
+    zone_map: Dict[str, str],
+    allocations: List[dict],
+    desired_zone: str,
+    start_time: str,
+    duration_minutes: int,
+    required_amount: int,
+    max_search_hours: int = 168  # Default: search up to 7 days ahead
+) -> Optional[Tuple[str, int]]:
+    """
+    Search forward in time to find the earliest slot with sufficient capacity.
+    
+    Returns: (earliest_start_time, available_count) or None if not found
+    """
+    # Parse the start time
+    start_dt = datetime.datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%SZ")
+    duration = datetime.timedelta(minutes=duration_minutes)
+    
+    # Search in 1-hour increments
+    search_increment = datetime.timedelta(hours=1)
+    max_search_time = start_dt + datetime.timedelta(hours=max_search_hours)
+    
+    current_search_time = start_dt
+    
+    while current_search_time <= max_search_time:
+        current_start = current_search_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        current_end = (current_search_time + duration).strftime("%Y-%m-%dT%H:%M:%SZ")
+        
+        # Check availability at this time slot
+        available = find_available_nodes(
+            node_map,
+            zone_map,
+            allocations,
+            desired_zone,
+            current_start,
+            current_end
+        )
+        
+        # If we found enough nodes, return this slot
+        if len(available) >= required_amount:
+            return (current_start, len(available))
+        
+        # Move to next time slot
+        current_search_time += search_increment
+    
+    # Couldn't find a slot within the search window
+    return None
 
 def create_lease(
     name: str,
@@ -232,8 +294,10 @@ def main():
     parser = argparse.ArgumentParser(description="Analyze node availability and create leases")
     parser.add_argument("--refresh", action="store_true",
                        help="Refresh allocations from OpenStack before processing")
-    parser.add_argument("--zone", default=os.getenv("ZONE", "current"),
-                       help="Zone to search for available nodes")
+    parser.add_argument("--zone", default=os.getenv("ZONE", "uc"),
+                       help="Site/zone to search for available nodes (uc, tacc, nu, ncar, edge, nrp, or 'unknown' for unmapped nodes)")
+    parser.add_argument("--list-zones", action="store_true",
+                       help="List available zones and exit")
     parser.add_argument("--start", default=os.getenv("DESIRED_START"),
                        help="Desired start time (YYYY-MM-DD HH:MM)")
     parser.add_argument("--duration", type=int,
@@ -246,6 +310,11 @@ def main():
     parser.add_argument("--amount", type=int,
                        default=int(os.getenv("AMOUNT", "1")),
                        help="Number of resources to reserve")
+    parser.add_argument("--find-earliest", action="store_true",
+                       help="If insufficient capacity at requested time, search forward to find earliest available slot")
+    parser.add_argument("--max-search-hours", type=int,
+                       default=int(os.getenv("MAX_SEARCH_HOURS", "168")),
+                       help="Maximum hours to search ahead when using --find-earliest (default: 168 = 7 days)")
     parser.add_argument("--dry-run", type=int,
                        default=int(os.getenv("DRY_RUN", "1")),
                        choices=[0, 1],
@@ -270,6 +339,24 @@ def main():
     print("\nProcessing node and zone information...")
     node_map, zone_map = build_node_map(nodes, clusters, sites, resource_map)
     
+    # Show available zones/sites
+    available_zones = sorted(set(zone_map.values()))
+    zone_counts = {zone: sum(1 for z in zone_map.values() if z == zone) for zone in available_zones}
+    print(f"Available zones: {', '.join(f'{z} ({zone_counts[z]} nodes)' for z in available_zones)}")
+    
+    # If user just wants to list zones, show detail and exit
+    if args.list_zones:
+        print("\nDetailed zone breakdown:")
+        for zone in available_zones:
+            print(f"\n  Zone: {zone}")
+            print(f"    Total nodes: {zone_counts[zone]}")
+            # Count nodes with resource mappings
+            mapped = sum(1 for uuid, z in zone_map.items() 
+                        if z == zone and node_map[uuid].get("resource_id"))
+            print(f"    Mapped to allocations: {mapped}")
+            print(f"    Unmapped: {zone_counts[zone] - mapped}")
+        sys.exit(0)
+    
     # 4. Parse and validate time window
     if not args.start:
         print("Error: No start time provided. Use --start or DESIRED_START")
@@ -293,6 +380,13 @@ def main():
     print(f"\nSearching for available nodes in zone '{args.zone}'...")
     print(f"Time window: {desired_start} to {desired_end}")
     
+    # Validate zone exists
+    if args.zone not in zone_counts:
+        print(f"\nWarning: Zone '{args.zone}' not found in loaded nodes.")
+        print(f"Available zones: {', '.join(available_zones)}")
+        print("No nodes to search.")
+        sys.exit(0)
+    
     free_nodes = find_available_nodes(
         node_map, zone_map, allocations,
         args.zone, desired_start, desired_end
@@ -300,15 +394,99 @@ def main():
     
     if not free_nodes:
         print("\nNo available nodes found in the specified zone and time window.")
-        print("Try another zone or shift the start time.")
+        
+        # If --find-earliest is enabled, search forward for availability
+        if args.find_earliest:
+            print(f"\nSearching for earliest available slot with {args.amount} nodes...")
+            print(f"Scanning up to {args.max_search_hours} hours ahead...")
+            
+            result = find_earliest_available_slot(
+                node_map,
+                zone_map,
+                allocations,
+                args.zone,
+                desired_start,
+                args.duration,
+                args.amount,
+                args.max_search_hours
+            )
+            
+            if result:
+                earliest_start, available_count = result
+                # Parse and format the time for display
+                earliest_dt = datetime.datetime.strptime(earliest_start, "%Y-%m-%dT%H:%M:%SZ")
+                original_dt = datetime.datetime.strptime(desired_start, "%Y-%m-%dT%H:%M:%SZ")
+                hours_ahead = int((earliest_dt - original_dt).total_seconds() / 3600)
+                
+                print(f"\n✓ Found availability!")
+                print(f"  Earliest time: {earliest_start} ({hours_ahead} hours from requested time)")
+                print(f"  Available nodes: {available_count}")
+                print(f"\nTo reserve at this time, run:")
+                print(f"  python3 integrate_and_plan.py --zone {args.zone} --start \"{earliest_dt.strftime('%Y-%m-%d %H:%M')}\" --duration {args.duration} --amount {args.amount} --dry-run 0")
+            else:
+                print(f"\n✗ No available slots found within {args.max_search_hours} hours.")
+                print("Try:")
+                print("  - Reducing --amount (requested node count)")
+                print("  - Increasing --max-search-hours")
+                print("  - Choosing a different --zone")
+        else:
+            print("Try another zone or shift the start time.")
+            print("Tip: Use --find-earliest to automatically search for the next available slot.")
+        
         sys.exit(0)
     
     # 6. Report findings
     print(f"\nFound {len(free_nodes)} available nodes:")
     for node in free_nodes[:5]:  # Show first 5
-        print(f"  - {node['hostname']} (UUID: {node['uuid']})")
+        site_info = f" [site: {node.get('site', 'unknown')}]" if node.get('site') else ""
+        print(f"  - {node['hostname']} (UUID: {node['uuid']}){site_info}")
     if len(free_nodes) > 5:
         print(f"  ... and {len(free_nodes)-5} more")
+    
+    # Check if we have enough nodes for the requested amount
+    if len(free_nodes) < args.amount:
+        print(f"\n⚠️  Warning: Only {len(free_nodes)} nodes available, but {args.amount} requested.")
+        
+        # If --find-earliest is enabled, search forward for sufficient capacity
+        if args.find_earliest:
+            print(f"\nSearching for earliest slot with {args.amount} nodes...")
+            print(f"Scanning up to {args.max_search_hours} hours ahead...")
+            
+            result = find_earliest_available_slot(
+                node_map,
+                zone_map,
+                allocations,
+                args.zone,
+                desired_start,
+                args.duration,
+                args.amount,
+                args.max_search_hours
+            )
+            
+            if result:
+                earliest_start, available_count = result
+                # Parse and format the time for display
+                earliest_dt = datetime.datetime.strptime(earliest_start, "%Y-%m-%dT%H:%M:%SZ")
+                original_dt = datetime.datetime.strptime(desired_start, "%Y-%m-%dT%H:%M:%SZ")
+                hours_ahead = int((earliest_dt - original_dt).total_seconds() / 3600)
+                
+                print(f"\n✓ Found sufficient capacity!")
+                print(f"  Earliest time: {earliest_start} ({hours_ahead} hours from requested time)")
+                print(f"  Available nodes: {available_count}")
+                print(f"\nTo reserve at this time, run:")
+                print(f"  python3 integrate_and_plan.py --zone {args.zone} --start \"{earliest_dt.strftime('%Y-%m-%d %H:%M')}\" --duration {args.duration} --amount {args.amount} --dry-run 0")
+                sys.exit(0)
+            else:
+                print(f"\n✗ No slots with {args.amount} nodes found within {args.max_search_hours} hours.")
+                print("Try:")
+                print("  - Reducing --amount (requested node count)")
+                print("  - Increasing --max-search-hours")
+                print("  - Choosing a different --zone")
+                sys.exit(1)
+        else:
+            print("Cannot proceed with lease creation - insufficient capacity.")
+            print("Tip: Use --find-earliest to automatically search for the next available slot.")
+            sys.exit(1)
     
     # 7. Create lease if requested
     if not args.dry_run:
