@@ -244,8 +244,25 @@ def create_lease(
     end_date: str,
     resource_type: str,
     amount: int
-) -> Optional[str]:
-    """Create a lease using Blazar API. Return lease_id if successful."""
+) -> Tuple[Optional[str], Optional[str]]:
+    """Create a lease using Blazar API.
+    Returns (lease_id, error_message). On success, error_message is None.
+    """
+    # Simulation hook for demos: allow a forced conflict once, then optional success
+    try:
+        if os.getenv("SIMULATE_CONFLICT_ONCE") == "1":
+            marker = Path(".simulate_conflict_done")
+            if not marker.exists():
+                marker.write_text("1")
+                return None, "409 Conflict: simulated capacity conflict"
+            # On retry, optionally simulate a successful lease creation
+            if os.getenv("SIMULATE_SUCCESS_ON_RETRY") == "1":
+                fake_id = f"sim-{datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+                return fake_id, None
+    except Exception:
+        # Ignore simulation errors and fall back to real behavior
+        pass
+
     from envboot.osutil import blz
     
     # Convert ISO format to datetime
@@ -271,17 +288,16 @@ def create_lease(
             }],
             events=[]
         )
-        
-        return lease["id"]
+        return lease["id"], None
     except KeyError as e:
         missing = str(e).strip("'")
-        print("Error creating lease: Missing required OpenStack environment variable:", missing)
-        print("Hint: Source your OpenRC or set OS_* variables, e.g.:")
-        print("  source CHI-<project>-openrc.sh  # or ensure a .env with OS_* vars is present")
-        return None
+        msg = (
+            f"Missing required OpenStack environment variable: {missing}. "
+            "Hint: source your OpenRC or set OS_* variables (e.g., 'source CHI-<project>-openrc.sh')."
+        )
+        return None, msg
     except Exception as e:
-        print(f"Error creating lease: {e}")
-        return None
+        return None, str(e)
 
 def append_audit_record(
     audit_file: str,
@@ -320,6 +336,16 @@ def main():
     parser.add_argument("--max-search-hours", type=int,
                        default=int(os.getenv("MAX_SEARCH_HOURS", "168")),
                        help="Maximum hours to search ahead when using --find-earliest (default: 168 = 7 days)")
+    # Retry flags for reconciling plan vs live at creation time
+    parser.add_argument("--retry-attempts", type=int,
+                       default=int(os.getenv("RETRY_ATTEMPTS", "2")),
+                       help="Number of additional attempts if lease creation fails due to plan drift (default: 2)")
+    parser.add_argument("--retry-refresh", type=int, choices=[0, 1],
+                       default=int(os.getenv("RETRY_REFRESH", "1")),
+                       help="Refresh allocations.json before each retry attempt (default: 1)")
+    parser.add_argument("--retry-find-earliest", type=int, choices=[0, 1],
+                       default=int(os.getenv("RETRY_FIND_EARLIEST", "1")),
+                       help="On retry, allow searching forward for earliest slot if capacity insufficient (default: 1)")
     parser.add_argument("--dry-run", type=int,
                        default=int(os.getenv("DRY_RUN", "1")),
                        choices=[0, 1],
@@ -493,34 +519,119 @@ def main():
             print("Tip: Use --find-earliest to automatically search for the next available slot.")
             sys.exit(1)
     
+    # Helper: classify errors for retry logic
+    def _classify_error(err: Optional[str]) -> str:
+        if not err:
+            return "none"
+        e = err.lower()
+        if "os_auth_url" in e or "missing required openstack environment" in e:
+            return "auth"
+        if "start date must be later than current" in e or "start must be after now" in e:
+            return "time"
+        if "409" in e or "conflict" in e or "not enough" in e or "no hosts" in e or "capacity" in e or "available" in e:
+            return "capacity"
+        return "other"
+
     # 7. Create lease if requested
     if not args.dry_run:
         print("\nCreating lease...")
         lease_name = f"envboot-auto-{datetime.datetime.utcnow().strftime('%Y%m%d-%H%M%S')}"
         
-        lease_id = create_lease(
-            lease_name,
-            desired_start,
-            desired_end,
-            args.resource_type,
-            args.amount
-        )
-        
-        if lease_id:
-            print(f"Successfully created lease: {lease_id}")
-            
-            # Record the action
-            audit_record = {
-                "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "zone": args.zone,
-                "lease_id": lease_id,
-                "start": desired_start,
-                "end": desired_end,
-                "hosts": [node["hostname"] for node in free_nodes]
-            }
-            append_audit_record("reserve_audit.jsonl", audit_record)
+        # Preflight: ensure start is in the future (UTC)
+        now_utc = datetime.datetime.utcnow()
+        if start_dt <= now_utc:
+            print("Error: Start date must be later than current UTC time.")
+            print("Tip: Convert local time to UTC or start a bit later. Check current UTC with 'date -u'.")
+            sys.exit(1)
+
+        # Preflight: basic OS_* var presence
+        if not os.environ.get("OS_AUTH_URL"):
+            print("Error: Missing OS_AUTH_URL. Source your OpenRC (e.g., 'source CHI-<project>-openrc.sh') or provide a .env.")
+            sys.exit(1)
+
+        attempts = 1 + max(0, args.retry_attempts)
+        attempt = 1
+        current_start = desired_start
+        current_end = desired_end
+        last_err: Optional[str] = None
+        created = False
+
+        while attempt <= attempts:
+            if attempt > 1:
+                print(f"\nRetry attempt {attempt}/{attempts}")
+                # Optional refresh to reconcile with live
+                if args.retry_refresh:
+                    refresh_allocations()
+                    # Reload allocations and recompute availability for current window
+                    allocations = load_json("allocations.json", "allocations")
+                    # Recompute free nodes
+                    free_nodes = find_available_nodes(
+                        node_map, zone_map, allocations,
+                        args.zone, current_start, current_end
+                    )
+                    # If we don't have enough, optionally find earliest
+                    if len(free_nodes) < args.amount and args.retry_find_earliest:
+                        print(f"Capacity insufficient after refresh. Searching earliest slot for {args.amount} nodes...")
+                        result = find_earliest_available_slot(
+                            node_map, zone_map, allocations,
+                            args.zone, current_start, args.duration, args.amount, args.max_search_hours
+                        )
+                        if result:
+                            current_start, avail_count = result
+                            current_end = (datetime.datetime.strptime(current_start, "%Y-%m-%dT%H:%M:%SZ") + datetime.timedelta(minutes=args.duration)).strftime("%Y-%m-%dT%H:%M:%SZ")
+                            print(f"Retrying at earliest available time: {current_start} (available: {avail_count})")
+                        else:
+                            print("No available slot found within search window; aborting.")
+                            break
+
+            lease_id, err = create_lease(
+                lease_name,
+                current_start,
+                current_end,
+                args.resource_type,
+                args.amount
+            )
+
+            if lease_id:
+                print(f"Successfully created lease: {lease_id}")
+                audit_record = {
+                    "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "zone": args.zone,
+                    "lease_id": lease_id,
+                    "start": current_start,
+                    "end": current_end,
+                    "hosts": [node["hostname"] for node in free_nodes]
+                }
+                append_audit_record("reserve_audit.jsonl", audit_record)
+                created = True
+                break
+
+            # No lease_id: classify and decide to retry or stop
+            last_err = err or "Unknown error"
+            reason = _classify_error(last_err)
+            print(f"Lease creation failed: {last_err}")
+
+            if reason in ("auth", "time", "other"):
+                # Non-retryable or ambiguous; stop with advice
+                if reason == "auth":
+                    print("Check your OpenStack credentials (OS_* variables).")
+                elif reason == "time":
+                    print("Ensure the start time is in the future (UTC).")
+                else:
+                    print("Not retrying due to non-capacity error.")
+                break
+
+            # For capacity/conflict, continue retry loop
+            attempt += 1
+
         else:
-            print("Failed to create lease")
+            # Shouldn't reach due to while condition, but safe guard
+            pass
+
+        # If after attempts we still have no lease, exit
+        if not created:
+            if attempt > attempts:
+                print("Exhausted retry attempts without creating a lease.")
             sys.exit(1)
     else:
         print("\nDry run - no lease created")

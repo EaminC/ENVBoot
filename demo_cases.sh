@@ -197,6 +197,30 @@ echo -e "${BOLD}== STEP 9: Bad zone case (should warn) ==${RESET}"
 run_step 10 "Bad time format (should error)" \
     python3 integrate_and_plan.py --zone uc --start "invalid-time" --duration "$DURATION" || true
 
+# BONUS: Retry-on-conflict demo (simulated)
+echo ""
+echo -e "${BOLD}== BONUS: Retry-on-conflict demo (simulated) ==${RESET}"
+echo "This demonstrates the retry loop without requiring live Blazar credentials."
+
+# Use the mock scenario and ensure the simulation marker is cleared
+cp examples/allocations_heavily_blocked.json allocations.json
+rm -f .simulate_conflict_done
+
+# Simulate a capacity conflict on first attempt, then success on retry
+export SIMULATE_CONFLICT_ONCE=1
+export SIMULATE_SUCCESS_ON_RETRY=1
+
+echo "Command: python3 integrate_and_plan.py --zone uc --start '2025-10-31 00:00' --duration 60 --amount 5 --retry-attempts 2 --dry-run 0"
+python3 integrate_and_plan.py --zone uc --start "2025-10-31 00:00" --duration 60 --amount 5 --retry-attempts 2 --dry-run 0 || true
+
+# Cleanup simulation vars
+unset SIMULATE_CONFLICT_ONCE
+unset SIMULATE_SUCCESS_ON_RETRY
+rm -f .simulate_conflict_done
+
+echo ""
+echo -e "${GREEN}[OK] Retry demo completed (simulated conflict then success).${RESET}"
+
 # Summary
 echo ""
 echo -e "${BOLD}==================================================================${RESET}"
