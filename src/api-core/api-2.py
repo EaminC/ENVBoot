@@ -98,7 +98,8 @@ def create_reservation(
     duration: int,
     nodes: int,
     name: Optional[str],
-    dry_run: bool
+    dry_run: bool,
+    resource_type: str,
 ) -> dict:
     """
     Create a reservation for the given zone and time window.
@@ -141,7 +142,7 @@ def create_reservation(
                     "end": desired_end,
                     "duration_minutes": duration,
                     "nodes_requested": nodes,
-                    "resource_type": "physical:host",
+                    "resource_type": resource_type,
                     "status": "simulated",
                     "dry_run": True
                 },
@@ -166,7 +167,7 @@ def create_reservation(
             name=name,
             start_date=desired_start,
             end_date=desired_end,
-            resource_type="physical:host",
+            resource_type=resource_type,
             amount=nodes
         )
         
@@ -188,7 +189,7 @@ def create_reservation(
                 "end": desired_end,
                 "duration_minutes": duration,
                 "nodes_requested": nodes,
-                "resource_type": "physical:host",
+                "resource_type": resource_type,
                 "status": "created",
                 "dry_run": False
             },
@@ -222,6 +223,12 @@ def main():
     parser.add_argument("--nodes", type=int, required=True, help="Number of nodes to reserve")
     parser.add_argument("--name", help="Reservation name (auto-generated if not provided)")
     parser.add_argument("--dry-run", action="store_true", help="Simulate reservation creation")
+    parser.add_argument(
+        "--resource-type",
+        choices=["virtual:instance", "physical:host"],
+        default="physical:host",
+        help="Resource type for the lease (default: physical:host)"
+    )
     
     args = parser.parse_args()
     
@@ -231,7 +238,8 @@ def main():
         duration=args.duration,
         nodes=args.nodes,
         name=args.name,
-        dry_run=args.dry_run
+        dry_run=args.dry_run,
+        resource_type=args.resource_type,
     )
     
     # Output JSON only (no other prints)
