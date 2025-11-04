@@ -1,0 +1,422 @@
+{
+  "total": 6,
+  "offset": 0,
+  "items": [
+    {
+      "description": "Edge/IoT",
+      "email_contact": "help@chameleoncloud.org",
+      "latitude": 41.7886,
+      "location": "University of Chicago, Chicago, Illinois, USA",
+      "longitude": 87.5987,
+      "name": "CHI@Edge",
+      "security_contact": "help@chameleoncloud.org",
+      "site_class": "edge",
+      "sys_admin_contact": "help@chameleoncloud.org",
+      "type": "site",
+      "uid": "edge",
+      "user_support_contact": "help@chameleoncloud.org",
+      "web": "https://chi.edge.chameleoncloud.org",
+      "version": "866906ca699280f23c0733965ccc31e79d0d57af",
+      "links": [
+        {
+          "rel": "clusters",
+          "href": "/sites/edge/clusters",
+          "type": "application/vnd.grid5000.collection+json"
+        },
+        {
+          "rel": "self",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/edge"
+        },
+        {
+          "rel": "parent",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/"
+        },
+        {
+          "rel": "version",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/edge/versions/866906ca699280f23c0733965ccc31e79d0d57af"
+        },
+        {
+          "rel": "versions",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/edge/versions"
+        },
+        {
+          "rel": "jobs",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/edge/jobs"
+        },
+        {
+          "rel": "deployments",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/edge/deployments"
+        },
+        {
+          "rel": "vlans",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/edge/vlans"
+        },
+        {
+          "rel": "metrics",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/edge/metrics"
+        },
+        {
+          "rel": "status",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/edge/status"
+        }
+      ]
+    },
+    {
+      "description": "National Center for Atmospheric Research",
+      "email_contact": "help@chameleoncloud.org",
+      "latitude": 39.9783,
+      "location": "Boulder, Colorado, USA",
+      "longitude": -105.275,
+      "name": "CHI@NCAR",
+      "security_contact": "help@chameleoncloud.org",
+      "site_class": "baremetal",
+      "sys_admin_contact": "help@chameleoncloud.org",
+      "type": "site",
+      "uid": "ncar",
+      "user_support_contact": "help@chameleoncloud.org",
+      "web": "https://chi.hpc.ucar.edu",
+      "version": "866906ca699280f23c0733965ccc31e79d0d57af",
+      "links": [
+        {
+          "rel": "clusters",
+          "href": "/sites/ncar/clusters",
+          "type": "application/vnd.grid5000.collection+json"
+        },
+        {
+          "rel": "self",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/ncar"
+        },
+        {
+          "rel": "parent",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/"
+        },
+        {
+          "rel": "version",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/ncar/versions/866906ca699280f23c0733965ccc31e79d0d57af"
+        },
+        {
+          "rel": "versions",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/ncar/versions"
+        },
+        {
+          "rel": "jobs",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/ncar/jobs"
+        },
+        {
+          "rel": "deployments",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/ncar/deployments"
+        },
+        {
+          "rel": "vlans",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/ncar/vlans"
+        },
+        {
+          "rel": "metrics",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/ncar/metrics"
+        },
+        {
+          "rel": "status",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/ncar/status"
+        }
+      ]
+    },
+    {
+      "description": "National Research Platform at SDSC",
+      "email_contact": "help@chameleoncloud.org",
+      "latitude": 48.8583,
+      "location": "9836 Hopkins Dr, La Jolla, CA 92093, USA",
+      "longitude": 2.2923,
+      "name": "CHI@NRP",
+      "security_contact": "help@chameleoncloud.org",
+      "site_class": "baremetal",
+      "sys_admin_contact": "help@chameleoncloud.org",
+      "type": "site",
+      "uid": "nrp",
+      "user_support_contact": "help@chameleoncloud.org",
+      "web": "https://chi.nrp.ai",
+      "version": "866906ca699280f23c0733965ccc31e79d0d57af",
+      "links": [
+        {
+          "rel": "clusters",
+          "href": "/sites/nrp/clusters",
+          "type": "application/vnd.grid5000.collection+json"
+        },
+        {
+          "rel": "self",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/nrp"
+        },
+        {
+          "rel": "parent",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/"
+        },
+        {
+          "rel": "version",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/nrp/versions/866906ca699280f23c0733965ccc31e79d0d57af"
+        },
+        {
+          "rel": "versions",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nrp/versions"
+        },
+        {
+          "rel": "jobs",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nrp/jobs"
+        },
+        {
+          "rel": "deployments",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nrp/deployments"
+        },
+        {
+          "rel": "vlans",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nrp/vlans"
+        },
+        {
+          "rel": "metrics",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nrp/metrics"
+        },
+        {
+          "rel": "status",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/nrp/status"
+        }
+      ]
+    },
+    {
+      "description": "Northwestern University",
+      "email_contact": "help@chameleoncloud.org",
+      "latitude": 42.056459,
+      "location": "Evanston, Illinois, USA",
+      "longitude": -87.675267,
+      "name": "CHI@NU",
+      "security_contact": "help@chameleoncloud.org",
+      "site_class": "baremetal",
+      "sys_admin_contact": "help@chameleoncloud.org",
+      "type": "site",
+      "uid": "nu",
+      "user_support_contact": "help@chameleoncloud.org",
+      "web": "https://sl-ciab.northwestern.edu",
+      "version": "866906ca699280f23c0733965ccc31e79d0d57af",
+      "links": [
+        {
+          "rel": "clusters",
+          "href": "/sites/nu/clusters",
+          "type": "application/vnd.grid5000.collection+json"
+        },
+        {
+          "rel": "self",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/nu"
+        },
+        {
+          "rel": "parent",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/"
+        },
+        {
+          "rel": "version",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/nu/versions/866906ca699280f23c0733965ccc31e79d0d57af"
+        },
+        {
+          "rel": "versions",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nu/versions"
+        },
+        {
+          "rel": "jobs",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nu/jobs"
+        },
+        {
+          "rel": "deployments",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nu/deployments"
+        },
+        {
+          "rel": "vlans",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nu/vlans"
+        },
+        {
+          "rel": "metrics",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/nu/metrics"
+        },
+        {
+          "rel": "status",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/nu/status"
+        }
+      ]
+    },
+    {
+      "description": "Texas Advanced Computing Center",
+      "email_contact": "help@chameleoncloud.org",
+      "latitude": 30.390223,
+      "location": "Austin, Texas, USA",
+      "longitude": -97.72563,
+      "name": "CHI@TACC",
+      "security_contact": "help@chameleoncloud.org",
+      "site_class": "baremetal",
+      "sys_admin_contact": "help@chameleoncloud.org",
+      "type": "site",
+      "uid": "tacc",
+      "user_support_contact": "help@chameleoncloud.org",
+      "web": "https://chi.tacc.chameleoncloud.org",
+      "version": "866906ca699280f23c0733965ccc31e79d0d57af",
+      "links": [
+        {
+          "rel": "clusters",
+          "href": "/sites/tacc/clusters",
+          "type": "application/vnd.grid5000.collection+json"
+        },
+        {
+          "rel": "self",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/tacc"
+        },
+        {
+          "rel": "parent",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/"
+        },
+        {
+          "rel": "version",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/tacc/versions/866906ca699280f23c0733965ccc31e79d0d57af"
+        },
+        {
+          "rel": "versions",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/tacc/versions"
+        },
+        {
+          "rel": "jobs",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/tacc/jobs"
+        },
+        {
+          "rel": "deployments",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/tacc/deployments"
+        },
+        {
+          "rel": "vlans",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/tacc/vlans"
+        },
+        {
+          "rel": "metrics",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/tacc/metrics"
+        },
+        {
+          "rel": "status",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/tacc/status"
+        }
+      ]
+    },
+    {
+      "description": "University of Chicago",
+      "email_contact": "help@chameleoncloud.org",
+      "latitude": 41.718002,
+      "location": "Argonne National Laboratory, Lemont, Illinois, USA",
+      "longitude": -87.982952,
+      "name": "CHI@UC",
+      "security_contact": "help@chameleoncloud.org",
+      "site_class": "baremetal",
+      "sys_admin_contact": "help@chameleoncloud.org",
+      "type": "site",
+      "uid": "uc",
+      "user_support_contact": "help@chameleoncloud.org",
+      "web": "https://chi.uc.chameleoncloud.org",
+      "version": "866906ca699280f23c0733965ccc31e79d0d57af",
+      "links": [
+        {
+          "rel": "clusters",
+          "href": "/sites/uc/clusters",
+          "type": "application/vnd.grid5000.collection+json"
+        },
+        {
+          "rel": "self",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/uc"
+        },
+        {
+          "rel": "parent",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/"
+        },
+        {
+          "rel": "version",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/uc/versions/866906ca699280f23c0733965ccc31e79d0d57af"
+        },
+        {
+          "rel": "versions",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/uc/versions"
+        },
+        {
+          "rel": "jobs",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/uc/jobs"
+        },
+        {
+          "rel": "deployments",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/uc/deployments"
+        },
+        {
+          "rel": "vlans",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/uc/vlans"
+        },
+        {
+          "rel": "metrics",
+          "type": "application/vnd.grid5000.collection+json",
+          "href": "/sites/uc/metrics"
+        },
+        {
+          "rel": "status",
+          "type": "application/vnd.grid5000.item+json",
+          "href": "/sites/uc/status"
+        }
+      ]
+    }
+  ],
+  "version": "866906ca699280f23c0733965ccc31e79d0d57af",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/vnd.grid5000.collection+json",
+      "href": "/sites"
+    }
+  ]
+}

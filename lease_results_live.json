@@ -1,0 +1,2838 @@
+{
+  "fetched_at": "2025-10-26T01:54:09Z",
+  "site_summaries": [
+    {
+      "clusters": [
+        {
+          "cluster_id": "unknown",
+          "name": "unknown",
+          "nodes": [
+            {
+              "hostname": "11BG3Q3",
+              "node_uuid": "f1b17578-4c22-4c15-befc-3f07caa0cdf7",
+              "reservations": [
+                {
+                  "end": "2025-10-27T15:05:00Z",
+                  "lease_id": "b80e04e1-9dce-4efe-b5d9-c9fb04cd4398",
+                  "reservation_id": "541cc660-b7b4-431a-b1d2-eea1eb85d407",
+                  "start": "2025-09-29T15:05:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-03T11:05:00Z",
+                  "lease_id": "310473e2-2310-437d-a549-b083430d4f22",
+                  "reservation_id": "d3e30937-c3ee-49d3-a2c8-685ceb9977d0",
+                  "start": "2025-10-27T15:55:00Z",
+                  "user_name": "hongzheng.wang@temple.edu"
+                },
+                {
+                  "end": "2025-11-03T11:05:00Z",
+                  "lease_id": "310473e2-2310-437d-a549-b083430d4f22",
+                  "reservation_id": "d3e30937-c3ee-49d3-a2c8-685ceb9977d0",
+                  "start": "2025-10-27T15:55:00Z",
+                  "user_name": "hongzheng.wang@temple.edu"
+                },
+                {
+                  "end": "2025-11-12T00:25:00Z",
+                  "lease_id": "b3cbe210-da6a-4de5-a7f4-6cecc5afc1e8",
+                  "reservation_id": "1963bf2d-ff9d-40a3-b3a2-359f76a1bb40",
+                  "start": "2025-11-05T00:25:00Z",
+                  "user_name": "philpakhrin@gmail.com"
+                },
+                {
+                  "end": "2025-11-20T05:08:00Z",
+                  "lease_id": "158ba88a-c9b3-4128-8bef-290577e2c2c2",
+                  "reservation_id": "7565291e-85af-46ca-93e2-c2bd1931ca80",
+                  "start": "2025-11-13T04:59:00Z",
+                  "user_name": "arashs"
+                },
+                {
+                  "end": "2025-12-02T15:05:00Z",
+                  "lease_id": "868a9b39-eef1-4c54-9892-c6ece10d9aa8",
+                  "reservation_id": "75f52481-06ee-49f2-ae23-fd51220bd351",
+                  "start": "2025-11-25T14:55:00Z",
+                  "user_name": "lizzyyue@bu.edu"
+                }
+              ],
+              "resource_id": "dacfe80e-7963-4325-8852-80afc4415daf"
+            },
+            {
+              "hostname": "21BG3Q3",
+              "node_uuid": "8db2f5d6-cfc5-473c-a3d1-7cd4b015cfa3",
+              "reservations": [
+                {
+                  "end": "2025-10-28T03:40:00Z",
+                  "lease_id": "9543a104-6aaa-4c2d-bc42-176864785024",
+                  "reservation_id": "352042bb-f8c2-4b86-8dc4-eb26421f831e",
+                  "start": "2025-10-23T03:31:00Z",
+                  "user_name": "pyada02@jaguar.tamu.edu"
+                },
+                {
+                  "end": "2025-10-31T13:55:00Z",
+                  "lease_id": "843a5040-b7ed-4b4f-9a1b-0aa876ca7d79",
+                  "reservation_id": "08757b45-396d-4b68-ba02-38a179d6fa86",
+                  "start": "2025-10-29T00:55:00Z",
+                  "user_name": "sicheng.z@utah.edu"
+                },
+                {
+                  "end": "2025-11-06T15:05:00Z",
+                  "lease_id": "0974603a-dae3-48b8-a37d-7ad5ebe7a7ea",
+                  "reservation_id": "8797999c-01e2-4ab0-a9da-6ce97dd165ff",
+                  "start": "2025-10-31T13:55:00Z",
+                  "user_name": "lizzyyue@bu.edu"
+                },
+                {
+                  "end": "2025-11-14T15:05:00Z",
+                  "lease_id": "522b07cf-433a-4b5d-8a67-cdd6d4e77aad",
+                  "reservation_id": "dddd42c1-a57d-402d-b654-362ec52940bd",
+                  "start": "2025-11-07T14:55:00Z",
+                  "user_name": "lizzyyue@bu.edu"
+                },
+                {
+                  "end": "2025-11-21T15:05:00Z",
+                  "lease_id": "d1bee450-a8b3-4f28-8923-c29b7313f6c4",
+                  "reservation_id": "a12bb6bb-67f4-41f4-8770-9829cd908c26",
+                  "start": "2025-11-15T14:55:00Z",
+                  "user_name": "lizzyyue@bu.edu"
+                },
+                {
+                  "end": "2025-11-28T17:05:00Z",
+                  "lease_id": "89265c9d-fd10-4a1d-b98e-650dc24f9782",
+                  "reservation_id": "9ed8728c-cbe6-41cd-80e4-8e379da8df6e",
+                  "start": "2025-11-21T16:55:00Z",
+                  "user_name": "hongzheng.wang@temple.edu"
+                },
+                {
+                  "end": "2025-12-05T22:12:00Z",
+                  "lease_id": "54655707-94b0-4afd-b16f-620c850bcf81",
+                  "reservation_id": "e07f8e27-950d-44b6-95ba-c200ff0e1717",
+                  "start": "2025-11-28T22:03:00Z",
+                  "user_name": "arashs"
+                },
+                {
+                  "end": "2025-12-05T22:12:00Z",
+                  "lease_id": "54655707-94b0-4afd-b16f-620c850bcf81",
+                  "reservation_id": "e07f8e27-950d-44b6-95ba-c200ff0e1717",
+                  "start": "2025-11-28T22:03:00Z",
+                  "user_name": "arashs"
+                },
+                {
+                  "end": "2025-12-19T07:05:00Z",
+                  "lease_id": "ad1fa20f-d533-4cb1-a1d2-6925c6a9da05",
+                  "reservation_id": "2b012be6-13ee-442e-8865-a730101ac25f",
+                  "start": "2025-12-12T07:55:00Z",
+                  "user_name": "philpakhrin@gmail.com"
+                }
+              ],
+              "resource_id": "674c1d71-d4d1-4376-b6e4-f2188a676914"
+            },
+            {
+              "hostname": "307G3Q3",
+              "node_uuid": "adc4b7e7-c1c7-488d-b088-ad901a76a65d",
+              "reservations": [
+                {
+                  "end": "2025-10-28T11:05:00Z",
+                  "lease_id": "bcbc02f4-2572-4fe2-a41c-88ccd1809500",
+                  "reservation_id": "a8a079b8-40b4-4f43-a8dc-8c42675c7272",
+                  "start": "2025-10-26T03:55:00Z",
+                  "user_name": "philpakhrin@gmail.com"
+                },
+                {
+                  "end": "2025-11-04T09:05:00Z",
+                  "lease_id": "119456e1-68cf-4244-ae7b-08f62874f197",
+                  "reservation_id": "2856a0e9-9e1a-4d46-acba-3ae9acdbdb12",
+                  "start": "2025-10-28T11:55:00Z",
+                  "user_name": "ffund@nyu.edu"
+                },
+                {
+                  "end": "2025-11-12T01:00:00Z",
+                  "lease_id": "f3dff953-aae6-4b26-a549-adc48a6ee6e4",
+                  "reservation_id": "469c7f8b-c2d9-4511-9c48-3182ee26bde4",
+                  "start": "2025-11-05T00:55:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-13T19:55:00Z",
+                  "lease_id": "6ddf6647-7990-4588-879c-4df7ac1259c2",
+                  "reservation_id": "b6507724-4e90-4b04-be63-73c9808d09e5",
+                  "start": "2025-11-12T01:05:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-20T19:56:00Z",
+                  "lease_id": "81f010ea-57e1-4bf1-b8e3-249374505d6b",
+                  "reservation_id": "7c0b734c-26ff-4921-a4f9-bb4adc625b58",
+                  "start": "2025-11-13T19:55:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-27T20:00:00Z",
+                  "lease_id": "e33a2187-61d7-44a0-8c08-e46b90925bd7",
+                  "reservation_id": "9f3f048b-7691-49ed-85ce-e9c369712623",
+                  "start": "2025-11-20T19:55:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-12-04T20:00:00Z",
+                  "lease_id": "e05d45b0-d442-4007-9beb-c576e35c212f",
+                  "reservation_id": "4b265cd8-8a2c-4cb4-8969-352250b98138",
+                  "start": "2025-11-27T19:58:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-12-11T20:04:00Z",
+                  "lease_id": "fbc8a619-416b-4dbd-829f-bf6f88f3ff48",
+                  "reservation_id": "cf41cdb5-cd01-4fec-9211-8d500319cc05",
+                  "start": "2025-12-04T20:00:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-12-11T20:04:00Z",
+                  "lease_id": "fbc8a619-416b-4dbd-829f-bf6f88f3ff48",
+                  "reservation_id": "cf41cdb5-cd01-4fec-9211-8d500319cc05",
+                  "start": "2025-12-04T20:00:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                }
+              ],
+              "resource_id": "e87ab27e-b9a7-4395-82d7-a7b2ff78ef95"
+            },
+            {
+              "hostname": "F1BG3Q3",
+              "node_uuid": "844736d7-5a65-47ce-a54c-fd82dea47069",
+              "reservations": [
+                {
+                  "end": "2025-10-28T13:28:00Z",
+                  "lease_id": "ff92d46a-9fe6-4b09-b260-5d3f8fa78c12",
+                  "reservation_id": "3e09d2e0-62c5-447e-b653-a636d948eb5d",
+                  "start": "2025-10-21T13:19:00Z",
+                  "user_name": "20045207@studenti.uniupo.it"
+                },
+                {
+                  "end": "2025-11-05T01:04:00Z",
+                  "lease_id": "bbbd58ff-3016-447d-bd59-f77a3d0abcea",
+                  "reservation_id": "3ca00ac1-ba4e-4098-8702-2a8d972e384b",
+                  "start": "2025-10-29T00:55:00Z",
+                  "user_name": "yuanhao.chang@email.ucr.edu"
+                },
+                {
+                  "end": "2025-11-13T12:05:00Z",
+                  "lease_id": "5946fc2f-1e98-4c2f-9e68-f10ffecd61af",
+                  "reservation_id": "b78aa944-dcfa-4215-973b-b681fe2e59ce",
+                  "start": "2025-11-06T11:55:00Z",
+                  "user_name": "afarhana@vt.edu"
+                },
+                {
+                  "end": "2025-11-13T12:05:00Z",
+                  "lease_id": "5946fc2f-1e98-4c2f-9e68-f10ffecd61af",
+                  "reservation_id": "b78aa944-dcfa-4215-973b-b681fe2e59ce",
+                  "start": "2025-11-06T11:55:00Z",
+                  "user_name": "afarhana@vt.edu"
+                },
+                {
+                  "end": "2025-11-21T22:08:00Z",
+                  "lease_id": "efde4969-31b8-49c5-933d-0f371efe438a",
+                  "reservation_id": "2c2d9d01-6876-41c8-86ef-8f7d124669a0",
+                  "start": "2025-11-14T21:59:00Z",
+                  "user_name": "arashs"
+                }
+              ],
+              "resource_id": "1a9e85f9-05d7-499c-81a9-a253b8fefdb9"
+            },
+            {
+              "hostname": "J0BG3Q3",
+              "node_uuid": "10ad276b-ba2f-4fe7-bb0d-203b6ff84432",
+              "reservations": [
+                {
+                  "end": "2025-10-30T19:54:00Z",
+                  "lease_id": "fc9b0381-5423-4141-a018-1f3608808c2c",
+                  "reservation_id": "5ad7c89a-f97d-4479-b364-559c1fce41e4",
+                  "start": "2025-10-23T19:45:00Z",
+                  "user_name": "arashs"
+                },
+                {
+                  "end": "2025-11-06T20:00:00Z",
+                  "lease_id": "7ca5e8ae-7837-4f95-beeb-cb8c35b82c20",
+                  "reservation_id": "1b9be860-b405-48c4-b394-fb451688657b",
+                  "start": "2025-10-30T19:55:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-13T20:00:00Z",
+                  "lease_id": "d0b531ce-fdaf-46ce-9c6a-ba907eab59f3",
+                  "reservation_id": "d093324e-db82-4790-8d70-b57c08ab2e46",
+                  "start": "2025-11-06T19:55:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-13T20:00:00Z",
+                  "lease_id": "d0b531ce-fdaf-46ce-9c6a-ba907eab59f3",
+                  "reservation_id": "d093324e-db82-4790-8d70-b57c08ab2e46",
+                  "start": "2025-11-06T19:55:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-20T20:00:00Z",
+                  "lease_id": "8820cb17-0754-4635-9d8f-b135109017f4",
+                  "reservation_id": "5ffc991e-00c7-499e-ae24-c12d313798bc",
+                  "start": "2025-11-13T19:55:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                },
+                {
+                  "end": "2025-11-27T19:58:00Z",
+                  "lease_id": "ca7f2642-c8cd-4c86-8016-dd6f56125881",
+                  "reservation_id": "3168dbfc-1286-4899-93f9-677fb7e17a74",
+                  "start": "2025-11-20T19:57:00Z",
+                  "user_name": "yuetaili@uw.edu"
+                }
+              ],
+              "resource_id": "c76b84dd-cbc7-4dbb-a8b3-e69cd4494bcf"
+            },
+            {
+              "hostname": "P3-CPU-001",
+              "node_uuid": "32c3403a-a47f-47bf-bc69-35f206d157c2",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                },
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "3321"
+            },
+            {
+              "hostname": "P3-CPU-002",
+              "node_uuid": "6a75c2df-eabe-41aa-98ac-c1e25bebc738",
+              "reservations": [
+                {
+                  "end": "2025-11-03T14:43:00Z",
+                  "lease_id": "6c96af25-b05e-4d2d-9ce2-33ccf9704e44",
+                  "reservation_id": "7c9e97bd-4862-4c55-9553-d99dd05d93b1",
+                  "start": "2025-10-28T01:55:00Z",
+                  "user_name": "sicheng.z@utah.edu"
+                }
+              ],
+              "resource_id": "3312"
+            },
+            {
+              "hostname": "P3-CPU-003",
+              "node_uuid": "d89eb3ee-2c01-4c4f-bb06-f04ef11353bd",
+              "reservations": [
+                {
+                  "end": "2025-10-26T02:52:00Z",
+                  "lease_id": "38b15807-6911-4659-aef5-0582e3f73f17",
+                  "reservation_id": "27d93151-40ac-445a-8170-9485acc03589",
+                  "start": "2025-10-23T21:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                },
+                {
+                  "end": "2025-10-26T02:52:00Z",
+                  "lease_id": "38b15807-6911-4659-aef5-0582e3f73f17",
+                  "reservation_id": "27d93151-40ac-445a-8170-9485acc03589",
+                  "start": "2025-10-23T21:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                }
+              ],
+              "resource_id": "3317"
+            },
+            {
+              "hostname": "P3-CPU-004",
+              "node_uuid": "16035a48-fc53-4b5f-87fc-f911569545da",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3314"
+            },
+            {
+              "hostname": "P3-CPU-005",
+              "node_uuid": "f0a70e83-937e-4107-914b-72872c8b741b",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                },
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "3313"
+            },
+            {
+              "hostname": "P3-CPU-006",
+              "node_uuid": "16cf13d6-3aa3-4c43-a68a-732ddefe9bc5",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                },
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "3323"
+            },
+            {
+              "hostname": "P3-CPU-007",
+              "node_uuid": "fd2d912a-01f0-40a8-825f-2c7cd30b56cd",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3331"
+            },
+            {
+              "hostname": "P3-CPU-008",
+              "node_uuid": "e5943f34-96b9-4558-9dfb-1acbc22f2be5",
+              "reservations": [
+                {
+                  "end": "2025-10-29T02:48:00Z",
+                  "lease_id": "caf13d31-e3d9-4bcf-bee8-e58837a0e5bf",
+                  "reservation_id": "1fe1b237-f2d2-46ed-9309-aaee101d377e",
+                  "start": "2025-10-23T02:39:00Z",
+                  "user_name": "zxli7@uchicago.edu"
+                },
+                {
+                  "end": "2025-10-29T02:48:00Z",
+                  "lease_id": "caf13d31-e3d9-4bcf-bee8-e58837a0e5bf",
+                  "reservation_id": "1fe1b237-f2d2-46ed-9309-aaee101d377e",
+                  "start": "2025-10-23T02:39:00Z",
+                  "user_name": "zxli7@uchicago.edu"
+                }
+              ],
+              "resource_id": "3329"
+            },
+            {
+              "hostname": "P3-CPU-009",
+              "node_uuid": "6d8a9b9d-6eb9-4c36-a287-93df514f4c75",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3327"
+            },
+            {
+              "hostname": "P3-CPU-010",
+              "node_uuid": "1c68ca65-2a29-4c4d-a9ea-6d20a447cdfa",
+              "reservations": [
+                {
+                  "end": "2025-10-27T21:30:00Z",
+                  "lease_id": "6bba2946-b256-48f3-a5aa-fb6c05e33d7a",
+                  "reservation_id": "a8a92c64-991c-4b3c-b0a4-85873b2dcefc",
+                  "start": "2025-10-20T21:21:00Z",
+                  "user_name": "tapan"
+                },
+                {
+                  "end": "2025-10-27T21:30:00Z",
+                  "lease_id": "6bba2946-b256-48f3-a5aa-fb6c05e33d7a",
+                  "reservation_id": "a8a92c64-991c-4b3c-b0a4-85873b2dcefc",
+                  "start": "2025-10-20T21:21:00Z",
+                  "user_name": "tapan"
+                }
+              ],
+              "resource_id": "3330"
+            },
+            {
+              "hostname": "P3-CPU-011",
+              "node_uuid": "ea794c01-2ae8-4e7a-b1cd-8d64b7610088",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "3324"
+            },
+            {
+              "hostname": "P3-CPU-012",
+              "node_uuid": "81da739b-d3e5-466f-aa84-a04187412723",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "3322"
+            },
+            {
+              "hostname": "P3-CPU-013",
+              "node_uuid": "d3fa821c-e2de-4e5d-af24-648ff710a7c0",
+              "reservations": [
+                {
+                  "end": "2025-10-31T18:58:00Z",
+                  "lease_id": "e9cdd1c2-e686-4306-a16a-d8df3eea02eb",
+                  "reservation_id": "87273221-1869-4e65-b0e6-f2c11404c2c9",
+                  "start": "2025-10-17T18:49:00Z",
+                  "user_name": "junchf1@uci.edu"
+                },
+                {
+                  "end": "2025-10-31T18:58:00Z",
+                  "lease_id": "e9cdd1c2-e686-4306-a16a-d8df3eea02eb",
+                  "reservation_id": "87273221-1869-4e65-b0e6-f2c11404c2c9",
+                  "start": "2025-10-17T18:49:00Z",
+                  "user_name": "junchf1@uci.edu"
+                }
+              ],
+              "resource_id": "3325"
+            },
+            {
+              "hostname": "P3-CPU-014",
+              "node_uuid": "65c744bb-81ea-4fa8-a5f7-998dc315b4f9",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3328"
+            },
+            {
+              "hostname": "P3-CPU-015",
+              "node_uuid": "c44c80f3-ef4b-4115-a80a-0ed93c3b486f",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3326"
+            },
+            {
+              "hostname": "P3-CPU-016",
+              "node_uuid": "9e0debfa-9e6a-4c78-809f-7eb7666166dc",
+              "reservations": [
+                {
+                  "end": "2025-10-31T20:57:00Z",
+                  "lease_id": "83885f62-260a-4c74-b6a8-377be6cc4b05",
+                  "reservation_id": "5d80cecf-a747-449c-a912-a2392e86863e",
+                  "start": "2025-06-27T20:48:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                }
+              ],
+              "resource_id": "3341"
+            },
+            {
+              "hostname": "P3-CPU-017",
+              "node_uuid": "ab40170d-541e-463d-b2e8-59abab01d14b",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3334"
+            },
+            {
+              "hostname": "P3-CPU-018",
+              "node_uuid": "e05f677a-d82b-4d41-9de2-751ad3167ccd",
+              "reservations": [
+                {
+                  "end": "2025-10-31T20:57:00Z",
+                  "lease_id": "83885f62-260a-4c74-b6a8-377be6cc4b05",
+                  "reservation_id": "5d80cecf-a747-449c-a912-a2392e86863e",
+                  "start": "2025-06-27T20:48:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                }
+              ],
+              "resource_id": "3340"
+            },
+            {
+              "hostname": "P3-CPU-019",
+              "node_uuid": "5bc4b84d-e791-42bf-862e-f46a25fd7b63",
+              "reservations": [
+                {
+                  "end": "2026-01-29T18:16:00Z",
+                  "lease_id": "35f9043d-e74e-4301-bf3e-1685275ae9f3",
+                  "reservation_id": "9a7a6707-9600-4b31-bbd6-d8f41bf34800",
+                  "start": "2025-01-03T18:07:00Z",
+                  "user_name": "markpowers@uchicago.edu"
+                },
+                {
+                  "end": "2026-01-29T18:16:00Z",
+                  "lease_id": "35f9043d-e74e-4301-bf3e-1685275ae9f3",
+                  "reservation_id": "9a7a6707-9600-4b31-bbd6-d8f41bf34800",
+                  "start": "2025-01-03T18:07:00Z",
+                  "user_name": "markpowers@uchicago.edu"
+                }
+              ],
+              "resource_id": "3332"
+            },
+            {
+              "hostname": "P3-CPU-020",
+              "node_uuid": "04d91a7a-db07-4d15-8958-10127b145ac3",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3335"
+            },
+            {
+              "hostname": "P3-CPU-021",
+              "node_uuid": "d8e9821f-99c2-455a-8072-2265c8ba11b0",
+              "reservations": [
+                {
+                  "end": "2025-10-28T19:36:00Z",
+                  "lease_id": "867b6ee6-c57d-4ca5-a765-f12bcfe6d518",
+                  "reservation_id": "fbf4312b-2b52-4652-817e-eff43f8f5228",
+                  "start": "2024-10-08T19:27:00Z",
+                  "user_name": "asm68153@uga.edu"
+                },
+                {
+                  "end": "2025-10-28T19:36:00Z",
+                  "lease_id": "867b6ee6-c57d-4ca5-a765-f12bcfe6d518",
+                  "reservation_id": "fbf4312b-2b52-4652-817e-eff43f8f5228",
+                  "start": "2024-10-08T19:27:00Z",
+                  "user_name": "asm68153@uga.edu"
+                }
+              ],
+              "resource_id": "3333"
+            },
+            {
+              "hostname": "P3-CPU-022",
+              "node_uuid": "048c2acc-cc3f-422e-88e2-ed1ffb48e4c9",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:56:00Z",
+                  "lease_id": "2d1b9ee4-c2e7-4d16-9db6-668ded11fe51",
+                  "reservation_id": "fa35be81-331a-40a6-a23d-9976ea6a2565",
+                  "start": "2025-08-16T17:47:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "3336"
+            },
+            {
+              "hostname": "P3-CPU-023",
+              "node_uuid": "1ae67ba9-1a5c-455d-9f6e-70ee8e6ed7c4",
+              "reservations": [
+                {
+                  "end": "2025-10-26T01:48:00Z",
+                  "lease_id": "a6402450-ac1a-49f5-b62f-2e1264a0c67c",
+                  "reservation_id": "c22fa765-153f-4d29-80b0-c95f0b81871b",
+                  "start": "2025-10-25T23:38:00Z",
+                  "user_name": "chrislowzhengxi@uchicago.edu"
+                },
+                {
+                  "end": "2025-10-26T01:48:00Z",
+                  "lease_id": "a6402450-ac1a-49f5-b62f-2e1264a0c67c",
+                  "reservation_id": "c22fa765-153f-4d29-80b0-c95f0b81871b",
+                  "start": "2025-10-25T23:38:00Z",
+                  "user_name": "chrislowzhengxi@uchicago.edu"
+                }
+              ],
+              "resource_id": "3337"
+            },
+            {
+              "hostname": "P3-CPU-024",
+              "node_uuid": "c99a8aa1-7202-4ba4-9f8f-b67450a0b461",
+              "reservations": [
+                {
+                  "end": "2025-11-02T20:28:00Z",
+                  "lease_id": "0eff7921-7a70-4734-8965-383b29501c57",
+                  "reservation_id": "14a49ad9-5a20-40e3-8f57-7b473ab24aec",
+                  "start": "2025-05-25T20:19:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                },
+                {
+                  "end": "2025-11-02T20:28:00Z",
+                  "lease_id": "0eff7921-7a70-4734-8965-383b29501c57",
+                  "reservation_id": "14a49ad9-5a20-40e3-8f57-7b473ab24aec",
+                  "start": "2025-05-25T20:19:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                }
+              ],
+              "resource_id": "3338"
+            },
+            {
+              "hostname": "P3-CPU-025",
+              "node_uuid": "b8af761e-81a3-4f5a-a1d4-d616b3af53fd",
+              "reservations": [
+                {
+                  "end": "2025-10-31T20:57:00Z",
+                  "lease_id": "83885f62-260a-4c74-b6a8-377be6cc4b05",
+                  "reservation_id": "5d80cecf-a747-449c-a912-a2392e86863e",
+                  "start": "2025-06-27T20:48:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                },
+                {
+                  "end": "2025-10-31T20:57:00Z",
+                  "lease_id": "83885f62-260a-4c74-b6a8-377be6cc4b05",
+                  "reservation_id": "5d80cecf-a747-449c-a912-a2392e86863e",
+                  "start": "2025-06-27T20:48:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                }
+              ],
+              "resource_id": "3339"
+            },
+            {
+              "hostname": "P3-CPU-026",
+              "node_uuid": "5c244193-2981-4108-9003-be53f3548123",
+              "reservations": [
+                {
+                  "end": "2025-10-26T02:52:00Z",
+                  "lease_id": "38b15807-6911-4659-aef5-0582e3f73f17",
+                  "reservation_id": "27d93151-40ac-445a-8170-9485acc03589",
+                  "start": "2025-10-23T21:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                }
+              ],
+              "resource_id": "3349"
+            },
+            {
+              "hostname": "P3-CPU-027",
+              "node_uuid": "74dd50fb-fef6-4fb8-9611-4ce6330cbd4c",
+              "reservations": [
+                {
+                  "end": "2025-10-29T03:20:00Z",
+                  "lease_id": "53f8615f-e815-45ea-9b47-b8a3af5bf467",
+                  "reservation_id": "1a361337-222a-48ea-807a-df27c644d5a6",
+                  "start": "2025-10-09T03:11:00Z",
+                  "user_name": "raja3@vanderbilt.edu"
+                },
+                {
+                  "end": "2025-10-29T03:20:00Z",
+                  "lease_id": "53f8615f-e815-45ea-9b47-b8a3af5bf467",
+                  "reservation_id": "1a361337-222a-48ea-807a-df27c644d5a6",
+                  "start": "2025-10-09T03:11:00Z",
+                  "user_name": "raja3@vanderbilt.edu"
+                }
+              ],
+              "resource_id": "3344"
+            },
+            {
+              "hostname": "P3-CPU-028",
+              "node_uuid": "affffe50-195e-4f05-ace9-3b1e519f7c8f",
+              "reservations": [
+                {
+                  "end": "2025-10-31T00:58:00Z",
+                  "lease_id": "672ffe83-7053-4065-b318-05aab8a4bda2",
+                  "reservation_id": "eeab927a-92e9-4df2-a534-05402efbb3e9",
+                  "start": "2025-09-13T00:49:00Z",
+                  "user_name": "hsieh123@umn.edu"
+                },
+                {
+                  "end": "2025-10-31T00:58:00Z",
+                  "lease_id": "672ffe83-7053-4065-b318-05aab8a4bda2",
+                  "reservation_id": "eeab927a-92e9-4df2-a534-05402efbb3e9",
+                  "start": "2025-09-13T00:49:00Z",
+                  "user_name": "hsieh123@umn.edu"
+                }
+              ],
+              "resource_id": "3350"
+            },
+            {
+              "hostname": "P3-CPU-029",
+              "node_uuid": "d356feb3-0424-4231-af5f-1132cd600f37",
+              "reservations": [
+                {
+                  "end": "2025-10-27T01:28:00Z",
+                  "lease_id": "9a8a9a6c-6eb8-402d-b29e-23d2f705bc36",
+                  "reservation_id": "eb24c602-8ce6-49a2-8ee2-b21c8ff44658",
+                  "start": "2025-10-13T01:19:00Z",
+                  "user_name": "eaminchan@uchicago.edu"
+                },
+                {
+                  "end": "2025-10-27T01:28:00Z",
+                  "lease_id": "9a8a9a6c-6eb8-402d-b29e-23d2f705bc36",
+                  "reservation_id": "eb24c602-8ce6-49a2-8ee2-b21c8ff44658",
+                  "start": "2025-10-13T01:19:00Z",
+                  "user_name": "eaminchan@uchicago.edu"
+                }
+              ],
+              "resource_id": "3342"
+            },
+            {
+              "hostname": "P3-CPU-030",
+              "node_uuid": "d042b8ba-5a75-46c4-b89b-9901331d1f20",
+              "reservations": [
+                {
+                  "end": "2025-10-29T17:30:00Z",
+                  "lease_id": "ad482ed1-a968-4396-bca8-f87493b81e6a",
+                  "reservation_id": "41007ea3-a93c-45f9-8fcd-19580776f1dd",
+                  "start": "2025-10-15T21:20:00Z",
+                  "user_name": "devon.lewis@rutgers.edu"
+                },
+                {
+                  "end": "2025-10-29T17:30:00Z",
+                  "lease_id": "ad482ed1-a968-4396-bca8-f87493b81e6a",
+                  "reservation_id": "41007ea3-a93c-45f9-8fcd-19580776f1dd",
+                  "start": "2025-10-15T21:20:00Z",
+                  "user_name": "devon.lewis@rutgers.edu"
+                }
+              ],
+              "resource_id": "3347"
+            },
+            {
+              "hostname": "P3-CPU-031",
+              "node_uuid": "ee432c92-78ca-4296-aa58-a10179869b87",
+              "reservations": [
+                {
+                  "end": "2025-10-26T02:52:00Z",
+                  "lease_id": "38b15807-6911-4659-aef5-0582e3f73f17",
+                  "reservation_id": "27d93151-40ac-445a-8170-9485acc03589",
+                  "start": "2025-10-23T21:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                },
+                {
+                  "end": "2025-10-26T02:52:00Z",
+                  "lease_id": "38b15807-6911-4659-aef5-0582e3f73f17",
+                  "reservation_id": "27d93151-40ac-445a-8170-9485acc03589",
+                  "start": "2025-10-23T21:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                }
+              ],
+              "resource_id": "3348"
+            },
+            {
+              "hostname": "P3-CPU-032",
+              "node_uuid": "11159aeb-c92b-42e0-bf27-1b9f9722343e",
+              "reservations": [
+                {
+                  "end": "2025-10-31T04:46:00Z",
+                  "lease_id": "894c1c46-05ba-452b-8352-bcb9a550e8ca",
+                  "reservation_id": "72a603ca-9ed2-4e67-8ca4-ce643824789d",
+                  "start": "2025-10-24T08:55:00Z",
+                  "user_name": "viv.deng@mail.utoronto.ca"
+                },
+                {
+                  "end": "2025-10-31T04:46:00Z",
+                  "lease_id": "894c1c46-05ba-452b-8352-bcb9a550e8ca",
+                  "reservation_id": "72a603ca-9ed2-4e67-8ca4-ce643824789d",
+                  "start": "2025-10-24T08:55:00Z",
+                  "user_name": "viv.deng@mail.utoronto.ca"
+                }
+              ],
+              "resource_id": "3345"
+            },
+            {
+              "hostname": "P3-CPU-033",
+              "node_uuid": "e0477777-88fe-42ec-a686-87e646e02e81",
+              "reservations": [
+                {
+                  "end": "2025-10-31T20:30:00Z",
+                  "lease_id": "6cf3dc6e-08ee-4319-9135-3f93ed283f7c",
+                  "reservation_id": "9eac6767-a7f9-442c-afe8-da208265e72f",
+                  "start": "2025-10-24T20:21:00Z",
+                  "user_name": "amavrogi@ucsc.edu"
+                },
+                {
+                  "end": "2025-10-31T20:30:00Z",
+                  "lease_id": "6cf3dc6e-08ee-4319-9135-3f93ed283f7c",
+                  "reservation_id": "9eac6767-a7f9-442c-afe8-da208265e72f",
+                  "start": "2025-10-24T20:21:00Z",
+                  "user_name": "amavrogi@ucsc.edu"
+                }
+              ],
+              "resource_id": "3343"
+            },
+            {
+              "hostname": "P3-CPU-034",
+              "node_uuid": "30fd8160-939f-4ba6-8c85-deb4df593d61",
+              "reservations": [
+                {
+                  "end": "2025-11-02T22:38:00Z",
+                  "lease_id": "0072d68f-2b4f-4d3f-99d0-f1452ac3dd6c",
+                  "reservation_id": "f2c45e53-ab3f-451b-8b38-50b4c9cf23f6",
+                  "start": "2025-05-13T22:29:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                },
+                {
+                  "end": "2025-11-02T22:38:00Z",
+                  "lease_id": "0072d68f-2b4f-4d3f-99d0-f1452ac3dd6c",
+                  "reservation_id": "f2c45e53-ab3f-451b-8b38-50b4c9cf23f6",
+                  "start": "2025-05-13T22:29:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                }
+              ],
+              "resource_id": "3351"
+            },
+            {
+              "hostname": "P3-CPU-035",
+              "node_uuid": "3e79e685-1a53-48ed-a67f-6afb03572839",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                },
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "3346"
+            },
+            {
+              "hostname": "P3-CPU-036",
+              "node_uuid": "feaecf87-dd11-4aad-8fe8-b8321262f340",
+              "reservations": [
+                {
+                  "end": "2026-01-08T19:01:00Z",
+                  "lease_id": "1330ba43-fe95-4647-8f5b-d937357e15dc",
+                  "reservation_id": "861bb21a-c89c-4b0a-822e-204e18daf62f",
+                  "start": "2025-04-03T18:52:00Z",
+                  "user_name": "marshalp@uchicago.edu"
+                },
+                {
+                  "end": "2026-01-08T19:01:00Z",
+                  "lease_id": "1330ba43-fe95-4647-8f5b-d937357e15dc",
+                  "reservation_id": "861bb21a-c89c-4b0a-822e-204e18daf62f",
+                  "start": "2025-04-03T18:52:00Z",
+                  "user_name": "marshalp@uchicago.edu"
+                }
+              ],
+              "resource_id": "3354"
+            },
+            {
+              "hostname": "P3-CPU-037",
+              "node_uuid": "d3ca4a4f-2319-4e88-9d63-6c8498f65820",
+              "reservations": [
+                {
+                  "end": "2026-01-08T19:01:00Z",
+                  "lease_id": "1330ba43-fe95-4647-8f5b-d937357e15dc",
+                  "reservation_id": "861bb21a-c89c-4b0a-822e-204e18daf62f",
+                  "start": "2025-04-03T18:52:00Z",
+                  "user_name": "marshalp@uchicago.edu"
+                }
+              ],
+              "resource_id": "3355"
+            },
+            {
+              "hostname": "P3-CPU-038",
+              "node_uuid": "89e48f7e-d04f-4455-b093-2a4318fb7026",
+              "reservations": [
+                {
+                  "end": "2025-11-02T00:05:00Z",
+                  "lease_id": "15bc025d-daa7-4b4e-a9bf-8cb5de09e5dc",
+                  "reservation_id": "dbf609dd-c116-472b-91d9-4eb4e16a7738",
+                  "start": "2025-10-18T23:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                },
+                {
+                  "end": "2025-11-02T00:05:00Z",
+                  "lease_id": "15bc025d-daa7-4b4e-a9bf-8cb5de09e5dc",
+                  "reservation_id": "dbf609dd-c116-472b-91d9-4eb4e16a7738",
+                  "start": "2025-10-18T23:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                }
+              ],
+              "resource_id": "3358"
+            },
+            {
+              "hostname": "P3-CPU-039",
+              "node_uuid": "b5a84d92-6032-4234-9fcc-d5b488870ee6",
+              "reservations": [
+                {
+                  "end": "2025-11-02T22:38:00Z",
+                  "lease_id": "0072d68f-2b4f-4d3f-99d0-f1452ac3dd6c",
+                  "reservation_id": "f2c45e53-ab3f-451b-8b38-50b4c9cf23f6",
+                  "start": "2025-05-13T22:29:00Z",
+                  "user_name": "rani.api3939@gmail.com"
+                }
+              ],
+              "resource_id": "3352"
+            },
+            {
+              "hostname": "P3-CPU-040",
+              "node_uuid": "a84f10dd-e99b-424c-b923-ee3c21a642cc",
+              "reservations": [
+                {
+                  "end": "2025-10-30T01:11:00Z",
+                  "lease_id": "18e6fa05-0d52-42ce-96ff-cf0d6613e6ff",
+                  "reservation_id": "29aeea54-e807-436f-8f69-714b94d51326",
+                  "start": "2025-10-23T01:02:00Z",
+                  "user_name": "binruih@uchicago.edu"
+                },
+                {
+                  "end": "2025-10-30T01:11:00Z",
+                  "lease_id": "18e6fa05-0d52-42ce-96ff-cf0d6613e6ff",
+                  "reservation_id": "29aeea54-e807-436f-8f69-714b94d51326",
+                  "start": "2025-10-23T01:02:00Z",
+                  "user_name": "binruih@uchicago.edu"
+                }
+              ],
+              "resource_id": "3357"
+            },
+            {
+              "hostname": "P3-CPU-041",
+              "node_uuid": "9ae9a4bd-5157-4f6b-930d-ea5739ff86f6",
+              "reservations": [
+                {
+                  "end": "2025-10-29T23:13:00Z",
+                  "lease_id": "0247399d-13a8-401a-a7d0-02acdddfbb14",
+                  "reservation_id": "b94abfaf-4331-4040-9f38-dc193b950dfe",
+                  "start": "2025-09-17T23:04:00Z",
+                  "user_name": "yuhangs@bu.edu"
+                },
+                {
+                  "end": "2025-10-29T23:13:00Z",
+                  "lease_id": "0247399d-13a8-401a-a7d0-02acdddfbb14",
+                  "reservation_id": "b94abfaf-4331-4040-9f38-dc193b950dfe",
+                  "start": "2025-09-17T23:04:00Z",
+                  "user_name": "yuhangs@bu.edu"
+                }
+              ],
+              "resource_id": "3356"
+            },
+            {
+              "hostname": "P3-CPU-042",
+              "node_uuid": "926a9c99-3b27-45a7-818c-e6525b9ce89c",
+              "reservations": [
+                {
+                  "end": "2025-11-02T00:05:00Z",
+                  "lease_id": "ef46bb1d-a74f-4c6a-8aff-0f5dffb68658",
+                  "reservation_id": "e9cc33b9-1e3d-467d-98c2-7bf5680310c4",
+                  "start": "2025-10-18T23:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                },
+                {
+                  "end": "2025-11-02T00:05:00Z",
+                  "lease_id": "ef46bb1d-a74f-4c6a-8aff-0f5dffb68658",
+                  "reservation_id": "e9cc33b9-1e3d-467d-98c2-7bf5680310c4",
+                  "start": "2025-10-18T23:55:00Z",
+                  "user_name": "rvarde2@uic.edu"
+                }
+              ],
+              "resource_id": "3353"
+            },
+            {
+              "hostname": "P3-GPU-009",
+              "node_uuid": "8de50d9d-0de8-4f13-a2d2-a2d7e666f952",
+              "reservations": [
+                {
+                  "end": "2025-10-28T14:36:00Z",
+                  "lease_id": "ba59c4bc-76a9-4a6e-9ca9-0dca8292cfe7",
+                  "reservation_id": "493fc31e-d17e-43ad-8898-fd1aa2e32f26",
+                  "start": "2025-10-22T00:40:00Z",
+                  "user_name": "ffund@nyu.edu"
+                },
+                {
+                  "end": "2025-10-28T14:36:00Z",
+                  "lease_id": "ba59c4bc-76a9-4a6e-9ca9-0dca8292cfe7",
+                  "reservation_id": "493fc31e-d17e-43ad-8898-fd1aa2e32f26",
+                  "start": "2025-10-22T00:40:00Z",
+                  "user_name": "ffund@nyu.edu"
+                }
+              ],
+              "resource_id": "3302"
+            },
+            {
+              "hostname": "P3-GPU-010",
+              "node_uuid": "99732d8f-3f6c-4602-985a-35aff2657b6c",
+              "reservations": [
+                {
+                  "end": "2025-10-28T01:03:00Z",
+                  "lease_id": "3821951c-12b4-46b1-a7bb-bf8093f0c28b",
+                  "reservation_id": "1b0f0215-b6db-49e3-b807-7951e11b4a7c",
+                  "start": "2025-09-23T15:01:00Z",
+                  "user_name": "sicheng.z@utah.edu"
+                },
+                {
+                  "end": "2025-11-03T14:43:00Z",
+                  "lease_id": "6c96af25-b05e-4d2d-9ce2-33ccf9704e44",
+                  "reservation_id": "7c9e97bd-4862-4c55-9553-d99dd05d93b1",
+                  "start": "2025-10-28T01:55:00Z",
+                  "user_name": "sicheng.z@utah.edu"
+                },
+                {
+                  "end": "2025-11-03T14:43:00Z",
+                  "lease_id": "6c96af25-b05e-4d2d-9ce2-33ccf9704e44",
+                  "reservation_id": "7c9e97bd-4862-4c55-9553-d99dd05d93b1",
+                  "start": "2025-10-28T01:55:00Z",
+                  "user_name": "sicheng.z@utah.edu"
+                }
+              ],
+              "resource_id": "3311"
+            },
+            {
+              "hostname": "P3-GPU-011",
+              "node_uuid": "41228e00-5d2b-42cb-a373-e532bb1be2da",
+              "reservations": [
+                {
+                  "end": "2025-10-30T16:48:00Z",
+                  "lease_id": "e64b7f9b-c512-4782-84b6-997080e66992",
+                  "reservation_id": "565eb92c-e30b-451e-ae5f-5226a209444b",
+                  "start": "2025-05-02T17:39:00Z",
+                  "user_name": "bihhan@stonybrook.edu"
+                },
+                {
+                  "end": "2025-11-09T22:05:00Z",
+                  "lease_id": "48d9a60c-b73d-459e-949a-18953d52d71b",
+                  "reservation_id": "67c04355-1518-40fc-b166-8c85863b5f4b",
+                  "start": "2025-11-02T21:56:00Z",
+                  "user_name": "bihhan@stonybrook.edu"
+                },
+                {
+                  "end": "2025-11-09T22:05:00Z",
+                  "lease_id": "48d9a60c-b73d-459e-949a-18953d52d71b",
+                  "reservation_id": "67c04355-1518-40fc-b166-8c85863b5f4b",
+                  "start": "2025-11-02T21:56:00Z",
+                  "user_name": "bihhan@stonybrook.edu"
+                }
+              ],
+              "resource_id": "3309"
+            },
+            {
+              "hostname": "P3-GPU-012",
+              "node_uuid": "24401231-4587-4377-a5ff-cc8b51ab99ac",
+              "reservations": [
+                {
+                  "end": "2025-11-03T19:29:00Z",
+                  "lease_id": "55cf9ae6-9f54-440a-93c8-46aff0df7b54",
+                  "reservation_id": "47a44004-2648-41e7-b69e-31b8c92028c3",
+                  "start": "2025-09-08T19:20:00Z",
+                  "user_name": "bihhan@stonybrook.edu"
+                },
+                {
+                  "end": "2025-11-11T20:07:00Z",
+                  "lease_id": "b33a3fc2-42b7-43f9-9f57-b00d651f39b8",
+                  "reservation_id": "993e1912-edb2-4329-baf0-ae4cedd0928f",
+                  "start": "2025-11-04T19:58:00Z",
+                  "user_name": "bihhan@stonybrook.edu"
+                },
+                {
+                  "end": "2025-11-11T20:07:00Z",
+                  "lease_id": "b33a3fc2-42b7-43f9-9f57-b00d651f39b8",
+                  "reservation_id": "993e1912-edb2-4329-baf0-ae4cedd0928f",
+                  "start": "2025-11-04T19:58:00Z",
+                  "user_name": "bihhan@stonybrook.edu"
+                }
+              ],
+              "resource_id": "3408"
+            },
+            {
+              "hostname": "P3-NVDIMM-001",
+              "node_uuid": "b828f7ea-7229-48c2-ba80-b1832f98c4ad",
+              "reservations": [
+                {
+                  "end": "2025-10-28T18:47:00Z",
+                  "lease_id": "e99475d9-0cf0-426d-962e-e17070a04c11",
+                  "reservation_id": "4cc79090-ca70-4e9f-bc99-8a828ed649d7",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "linjie.ma@rutgers.edu"
+                }
+              ],
+              "resource_id": "3306"
+            },
+            {
+              "hostname": "P3-NVDIMM-002",
+              "node_uuid": "21e3f190-ee10-4c38-aceb-64468a2355ef",
+              "reservations": [
+                {
+                  "end": "2025-10-28T16:00:00Z",
+                  "lease_id": "ac2580b0-c720-44f1-9068-92932b2aa88e",
+                  "reservation_id": "7d8466ee-57bc-40a2-bf89-7fe70e0f67b5",
+                  "start": "2025-08-26T15:51:00Z",
+                  "user_name": "jian@sosp.dev"
+                },
+                {
+                  "end": "2025-10-28T16:00:00Z",
+                  "lease_id": "ac2580b0-c720-44f1-9068-92932b2aa88e",
+                  "reservation_id": "7d8466ee-57bc-40a2-bf89-7fe70e0f67b5",
+                  "start": "2025-08-26T15:51:00Z",
+                  "user_name": "jian@sosp.dev"
+                }
+              ],
+              "resource_id": "3308"
+            },
+            {
+              "hostname": "P3-SSD-001",
+              "node_uuid": "6f8e4223-5141-479d-a452-5f4484cdaeb8",
+              "reservations": [
+                {
+                  "end": "2025-10-28T18:47:00Z",
+                  "lease_id": "e99475d9-0cf0-426d-962e-e17070a04c11",
+                  "reservation_id": "4cc79090-ca70-4e9f-bc99-8a828ed649d7",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "linjie.ma@rutgers.edu"
+                },
+                {
+                  "end": "2025-10-28T18:47:00Z",
+                  "lease_id": "e99475d9-0cf0-426d-962e-e17070a04c11",
+                  "reservation_id": "4cc79090-ca70-4e9f-bc99-8a828ed649d7",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "linjie.ma@rutgers.edu"
+                }
+              ],
+              "resource_id": "3305"
+            },
+            {
+              "hostname": "P3-SSD-002",
+              "node_uuid": "9a3d528e-b7ed-407e-bbf0-4bac74161204",
+              "reservations": [
+                {
+                  "end": "2025-10-28T18:47:00Z",
+                  "lease_id": "e99475d9-0cf0-426d-962e-e17070a04c11",
+                  "reservation_id": "4cc79090-ca70-4e9f-bc99-8a828ed649d7",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "linjie.ma@rutgers.edu"
+                },
+                {
+                  "end": "2025-10-28T18:47:00Z",
+                  "lease_id": "e99475d9-0cf0-426d-962e-e17070a04c11",
+                  "reservation_id": "4cc79090-ca70-4e9f-bc99-8a828ed649d7",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "linjie.ma@rutgers.edu"
+                }
+              ],
+              "resource_id": "3307"
+            },
+            {
+              "hostname": "P3-SSD-003",
+              "node_uuid": "75bd70e1-155b-4c53-93cf-c9746c42cfb8",
+              "reservations": [
+                {
+                  "end": "2025-10-28T18:47:00Z",
+                  "lease_id": "e99475d9-0cf0-426d-962e-e17070a04c11",
+                  "reservation_id": "4cc79090-ca70-4e9f-bc99-8a828ed649d7",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "linjie.ma@rutgers.edu"
+                },
+                {
+                  "end": "2025-10-28T18:47:00Z",
+                  "lease_id": "e99475d9-0cf0-426d-962e-e17070a04c11",
+                  "reservation_id": "4cc79090-ca70-4e9f-bc99-8a828ed649d7",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "linjie.ma@rutgers.edu"
+                }
+              ],
+              "resource_id": "3310"
+            },
+            {
+              "hostname": "P3-SSD-004",
+              "node_uuid": "d6cf10bd-2805-42a0-a14d-3fa1085ef7e1",
+              "reservations": [
+                {
+                  "end": "2025-10-29T17:28:00Z",
+                  "lease_id": "85d28c85-7b32-440e-8f80-d9245233b995",
+                  "reservation_id": "e062fe20-97db-4189-bd7c-4dbe8f52f442",
+                  "start": "2025-08-04T17:19:00Z",
+                  "user_name": "iamarefinniam@gmail.com"
+                },
+                {
+                  "end": "2025-10-29T17:28:00Z",
+                  "lease_id": "85d28c85-7b32-440e-8f80-d9245233b995",
+                  "reservation_id": "e062fe20-97db-4189-bd7c-4dbe8f52f442",
+                  "start": "2025-08-04T17:19:00Z",
+                  "user_name": "iamarefinniam@gmail.com"
+                }
+              ],
+              "resource_id": "3304"
+            },
+            {
+              "hostname": "P3-SSD-005",
+              "node_uuid": "868ba245-c229-4073-875f-46837f987de8",
+              "reservations": [
+                {
+                  "end": "2025-10-28T14:36:00Z",
+                  "lease_id": "ba59c4bc-76a9-4a6e-9ca9-0dca8292cfe7",
+                  "reservation_id": "493fc31e-d17e-43ad-8898-fd1aa2e32f26",
+                  "start": "2025-10-22T00:40:00Z",
+                  "user_name": "ffund@nyu.edu"
+                }
+              ],
+              "resource_id": "3303"
+            },
+            {
+              "hostname": "P3-SSD-006",
+              "node_uuid": "7b51e341-8cce-4f78-936c-b6756e6bcd0d",
+              "reservations": [
+                {
+                  "end": "2025-10-29T23:04:00Z",
+                  "lease_id": "5806a48d-6e56-4a1a-89c1-3231fa68c34d",
+                  "reservation_id": "a7db55ee-b06b-440c-b77b-5e1ce15c955b",
+                  "start": "2025-10-12T22:55:00Z",
+                  "user_name": "varuncg@mit.edu"
+                },
+                {
+                  "end": "2025-10-29T23:04:00Z",
+                  "lease_id": "5806a48d-6e56-4a1a-89c1-3231fa68c34d",
+                  "reservation_id": "a7db55ee-b06b-440c-b77b-5e1ce15c955b",
+                  "start": "2025-10-12T22:55:00Z",
+                  "user_name": "varuncg@mit.edu"
+                }
+              ],
+              "resource_id": "3318"
+            },
+            {
+              "hostname": "P3-SSD-007",
+              "node_uuid": "45dfcaba-0816-46b7-aa50-c62a32b1c1df",
+              "reservations": [
+                {
+                  "end": "2025-10-29T17:58:00Z",
+                  "lease_id": "2ede43d1-5a1e-4ab1-8cb7-c9d41d6fbc46",
+                  "reservation_id": "4f05db81-1376-481a-955d-4aff852a3f27",
+                  "start": "2025-10-22T17:49:00Z",
+                  "user_name": "haoyu.li@rutgers.edu"
+                },
+                {
+                  "end": "2025-10-29T17:58:00Z",
+                  "lease_id": "2ede43d1-5a1e-4ab1-8cb7-c9d41d6fbc46",
+                  "reservation_id": "4f05db81-1376-481a-955d-4aff852a3f27",
+                  "start": "2025-10-22T17:49:00Z",
+                  "user_name": "haoyu.li@rutgers.edu"
+                }
+              ],
+              "resource_id": "3319"
+            },
+            {
+              "hostname": "P3-SSD-008",
+              "node_uuid": "d53dd53a-936e-45ed-b623-6c96e8eb6316",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:42:00Z",
+                  "lease_id": "3a25879c-691f-44eb-ae91-b1ca028d05d4",
+                  "reservation_id": "61c0ec17-e5bf-4d23-bf7f-3da7d927320d",
+                  "start": "2025-10-02T00:33:00Z",
+                  "user_name": "galva057@csusm.edu"
+                },
+                {
+                  "end": "2025-10-29T00:42:00Z",
+                  "lease_id": "3a25879c-691f-44eb-ae91-b1ca028d05d4",
+                  "reservation_id": "61c0ec17-e5bf-4d23-bf7f-3da7d927320d",
+                  "start": "2025-10-02T00:33:00Z",
+                  "user_name": "galva057@csusm.edu"
+                }
+              ],
+              "resource_id": "3315"
+            },
+            {
+              "hostname": "P3-SSD-009",
+              "node_uuid": "4ad28a72-c19d-47d1-ae09-e54b77ed39d1",
+              "reservations": [
+                {
+                  "end": "2025-10-29T17:57:00Z",
+                  "lease_id": "adf52123-94fd-4b75-9060-dc15acf114e2",
+                  "reservation_id": "a59c79b3-76e8-418e-8f91-8bff3cf4b06c",
+                  "start": "2025-10-22T17:48:00Z",
+                  "user_name": "haoyu.li@rutgers.edu"
+                },
+                {
+                  "end": "2025-10-29T17:57:00Z",
+                  "lease_id": "adf52123-94fd-4b75-9060-dc15acf114e2",
+                  "reservation_id": "a59c79b3-76e8-418e-8f91-8bff3cf4b06c",
+                  "start": "2025-10-22T17:48:00Z",
+                  "user_name": "haoyu.li@rutgers.edu"
+                }
+              ],
+              "resource_id": "3316"
+            },
+            {
+              "hostname": "P3-SSD-010",
+              "node_uuid": "7ed407a7-98dd-4708-bf32-9e0ab50c9f68",
+              "reservations": [
+                {
+                  "end": "2025-10-31T13:37:00Z",
+                  "lease_id": "db75200c-c9c8-4040-b827-f897368de8b5",
+                  "reservation_id": "19ae27c2-e518-4ede-92a9-61ccbc0df5eb",
+                  "start": "2024-05-17T15:28:00Z",
+                  "user_name": "rayandrew@uchicago.edu"
+                },
+                {
+                  "end": "2025-10-31T13:37:00Z",
+                  "lease_id": "db75200c-c9c8-4040-b827-f897368de8b5",
+                  "reservation_id": "19ae27c2-e518-4ede-92a9-61ccbc0df5eb",
+                  "start": "2024-05-17T15:28:00Z",
+                  "user_name": "rayandrew@uchicago.edu"
+                },
+                {
+                  "end": "2025-11-08T18:14:00Z",
+                  "lease_id": "7ba47c76-cb15-4445-b31c-d25fa4c716cd",
+                  "reservation_id": "180a92f6-e9e5-4cb5-9e0a-a39a584b45cf",
+                  "start": "2025-11-01T18:05:00Z",
+                  "user_name": "williamnixon20@gmail.com"
+                }
+              ],
+              "resource_id": "3320"
+            },
+            {
+              "hostname": "gigaio-compute-01",
+              "node_uuid": "1134b490-9a5d-46ac-aa61-997cf0a4cd85",
+              "reservations": [
+                {
+                  "end": "2025-11-11T20:07:00Z",
+                  "lease_id": "b33a3fc2-42b7-43f9-9f57-b00d651f39b8",
+                  "reservation_id": "993e1912-edb2-4329-baf0-ae4cedd0928f",
+                  "start": "2025-11-04T19:58:00Z",
+                  "user_name": "bihhan@stonybrook.edu"
+                }
+              ],
+              "resource_id": "4937f505-87fe-446b-b4b6-299a9c8dbc1f"
+            },
+            {
+              "hostname": "gigaio-compute-02",
+              "node_uuid": "5f9eb1d8-bad8-42e3-bffe-0b4c5292154f",
+              "reservations": [
+                {
+                  "end": "2025-11-03T03:06:00Z",
+                  "lease_id": "7a991510-9ae4-4156-8356-3db42ef79961",
+                  "reservation_id": "84ccde76-4894-483d-b680-75e0d354bf1d",
+                  "start": "2025-10-14T02:57:00Z",
+                  "user_name": "mdear2@uic.edu"
+                },
+                {
+                  "end": "2025-11-03T03:06:00Z",
+                  "lease_id": "7a991510-9ae4-4156-8356-3db42ef79961",
+                  "reservation_id": "84ccde76-4894-483d-b680-75e0d354bf1d",
+                  "start": "2025-10-14T02:57:00Z",
+                  "user_name": "mdear2@uic.edu"
+                }
+              ],
+              "resource_id": "90493fb8-7e80-422a-9557-6f089fb30941"
+            },
+            {
+              "hostname": "gigaio-compute-03",
+              "node_uuid": "3daf5a6c-0aeb-4536-ad62-71e1818df4ba",
+              "reservations": [
+                {
+                  "end": "2025-10-28T16:05:00Z",
+                  "lease_id": "a4bb3f38-2605-4888-bef4-9633ac371844",
+                  "reservation_id": "db6caaff-e7cc-4c53-a87d-7eec8f1843c1",
+                  "start": "2025-10-21T15:55:00Z",
+                  "user_name": "hongzheng.wang@temple.edu"
+                },
+                {
+                  "end": "2025-10-28T16:05:00Z",
+                  "lease_id": "a4bb3f38-2605-4888-bef4-9633ac371844",
+                  "reservation_id": "db6caaff-e7cc-4c53-a87d-7eec8f1843c1",
+                  "start": "2025-10-21T15:55:00Z",
+                  "user_name": "hongzheng.wang@temple.edu"
+                }
+              ],
+              "resource_id": "71cd17be-c746-47f0-9e99-73d86ee483f0"
+            },
+            {
+              "hostname": "gigaio-compute-04",
+              "node_uuid": "67380d81-3107-4041-81c9-497e3ef04d49",
+              "reservations": [
+                {
+                  "end": "2025-11-01T06:02:00Z",
+                  "lease_id": "64eab511-1f28-41a6-bc86-002dd6ce9de5",
+                  "reservation_id": "50e39976-779e-4a66-8ad5-c5f5a8a1f23a",
+                  "start": "2025-10-26T05:54:00Z",
+                  "user_name": "m.nooruddin@txstate.edu"
+                },
+                {
+                  "end": "2025-11-01T06:02:00Z",
+                  "lease_id": "64eab511-1f28-41a6-bc86-002dd6ce9de5",
+                  "reservation_id": "50e39976-779e-4a66-8ad5-c5f5a8a1f23a",
+                  "start": "2025-10-26T05:54:00Z",
+                  "user_name": "m.nooruddin@txstate.edu"
+                }
+              ],
+              "resource_id": "5a2e17a4-8603-40ca-a056-07093b24308b"
+            },
+            {
+              "hostname": "gigaio-compute-05",
+              "node_uuid": "3e2bda13-207a-44bc-a800-0832ac7ebd6a",
+              "reservations": [
+                {
+                  "end": "2025-10-29T02:43:00Z",
+                  "lease_id": "ce82b964-5c9f-4ad5-88d6-aea76d272374",
+                  "reservation_id": "8ae21890-77da-4e48-81bf-00e5fe61826f",
+                  "start": "2025-10-22T07:55:00Z",
+                  "user_name": "fany@anl.gov"
+                },
+                {
+                  "end": "2025-11-04T19:26:00Z",
+                  "lease_id": "49a0d0e3-259b-4295-bbde-3873394ec651",
+                  "reservation_id": "a20aa41b-7ca9-4edb-bb44-3afd4a6ee50e",
+                  "start": "2025-10-29T02:55:00Z",
+                  "user_name": "fany@anl.gov"
+                },
+                {
+                  "end": "2025-11-10T19:28:00Z",
+                  "lease_id": "11785430-8e18-4ddf-bd48-c21bf6ea3787",
+                  "reservation_id": "fcd5c489-8bef-4d0d-bb24-a9befd8a5d86",
+                  "start": "2025-11-04T19:55:00Z",
+                  "user_name": "fany@anl.gov"
+                },
+                {
+                  "end": "2025-11-10T19:28:00Z",
+                  "lease_id": "11785430-8e18-4ddf-bd48-c21bf6ea3787",
+                  "reservation_id": "fcd5c489-8bef-4d0d-bb24-a9befd8a5d86",
+                  "start": "2025-11-04T19:55:00Z",
+                  "user_name": "fany@anl.gov"
+                },
+                {
+                  "end": "2025-11-16T19:40:00Z",
+                  "lease_id": "b7410359-5af7-47b6-8d7f-7659f3951aea",
+                  "reservation_id": "5b2a575b-b7d4-4517-a599-294188757e3a",
+                  "start": "2025-11-10T19:55:00Z",
+                  "user_name": "fany@anl.gov"
+                }
+              ],
+              "resource_id": "a2459a95-248b-42e8-b5ab-f35e3d61f38b"
+            },
+            {
+              "hostname": "gigaio-compute-06",
+              "node_uuid": "25ba0313-900d-4133-9bb3-9f622d743c2d",
+              "reservations": [
+                {
+                  "end": "2025-10-26T22:01:00Z",
+                  "lease_id": "dd7534a4-5012-4af1-af29-45947d918c8a",
+                  "reservation_id": "543fb60d-eb20-4ce6-b6a5-d5260f0f568c",
+                  "start": "2025-10-21T21:52:00Z",
+                  "user_name": "lkothuru@hawk.illinoistech.edu"
+                },
+                {
+                  "end": "2025-10-26T22:01:00Z",
+                  "lease_id": "dd7534a4-5012-4af1-af29-45947d918c8a",
+                  "reservation_id": "543fb60d-eb20-4ce6-b6a5-d5260f0f568c",
+                  "start": "2025-10-21T21:52:00Z",
+                  "user_name": "lkothuru@hawk.illinoistech.edu"
+                }
+              ],
+              "resource_id": "e1ef3e8c-9bd0-4f32-9b59-fe400780c303"
+            },
+            {
+              "hostname": "gigaio-compute-07",
+              "node_uuid": "14fb625f-3188-4a40-9a26-f202f70507f8",
+              "reservations": [
+                {
+                  "end": "2025-11-01T06:02:00Z",
+                  "lease_id": "64eab511-1f28-41a6-bc86-002dd6ce9de5",
+                  "reservation_id": "50e39976-779e-4a66-8ad5-c5f5a8a1f23a",
+                  "start": "2025-10-26T05:54:00Z",
+                  "user_name": "m.nooruddin@txstate.edu"
+                }
+              ],
+              "resource_id": "5c7b2c26-1c35-40e5-a499-c62960b3052d"
+            },
+            {
+              "hostname": "gigaio-compute-08",
+              "node_uuid": "bc6a158a-14fd-4e99-b64f-742ac13f59b8",
+              "reservations": [
+                {
+                  "end": "2025-10-30T04:38:00Z",
+                  "lease_id": "c24131ac-40b0-4bf3-aee6-f8b227846241",
+                  "reservation_id": "ce39d92c-5728-4056-9ea7-302b8c8e4af7",
+                  "start": "2025-10-23T04:29:00Z",
+                  "user_name": "viv.deng@mail.utoronto.ca"
+                },
+                {
+                  "end": "2025-10-30T04:38:00Z",
+                  "lease_id": "c24131ac-40b0-4bf3-aee6-f8b227846241",
+                  "reservation_id": "ce39d92c-5728-4056-9ea7-302b8c8e4af7",
+                  "start": "2025-10-23T04:29:00Z",
+                  "user_name": "viv.deng@mail.utoronto.ca"
+                }
+              ],
+              "resource_id": "8633d32f-7d0c-483e-af4b-04d4206928a5"
+            },
+            {
+              "hostname": "nc01",
+              "node_uuid": "fd6408d7-018f-49d0-8a58-965ef177e423",
+              "reservations": [
+                {
+                  "end": "2025-10-26T20:33:00Z",
+                  "lease_id": "49277f02-fa4e-49ab-8f50-c4555c74c252",
+                  "reservation_id": "1c44d0e2-2f45-4283-940e-748edbf87517",
+                  "start": "2025-10-24T20:24:00Z",
+                  "user_name": "xueli.daisy@gmail.com"
+                },
+                {
+                  "end": "2025-10-26T20:33:00Z",
+                  "lease_id": "49277f02-fa4e-49ab-8f50-c4555c74c252",
+                  "reservation_id": "1c44d0e2-2f45-4283-940e-748edbf87517",
+                  "start": "2025-10-24T20:24:00Z",
+                  "user_name": "xueli.daisy@gmail.com"
+                }
+              ],
+              "resource_id": "1057"
+            },
+            {
+              "hostname": "nc02",
+              "node_uuid": "d30580f2-dab2-4e9e-9a85-93aa7b768341",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                },
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "1132"
+            },
+            {
+              "hostname": "nc03",
+              "node_uuid": "cba40c26-f76a-4dce-95e0-a58da2ad699d",
+              "reservations": [
+                {
+                  "end": "2025-10-28T22:59:00Z",
+                  "lease_id": "9b6af138-efe6-4c13-9d9a-d36c453b545a",
+                  "reservation_id": "4f191f8c-6eb4-466e-a19e-77eddcfdbc81",
+                  "start": "2025-09-30T22:50:00Z",
+                  "user_name": "xiongxu1998@gmail.com"
+                },
+                {
+                  "end": "2025-10-28T22:59:00Z",
+                  "lease_id": "9b6af138-efe6-4c13-9d9a-d36c453b545a",
+                  "reservation_id": "4f191f8c-6eb4-466e-a19e-77eddcfdbc81",
+                  "start": "2025-09-30T22:50:00Z",
+                  "user_name": "xiongxu1998@gmail.com"
+                }
+              ],
+              "resource_id": "1133"
+            },
+            {
+              "hostname": "nc04",
+              "node_uuid": "1bff5f81-95b2-4d76-88b3-4a45610acb38",
+              "reservations": [
+                {
+                  "end": "2025-11-06T09:54:00Z",
+                  "lease_id": "4de50dc1-d3fc-4bdf-8a47-cef4d976e9bb",
+                  "reservation_id": "6f613a77-e48f-4a5f-93ee-9ad5175938fe",
+                  "start": "2024-12-01T09:45:00Z",
+                  "user_name": "sqasim@bu.edu"
+                },
+                {
+                  "end": "2025-11-06T09:54:00Z",
+                  "lease_id": "4de50dc1-d3fc-4bdf-8a47-cef4d976e9bb",
+                  "reservation_id": "6f613a77-e48f-4a5f-93ee-9ad5175938fe",
+                  "start": "2024-12-01T09:45:00Z",
+                  "user_name": "sqasim@bu.edu"
+                }
+              ],
+              "resource_id": "1134"
+            },
+            {
+              "hostname": "nc05",
+              "node_uuid": "ff9ebde7-582c-4a75-9ea0-bd3d154c33db",
+              "reservations": [
+                {
+                  "end": "2025-10-26T04:22:00Z",
+                  "lease_id": "1cae05fd-d0c9-4525-8943-65e81c78b32b",
+                  "reservation_id": "ef5e2569-bceb-4e1d-81ba-23c435e21abc",
+                  "start": "2025-10-18T04:13:00Z",
+                  "user_name": "danial.agw.2005@gmail.com"
+                },
+                {
+                  "end": "2025-10-26T04:22:00Z",
+                  "lease_id": "1cae05fd-d0c9-4525-8943-65e81c78b32b",
+                  "reservation_id": "ef5e2569-bceb-4e1d-81ba-23c435e21abc",
+                  "start": "2025-10-18T04:13:00Z",
+                  "user_name": "danial.agw.2005@gmail.com"
+                }
+              ],
+              "resource_id": "1135"
+            },
+            {
+              "hostname": "nc06",
+              "node_uuid": "44d95746-3573-47c2-8912-aaea639ed6ad",
+              "reservations": [
+                {
+                  "end": "2025-10-31T22:40:00Z",
+                  "lease_id": "1734743e-27ff-42a6-8a16-b1d96968e60e",
+                  "reservation_id": "e4c194ef-17a8-41d6-ad37-c181a8210583",
+                  "start": "2025-10-24T22:31:00Z",
+                  "user_name": "araman5@buffalo.edu"
+                },
+                {
+                  "end": "2025-10-31T22:40:00Z",
+                  "lease_id": "1734743e-27ff-42a6-8a16-b1d96968e60e",
+                  "reservation_id": "e4c194ef-17a8-41d6-ad37-c181a8210583",
+                  "start": "2025-10-24T22:31:00Z",
+                  "user_name": "araman5@buffalo.edu"
+                }
+              ],
+              "resource_id": "1136"
+            },
+            {
+              "hostname": "nc07",
+              "node_uuid": "b71a17ce-fce2-4346-b943-8c49298a06db",
+              "reservations": [
+                {
+                  "end": "2025-10-28T22:41:00Z",
+                  "lease_id": "ccda25ad-0c7b-4087-ace2-30ee60b8ad46",
+                  "reservation_id": "8eeddfa3-0ec5-40c3-bea8-d863532f3102",
+                  "start": "2025-10-07T22:32:00Z",
+                  "user_name": "jvgonzalez6@miners.utep.edu"
+                },
+                {
+                  "end": "2025-10-28T22:41:00Z",
+                  "lease_id": "ccda25ad-0c7b-4087-ace2-30ee60b8ad46",
+                  "reservation_id": "8eeddfa3-0ec5-40c3-bea8-d863532f3102",
+                  "start": "2025-10-07T22:32:00Z",
+                  "user_name": "jvgonzalez6@miners.utep.edu"
+                }
+              ],
+              "resource_id": "1137"
+            },
+            {
+              "hostname": "nc08",
+              "node_uuid": "8fb01824-cd0a-4bb3-9bfa-87d3f0dc4ada",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1138"
+            },
+            {
+              "hostname": "nc09",
+              "node_uuid": "4ebd7a4f-2e80-4dd5-b2f8-cdcbdce6fe2c",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1139"
+            },
+            {
+              "hostname": "nc10",
+              "node_uuid": "6715e9aa-146e-4a90-8316-b5d3ad5d2ed6",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1140"
+            },
+            {
+              "hostname": "nc11",
+              "node_uuid": "30a424b3-28a6-44bd-a4a6-d439439e8a09",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1141"
+            },
+            {
+              "hostname": "nc12",
+              "node_uuid": "7a3bde6b-ef18-458a-9ec7-0232188d6fc3",
+              "reservations": [
+                {
+                  "end": "2025-10-26T20:00:00Z",
+                  "lease_id": "fb765d12-f8f3-47c7-87a0-4759a55a360e",
+                  "reservation_id": "3d648320-1ac0-428f-b11d-ec26a202c8e6",
+                  "start": "2025-09-29T19:51:00Z",
+                  "user_name": "mingkai.li@columbia.edu"
+                },
+                {
+                  "end": "2025-10-26T20:00:00Z",
+                  "lease_id": "fb765d12-f8f3-47c7-87a0-4759a55a360e",
+                  "reservation_id": "3d648320-1ac0-428f-b11d-ec26a202c8e6",
+                  "start": "2025-09-29T19:51:00Z",
+                  "user_name": "mingkai.li@columbia.edu"
+                }
+              ],
+              "resource_id": "1142"
+            },
+            {
+              "hostname": "nc13",
+              "node_uuid": "2ea88b95-0b72-4cdc-847e-e089ae71bf41",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1143"
+            },
+            {
+              "hostname": "nc14",
+              "node_uuid": "979cfa5d-456b-45f6-8ed8-0d528dba7ba4",
+              "reservations": [
+                {
+                  "end": "2025-10-31T15:06:00Z",
+                  "lease_id": "413dd169-8ece-4ac8-b61b-c17487c580a1",
+                  "reservation_id": "49f39b47-30ff-4a2b-8e31-9e054ac1422d",
+                  "start": "2025-08-22T14:57:00Z",
+                  "user_name": "yxs33220@ucmo.edu"
+                },
+                {
+                  "end": "2025-10-31T15:06:00Z",
+                  "lease_id": "413dd169-8ece-4ac8-b61b-c17487c580a1",
+                  "reservation_id": "49f39b47-30ff-4a2b-8e31-9e054ac1422d",
+                  "start": "2025-08-22T14:57:00Z",
+                  "user_name": "yxs33220@ucmo.edu"
+                }
+              ],
+              "resource_id": "1144"
+            },
+            {
+              "hostname": "nc15",
+              "node_uuid": "581c40ec-c957-4399-b62a-d03d114dfb7c",
+              "reservations": [
+                {
+                  "end": "2025-10-31T15:06:00Z",
+                  "lease_id": "413dd169-8ece-4ac8-b61b-c17487c580a1",
+                  "reservation_id": "49f39b47-30ff-4a2b-8e31-9e054ac1422d",
+                  "start": "2025-08-22T14:57:00Z",
+                  "user_name": "yxs33220@ucmo.edu"
+                }
+              ],
+              "resource_id": "1145"
+            },
+            {
+              "hostname": "nc16",
+              "node_uuid": "32866b85-6ae1-4433-8561-1919a0b28712",
+              "reservations": [
+                {
+                  "end": "2025-10-30T09:28:00Z",
+                  "lease_id": "33e804e7-c4f6-4555-a4cf-f657f61d3144",
+                  "reservation_id": "833bd463-0cd3-4cae-affd-a358fc209394",
+                  "start": "2025-09-11T09:19:00Z",
+                  "user_name": "mdossena"
+                },
+                {
+                  "end": "2025-10-30T09:28:00Z",
+                  "lease_id": "33e804e7-c4f6-4555-a4cf-f657f61d3144",
+                  "reservation_id": "833bd463-0cd3-4cae-affd-a358fc209394",
+                  "start": "2025-09-11T09:19:00Z",
+                  "user_name": "mdossena"
+                }
+              ],
+              "resource_id": "1146"
+            },
+            {
+              "hostname": "nc17",
+              "node_uuid": "a9e465a9-8b6d-453c-8186-f4297efba3cd",
+              "reservations": [
+                {
+                  "end": "2025-10-30T09:28:00Z",
+                  "lease_id": "33e804e7-c4f6-4555-a4cf-f657f61d3144",
+                  "reservation_id": "833bd463-0cd3-4cae-affd-a358fc209394",
+                  "start": "2025-09-11T09:19:00Z",
+                  "user_name": "mdossena"
+                }
+              ],
+              "resource_id": "1147"
+            },
+            {
+              "hostname": "nc18",
+              "node_uuid": "d74f4c82-180f-48bd-b193-307391e80f6e",
+              "reservations": [
+                {
+                  "end": "2025-10-30T09:28:00Z",
+                  "lease_id": "33e804e7-c4f6-4555-a4cf-f657f61d3144",
+                  "reservation_id": "833bd463-0cd3-4cae-affd-a358fc209394",
+                  "start": "2025-09-11T09:19:00Z",
+                  "user_name": "mdossena"
+                }
+              ],
+              "resource_id": "1148"
+            },
+            {
+              "hostname": "nc19",
+              "node_uuid": "480ef54f-41fa-4058-b880-d61acf802f0e",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1149"
+            },
+            {
+              "hostname": "nc21",
+              "node_uuid": "9d478047-bca8-4987-ac52-616862d57b70",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1151"
+            },
+            {
+              "hostname": "nc24",
+              "node_uuid": "61ba06af-1f7b-4ea5-8e85-6519c0187c68",
+              "reservations": [
+                {
+                  "end": "2025-10-31T14:59:00Z",
+                  "lease_id": "70a8c4be-4ffd-4edd-8ed2-1befb5779553",
+                  "reservation_id": "9cbad516-b4b0-4036-8d81-bb2a69d8cf07",
+                  "start": "2025-08-22T14:50:00Z",
+                  "user_name": "yxs33220@ucmo.edu"
+                },
+                {
+                  "end": "2025-10-31T14:59:00Z",
+                  "lease_id": "70a8c4be-4ffd-4edd-8ed2-1befb5779553",
+                  "reservation_id": "9cbad516-b4b0-4036-8d81-bb2a69d8cf07",
+                  "start": "2025-08-22T14:50:00Z",
+                  "user_name": "yxs33220@ucmo.edu"
+                }
+              ],
+              "resource_id": "1154"
+            },
+            {
+              "hostname": "nc25",
+              "node_uuid": "e46f6e1a-38f5-451d-a5ed-3b82a6444fcb",
+              "reservations": [
+                {
+                  "end": "2025-10-27T03:41:00Z",
+                  "lease_id": "920da193-9e08-4805-a02e-b6ae961ac2d1",
+                  "reservation_id": "f67cd7b5-627e-4d05-aafc-dc876fd5f6b2",
+                  "start": "2025-10-21T03:32:00Z",
+                  "user_name": "dylancouch@ksu.edu"
+                },
+                {
+                  "end": "2025-10-27T03:41:00Z",
+                  "lease_id": "920da193-9e08-4805-a02e-b6ae961ac2d1",
+                  "reservation_id": "f67cd7b5-627e-4d05-aafc-dc876fd5f6b2",
+                  "start": "2025-10-21T03:32:00Z",
+                  "user_name": "dylancouch@ksu.edu"
+                }
+              ],
+              "resource_id": "1155"
+            },
+            {
+              "hostname": "nc26",
+              "node_uuid": "448de3a5-3200-4e6e-a4c3-e5348e5e70af",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1156"
+            },
+            {
+              "hostname": "nc27",
+              "node_uuid": "21f7c8f2-b527-42a9-b8f1-c23cb6bdc91a",
+              "reservations": [
+                {
+                  "end": "2025-10-30T01:00:00Z",
+                  "lease_id": "37a1386d-fbaf-4cb5-bd1c-e2122f69171a",
+                  "reservation_id": "386db3da-f26c-4c12-ac3a-f31268b7c205",
+                  "start": "2025-08-29T00:51:00Z",
+                  "user_name": "qc2779@my.utexas.edu"
+                },
+                {
+                  "end": "2025-10-30T01:00:00Z",
+                  "lease_id": "37a1386d-fbaf-4cb5-bd1c-e2122f69171a",
+                  "reservation_id": "386db3da-f26c-4c12-ac3a-f31268b7c205",
+                  "start": "2025-08-29T00:51:00Z",
+                  "user_name": "qc2779@my.utexas.edu"
+                }
+              ],
+              "resource_id": "1157"
+            },
+            {
+              "hostname": "nc28",
+              "node_uuid": "303310ee-baf0-4bd3-b3c9-7f28d14936e4",
+              "reservations": [
+                {
+                  "end": "2025-10-30T01:00:00Z",
+                  "lease_id": "37a1386d-fbaf-4cb5-bd1c-e2122f69171a",
+                  "reservation_id": "386db3da-f26c-4c12-ac3a-f31268b7c205",
+                  "start": "2025-08-29T00:51:00Z",
+                  "user_name": "qc2779@my.utexas.edu"
+                }
+              ],
+              "resource_id": "1158"
+            },
+            {
+              "hostname": "nc29",
+              "node_uuid": "3993facb-7a19-4847-adeb-30eca59aebfa",
+              "reservations": [
+                {
+                  "end": "2025-10-30T01:00:00Z",
+                  "lease_id": "37a1386d-fbaf-4cb5-bd1c-e2122f69171a",
+                  "reservation_id": "386db3da-f26c-4c12-ac3a-f31268b7c205",
+                  "start": "2025-08-29T00:51:00Z",
+                  "user_name": "qc2779@my.utexas.edu"
+                }
+              ],
+              "resource_id": "1159"
+            },
+            {
+              "hostname": "nc30",
+              "node_uuid": "5ae22a06-b2dc-4d5c-b51e-d95e39e839dc",
+              "reservations": [
+                {
+                  "end": "2025-10-30T04:17:00Z",
+                  "lease_id": "4476f6eb-0316-4729-afc2-99e941f94bab",
+                  "reservation_id": "76d33e3d-785d-4cbe-a2ab-b18b6763d252",
+                  "start": "2025-10-23T04:08:00Z",
+                  "user_name": "worangjana@gmail.com"
+                },
+                {
+                  "end": "2025-10-30T04:17:00Z",
+                  "lease_id": "4476f6eb-0316-4729-afc2-99e941f94bab",
+                  "reservation_id": "76d33e3d-785d-4cbe-a2ab-b18b6763d252",
+                  "start": "2025-10-23T04:08:00Z",
+                  "user_name": "worangjana@gmail.com"
+                }
+              ],
+              "resource_id": "1160"
+            },
+            {
+              "hostname": "nc31",
+              "node_uuid": "ba374279-bd33-4b4a-b2fe-2deea6746374",
+              "reservations": [
+                {
+                  "end": "2025-11-02T17:14:00Z",
+                  "lease_id": "8425f904-6fb5-4014-b68f-c964e45b2593",
+                  "reservation_id": "f08e5c03-5f0e-466b-850b-93e27c83325c",
+                  "start": "2025-08-16T00:35:00Z",
+                  "user_name": "sliu27@wm.edu"
+                },
+                {
+                  "end": "2025-11-02T17:14:00Z",
+                  "lease_id": "8425f904-6fb5-4014-b68f-c964e45b2593",
+                  "reservation_id": "f08e5c03-5f0e-466b-850b-93e27c83325c",
+                  "start": "2025-08-16T00:35:00Z",
+                  "user_name": "sliu27@wm.edu"
+                }
+              ],
+              "resource_id": "1161"
+            },
+            {
+              "hostname": "nc32",
+              "node_uuid": "9e7c95b4-e5a4-4356-af87-4fc1b6262894",
+              "reservations": [
+                {
+                  "end": "2025-11-02T17:14:00Z",
+                  "lease_id": "8425f904-6fb5-4014-b68f-c964e45b2593",
+                  "reservation_id": "f08e5c03-5f0e-466b-850b-93e27c83325c",
+                  "start": "2025-08-16T00:35:00Z",
+                  "user_name": "sliu27@wm.edu"
+                }
+              ],
+              "resource_id": "1162"
+            },
+            {
+              "hostname": "nc33",
+              "node_uuid": "8c7b8067-cfa4-49b4-9812-778e78631bf8",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1654"
+            },
+            {
+              "hostname": "nc34",
+              "node_uuid": "219a58dd-a3b2-4c4f-8517-ab72bc82c741",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                },
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "1640"
+            },
+            {
+              "hostname": "nc35",
+              "node_uuid": "03129bbe-330c-4591-bc17-96d7e15d3e74",
+              "reservations": [
+                {
+                  "end": "2025-10-30T22:50:00Z",
+                  "lease_id": "4b3e216a-ff50-4aed-a13c-812a78bea4f5",
+                  "reservation_id": "1299ffb0-5777-4033-b5d1-010befd50d9d",
+                  "start": "2025-09-16T21:41:00Z",
+                  "user_name": "yx102@rice.edu"
+                },
+                {
+                  "end": "2025-10-30T22:50:00Z",
+                  "lease_id": "4b3e216a-ff50-4aed-a13c-812a78bea4f5",
+                  "reservation_id": "1299ffb0-5777-4033-b5d1-010befd50d9d",
+                  "start": "2025-09-16T21:41:00Z",
+                  "user_name": "yx102@rice.edu"
+                }
+              ],
+              "resource_id": "1659"
+            },
+            {
+              "hostname": "nc36",
+              "node_uuid": "e7388428-f23f-4404-9222-57e77ccef41b",
+              "reservations": [
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                },
+                {
+                  "end": "2025-10-29T00:47:00Z",
+                  "lease_id": "1bcdc626-5ed9-425b-956f-395fbd8c7d5a",
+                  "reservation_id": "8869e3c0-c58e-4788-b173-df2e95f27521",
+                  "start": "2025-10-23T00:38:00Z",
+                  "user_name": "mgovinde@purdue.edu"
+                }
+              ],
+              "resource_id": "1667"
+            },
+            {
+              "hostname": "nc37",
+              "node_uuid": "36da963d-4cf5-45ca-b300-756572812c98",
+              "reservations": [
+                {
+                  "end": "2025-10-29T09:28:00Z",
+                  "lease_id": "f79927af-66ab-4c49-acc8-078afebed8a5",
+                  "reservation_id": "a1de8bb6-6e5c-42e9-ad5b-427f7a74857a",
+                  "start": "2025-10-22T09:19:00Z",
+                  "user_name": "augusto.leogrande@gmail.com"
+                },
+                {
+                  "end": "2025-10-29T09:28:00Z",
+                  "lease_id": "f79927af-66ab-4c49-acc8-078afebed8a5",
+                  "reservation_id": "a1de8bb6-6e5c-42e9-ad5b-427f7a74857a",
+                  "start": "2025-10-22T09:19:00Z",
+                  "user_name": "augusto.leogrande@gmail.com"
+                }
+              ],
+              "resource_id": "1630"
+            },
+            {
+              "hostname": "nc38",
+              "node_uuid": "21511c7b-39b3-4cfd-aa8b-f519b43aeeba",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1740"
+            },
+            {
+              "hostname": "nc39",
+              "node_uuid": "5b5c7005-b345-4cc1-ae72-83654da15107",
+              "reservations": [
+                {
+                  "end": "2025-10-28T19:34:00Z",
+                  "lease_id": "6edb41ae-998e-4c1b-a698-9e5d37795681",
+                  "reservation_id": "9dfcf9c1-64ef-4b2b-8cd5-fbc06f83097e",
+                  "start": "2025-10-07T19:25:00Z",
+                  "user_name": "jvgonzalez6@miners.utep.edu"
+                },
+                {
+                  "end": "2025-10-28T19:34:00Z",
+                  "lease_id": "6edb41ae-998e-4c1b-a698-9e5d37795681",
+                  "reservation_id": "9dfcf9c1-64ef-4b2b-8cd5-fbc06f83097e",
+                  "start": "2025-10-07T19:25:00Z",
+                  "user_name": "jvgonzalez6@miners.utep.edu"
+                }
+              ],
+              "resource_id": "1706"
+            },
+            {
+              "hostname": "nc40",
+              "node_uuid": "b73a5add-2104-4645-95f1-bec85d0c718e",
+              "reservations": [
+                {
+                  "end": "2025-11-02T05:39:00Z",
+                  "lease_id": "8d8a8b34-6627-4568-bf2f-00550c5551f0",
+                  "reservation_id": "26e5dcf4-6904-42e8-bd92-0d36090451ec",
+                  "start": "2025-10-19T05:30:00Z",
+                  "user_name": "nunziomessineo7@gmail.com"
+                },
+                {
+                  "end": "2025-11-02T05:39:00Z",
+                  "lease_id": "8d8a8b34-6627-4568-bf2f-00550c5551f0",
+                  "reservation_id": "26e5dcf4-6904-42e8-bd92-0d36090451ec",
+                  "start": "2025-10-19T05:30:00Z",
+                  "user_name": "nunziomessineo7@gmail.com"
+                }
+              ],
+              "resource_id": "1613"
+            },
+            {
+              "hostname": "nc41",
+              "node_uuid": "81b02796-a84a-413b-a207-67e8fd04cc77",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1635"
+            },
+            {
+              "hostname": "nc42",
+              "node_uuid": "490a3354-5ed2-4330-9e64-c3bcfd7519d4",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1682"
+            },
+            {
+              "hostname": "nc43",
+              "node_uuid": "36bcdda5-9564-4c87-964b-fc9472ef6c4c",
+              "reservations": [
+                {
+                  "end": "2025-10-31T16:58:00Z",
+                  "lease_id": "879cb0a1-06cd-4b50-a404-13ed3645a84e",
+                  "reservation_id": "ff4a965d-c1bd-4359-9e51-b1b67dfb1a57",
+                  "start": "2025-09-26T16:49:00Z",
+                  "user_name": "nikkilee@ucdavis.edu"
+                },
+                {
+                  "end": "2025-10-31T16:58:00Z",
+                  "lease_id": "879cb0a1-06cd-4b50-a404-13ed3645a84e",
+                  "reservation_id": "ff4a965d-c1bd-4359-9e51-b1b67dfb1a57",
+                  "start": "2025-09-26T16:49:00Z",
+                  "user_name": "nikkilee@ucdavis.edu"
+                }
+              ],
+              "resource_id": "1716"
+            },
+            {
+              "hostname": "nc44",
+              "node_uuid": "debd9df3-9529-416d-90c6-a0ffe65c7967",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1715"
+            },
+            {
+              "hostname": "nc45",
+              "node_uuid": "de729ebb-2d75-401e-b2eb-3739bd28317f",
+              "reservations": [
+                {
+                  "end": "2025-10-29T05:45:00Z",
+                  "lease_id": "525ebc03-f4c4-4dab-969c-9fbc10d28cf4",
+                  "reservation_id": "b5510070-b12f-4744-8007-4d48560e4ce5",
+                  "start": "2025-10-24T05:36:00Z",
+                  "user_name": "smendoza9@hawk.illinoistech.edu"
+                },
+                {
+                  "end": "2025-10-29T05:45:00Z",
+                  "lease_id": "525ebc03-f4c4-4dab-969c-9fbc10d28cf4",
+                  "reservation_id": "b5510070-b12f-4744-8007-4d48560e4ce5",
+                  "start": "2025-10-24T05:36:00Z",
+                  "user_name": "smendoza9@hawk.illinoistech.edu"
+                }
+              ],
+              "resource_id": "1603"
+            },
+            {
+              "hostname": "nc46",
+              "node_uuid": "7d1815aa-48b7-49a0-b64d-1a3db83d5cf3",
+              "reservations": [
+                {
+                  "end": "2025-11-01T19:31:00Z",
+                  "lease_id": "fc79ab7c-941c-45fe-a78d-9c6600a73874",
+                  "reservation_id": "5f18fec5-cf6e-49d5-bac4-95a1cd8108de",
+                  "start": "2025-10-25T19:22:00Z",
+                  "user_name": "zxli7@uchicago.edu"
+                },
+                {
+                  "end": "2025-11-01T19:31:00Z",
+                  "lease_id": "fc79ab7c-941c-45fe-a78d-9c6600a73874",
+                  "reservation_id": "5f18fec5-cf6e-49d5-bac4-95a1cd8108de",
+                  "start": "2025-10-25T19:22:00Z",
+                  "user_name": "zxli7@uchicago.edu"
+                }
+              ],
+              "resource_id": "1669"
+            },
+            {
+              "hostname": "nc47",
+              "node_uuid": "9f63b9c7-8b73-4a46-9826-2efd7aca04c1",
+              "reservations": [
+                {
+                  "end": "2025-10-28T22:34:00Z",
+                  "lease_id": "75b6392c-6adf-4a7f-a7ad-bbb0ab313856",
+                  "reservation_id": "a4bc08e5-614a-4c91-9f91-b4906335c571",
+                  "start": "2025-09-22T22:25:00Z",
+                  "user_name": "asm68153@uga.edu"
+                },
+                {
+                  "end": "2025-10-28T22:34:00Z",
+                  "lease_id": "75b6392c-6adf-4a7f-a7ad-bbb0ab313856",
+                  "reservation_id": "a4bc08e5-614a-4c91-9f91-b4906335c571",
+                  "start": "2025-09-22T22:25:00Z",
+                  "user_name": "asm68153@uga.edu"
+                }
+              ],
+              "resource_id": "1691"
+            },
+            {
+              "hostname": "nc48",
+              "node_uuid": "fa6fbe1e-f0cf-4d92-be60-88d8765594d7",
+              "reservations": [
+                {
+                  "end": "2025-10-29T22:08:00Z",
+                  "lease_id": "9f3ece74-4268-4711-8678-055186a45737",
+                  "reservation_id": "4d6aa6c8-02a0-4543-8b51-e25de051dcfc",
+                  "start": "2025-10-15T21:59:00Z",
+                  "user_name": "chrislowzhengxi@uchicago.edu"
+                },
+                {
+                  "end": "2025-10-29T22:08:00Z",
+                  "lease_id": "9f3ece74-4268-4711-8678-055186a45737",
+                  "reservation_id": "4d6aa6c8-02a0-4543-8b51-e25de051dcfc",
+                  "start": "2025-10-15T21:59:00Z",
+                  "user_name": "chrislowzhengxi@uchicago.edu"
+                }
+              ],
+              "resource_id": "1747"
+            },
+            {
+              "hostname": "nc49",
+              "node_uuid": "f6da59d3-676e-4d30-8c5f-20cee1b9ed3b",
+              "reservations": [
+                {
+                  "end": "2025-10-28T00:04:00Z",
+                  "lease_id": "9fa6954c-ff5e-4b4f-9ec2-1638199a8194",
+                  "reservation_id": "5690b77e-82d6-4024-b8c1-5adbc4d2a23b",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "kshah136@hawk.illinoistech.edu"
+                },
+                {
+                  "end": "2025-10-28T00:04:00Z",
+                  "lease_id": "9fa6954c-ff5e-4b4f-9ec2-1638199a8194",
+                  "reservation_id": "5690b77e-82d6-4024-b8c1-5adbc4d2a23b",
+                  "start": "2025-10-21T19:55:00Z",
+                  "user_name": "kshah136@hawk.illinoistech.edu"
+                }
+              ],
+              "resource_id": "1733"
+            },
+            {
+              "hostname": "nc50",
+              "node_uuid": "1526e829-8a5f-4f84-9745-84abf9ae7713",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1731"
+            },
+            {
+              "hostname": "nc51",
+              "node_uuid": "830a4333-a419-4346-a695-c1c0debc89a1",
+              "reservations": [
+                {
+                  "end": "2025-10-28T00:04:00Z",
+                  "lease_id": "173f4699-6c6d-46ee-9cda-31200939897b",
+                  "reservation_id": "73eb37c8-fa02-4dce-ae6b-00bcf69002f0",
+                  "start": "2025-10-21T16:55:00Z",
+                  "user_name": "ashah186@hawk.illinoistech.edu"
+                },
+                {
+                  "end": "2025-10-28T00:04:00Z",
+                  "lease_id": "173f4699-6c6d-46ee-9cda-31200939897b",
+                  "reservation_id": "73eb37c8-fa02-4dce-ae6b-00bcf69002f0",
+                  "start": "2025-10-21T16:55:00Z",
+                  "user_name": "ashah186@hawk.illinoistech.edu"
+                }
+              ],
+              "resource_id": "1686"
+            },
+            {
+              "hostname": "nc52",
+              "node_uuid": "cd5a237e-1a4c-4fca-b25c-0d5a051e2865",
+              "reservations": [
+                {
+                  "end": "2025-11-01T16:20:00Z",
+                  "lease_id": "22be5ab6-96c9-4d01-b9f2-fa9dfe308287",
+                  "reservation_id": "50c9d907-db4f-4b7e-a68a-e00b85fc2953",
+                  "start": "2025-10-25T16:11:00Z",
+                  "user_name": "jenniferbudim@gmail.com"
+                },
+                {
+                  "end": "2025-11-01T16:20:00Z",
+                  "lease_id": "22be5ab6-96c9-4d01-b9f2-fa9dfe308287",
+                  "reservation_id": "50c9d907-db4f-4b7e-a68a-e00b85fc2953",
+                  "start": "2025-10-25T16:11:00Z",
+                  "user_name": "jenniferbudim@gmail.com"
+                }
+              ],
+              "resource_id": "1721"
+            },
+            {
+              "hostname": "nc53",
+              "node_uuid": "37c796cb-b4c5-4b9d-8088-06065b32631b",
+              "reservations": [
+                {
+                  "end": "2025-10-30T18:24:00Z",
+                  "lease_id": "da8aa623-ab41-45a4-a5e8-f1edff53ebca",
+                  "reservation_id": "32ea19a3-f3c1-44fa-aec7-e0f7866f7155",
+                  "start": "2025-09-19T02:15:00Z",
+                  "user_name": "nikkilee@ucdavis.edu"
+                },
+                {
+                  "end": "2025-10-30T18:24:00Z",
+                  "lease_id": "da8aa623-ab41-45a4-a5e8-f1edff53ebca",
+                  "reservation_id": "32ea19a3-f3c1-44fa-aec7-e0f7866f7155",
+                  "start": "2025-09-19T02:15:00Z",
+                  "user_name": "nikkilee@ucdavis.edu"
+                }
+              ],
+              "resource_id": "1694"
+            },
+            {
+              "hostname": "nc54",
+              "node_uuid": "eba60b5f-8bd0-470c-8aa9-ffa1743eb35f",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1650"
+            },
+            {
+              "hostname": "nc55",
+              "node_uuid": "d847a8c8-1aa0-41d0-936f-ff5a473b4fcb",
+              "reservations": [
+                {
+                  "end": "2025-10-26T10:20:00Z",
+                  "lease_id": "d6dbc602-c8a7-4c8f-96e8-8a96219ae287",
+                  "reservation_id": "3ca00087-631e-4fb1-852d-8b1eb98a7484",
+                  "start": "2025-10-23T08:55:00Z",
+                  "user_name": "vbent01@jaguar.tamu.edu"
+                },
+                {
+                  "end": "2025-10-26T10:20:00Z",
+                  "lease_id": "d6dbc602-c8a7-4c8f-96e8-8a96219ae287",
+                  "reservation_id": "3ca00087-631e-4fb1-852d-8b1eb98a7484",
+                  "start": "2025-10-23T08:55:00Z",
+                  "user_name": "vbent01@jaguar.tamu.edu"
+                }
+              ],
+              "resource_id": "1741"
+            },
+            {
+              "hostname": "nc56",
+              "node_uuid": "9d34ccb6-bf0a-4d70-a440-d444c969ec23",
+              "reservations": [
+                {
+                  "end": "2025-11-03T15:03:00Z",
+                  "lease_id": "7a9cfa2b-b071-4975-8faa-147507214ff7",
+                  "reservation_id": "01b1320d-ddeb-4d95-8d05-4b116d4894cd",
+                  "start": "2025-09-29T14:54:00Z",
+                  "user_name": "stevenyang0316@gmail.com"
+                },
+                {
+                  "end": "2025-11-03T15:03:00Z",
+                  "lease_id": "7a9cfa2b-b071-4975-8faa-147507214ff7",
+                  "reservation_id": "01b1320d-ddeb-4d95-8d05-4b116d4894cd",
+                  "start": "2025-09-29T14:54:00Z",
+                  "user_name": "stevenyang0316@gmail.com"
+                }
+              ],
+              "resource_id": "1692"
+            },
+            {
+              "hostname": "nc57",
+              "node_uuid": "97c958b0-dc6e-4747-91c8-c7eead256734",
+              "reservations": [
+                {
+                  "end": "2025-10-29T03:56:00Z",
+                  "lease_id": "59216e1a-4c16-4a86-af25-2b6bba3aa544",
+                  "reservation_id": "ef22eac0-79ac-4064-8b45-c3da80f049ba",
+                  "start": "2025-07-23T03:47:00Z",
+                  "user_name": "yxs33220@ucmo.edu"
+                },
+                {
+                  "end": "2025-10-29T03:56:00Z",
+                  "lease_id": "59216e1a-4c16-4a86-af25-2b6bba3aa544",
+                  "reservation_id": "ef22eac0-79ac-4064-8b45-c3da80f049ba",
+                  "start": "2025-07-23T03:47:00Z",
+                  "user_name": "yxs33220@ucmo.edu"
+                }
+              ],
+              "resource_id": "1670"
+            },
+            {
+              "hostname": "nc58",
+              "node_uuid": "a9895567-38de-4317-935b-a5e9d97b6cea",
+              "reservations": [
+                {
+                  "end": "2025-10-29T20:41:00Z",
+                  "lease_id": "286f6189-e5ba-4bfd-a144-702bc5e3341d",
+                  "reservation_id": "36f08657-79fc-4af8-b6c4-8e181c34e1a0",
+                  "start": "2025-10-23T20:32:00Z",
+                  "user_name": "hpatel182@hawk.illinoistech.edu"
+                },
+                {
+                  "end": "2025-10-29T20:41:00Z",
+                  "lease_id": "286f6189-e5ba-4bfd-a144-702bc5e3341d",
+                  "reservation_id": "36f08657-79fc-4af8-b6c4-8e181c34e1a0",
+                  "start": "2025-10-23T20:32:00Z",
+                  "user_name": "hpatel182@hawk.illinoistech.edu"
+                }
+              ],
+              "resource_id": "1696"
+            },
+            {
+              "hostname": "nc59",
+              "node_uuid": "a61fc0a9-3716-4758-93bf-56a4dccf195f",
+              "reservations": [
+                {
+                  "end": "2025-11-01T18:49:00Z",
+                  "lease_id": "b933dc71-84ec-4245-a12e-15cde712e6d2",
+                  "reservation_id": "9058a421-fb37-4719-bc6e-40df79dc1e7c",
+                  "start": "2025-10-18T18:40:00Z",
+                  "user_name": "kaushiks@bu.edu"
+                },
+                {
+                  "end": "2025-11-01T18:49:00Z",
+                  "lease_id": "b933dc71-84ec-4245-a12e-15cde712e6d2",
+                  "reservation_id": "9058a421-fb37-4719-bc6e-40df79dc1e7c",
+                  "start": "2025-10-18T18:40:00Z",
+                  "user_name": "kaushiks@bu.edu"
+                }
+              ],
+              "resource_id": "1672"
+            },
+            {
+              "hostname": "nc60",
+              "node_uuid": "30e03bc2-04b7-4d29-9bba-27facca111ae",
+              "reservations": [
+                {
+                  "end": "2025-10-30T15:41:00Z",
+                  "lease_id": "17e10e3a-e759-41e0-8301-021bb8279fe2",
+                  "reservation_id": "033d6063-c07f-4121-b289-36d19516e50f",
+                  "start": "2025-10-24T15:32:00Z",
+                  "user_name": "tmand02@jaguar.tamu.edu"
+                },
+                {
+                  "end": "2025-10-30T15:41:00Z",
+                  "lease_id": "17e10e3a-e759-41e0-8301-021bb8279fe2",
+                  "reservation_id": "033d6063-c07f-4121-b289-36d19516e50f",
+                  "start": "2025-10-24T15:32:00Z",
+                  "user_name": "tmand02@jaguar.tamu.edu"
+                }
+              ],
+              "resource_id": "1627"
+            },
+            {
+              "hostname": "nc61",
+              "node_uuid": "149a9db5-e312-4d7b-bc51-bf1a33329179",
+              "reservations": [
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                },
+                {
+                  "end": "2025-11-03T18:01:00Z",
+                  "lease_id": "4fc93859-d0b0-43af-aa29-061b115d7aa8",
+                  "reservation_id": "22d4049e-4ed6-4796-98ab-c28975e1a730",
+                  "start": "2025-09-29T17:52:00Z",
+                  "user_name": "sh90804@uga.edu"
+                }
+              ],
+              "resource_id": "1699"
+            },
+            {
+              "hostname": "nc62",
+              "node_uuid": "80a084c0-4198-42fc-87ae-9fc1899eb336",
+              "reservations": [
+                {
+                  "end": "2025-10-28T19:34:00Z",
+                  "lease_id": "6edb41ae-998e-4c1b-a698-9e5d37795681",
+                  "reservation_id": "9dfcf9c1-64ef-4b2b-8cd5-fbc06f83097e",
+                  "start": "2025-10-07T19:25:00Z",
+                  "user_name": "jvgonzalez6@miners.utep.edu"
+                }
+              ],
+              "resource_id": "1710"
+            },
+            {
+              "hostname": "nc63",
+              "node_uuid": "b0194ee7-9866-4de1-a86d-e2ffd4a3c58a",
+              "reservations": [
+                {
+                  "end": "2025-11-01T17:00:00Z",
+                  "lease_id": "fe7a0b62-1f51-4d60-8f0c-3d3cc3e9c74d",
+                  "reservation_id": "b5f9177f-ba73-40a6-af3f-05259f77e8b2",
+                  "start": "2025-10-18T16:51:00Z",
+                  "user_name": "kaushiks@bu.edu"
+                },
+                {
+                  "end": "2025-11-01T17:00:00Z",
+                  "lease_id": "fe7a0b62-1f51-4d60-8f0c-3d3cc3e9c74d",
+                  "reservation_id": "b5f9177f-ba73-40a6-af3f-05259f77e8b2",
+                  "start": "2025-10-18T16:51:00Z",
+                  "user_name": "kaushiks@bu.edu"
+                }
+              ],
+              "resource_id": "1742"
+            },
+            {
+              "hostname": "nc64",
+              "node_uuid": "4a351095-4f77-4a68-88c7-a306b67b2269",
+              "reservations": [
+                {
+                  "end": "2025-10-30T13:29:00Z",
+                  "lease_id": "ddf47347-bf13-417c-9a35-5e3b0389c1ae",
+                  "reservation_id": "e21ed7e6-0bc0-4d32-9e84-a28bd10962cd",
+                  "start": "2025-09-12T01:20:00Z",
+                  "user_name": "nikkilee@ucdavis.edu"
+                },
+                {
+                  "end": "2025-10-30T13:29:00Z",
+                  "lease_id": "ddf47347-bf13-417c-9a35-5e3b0389c1ae",
+                  "reservation_id": "e21ed7e6-0bc0-4d32-9e84-a28bd10962cd",
+                  "start": "2025-09-12T01:20:00Z",
+                  "user_name": "nikkilee@ucdavis.edu"
+                }
+              ],
+              "resource_id": "1598"
+            }
+          ]
+        }
+      ],
+      "display_name": "Unknown Site",
+      "site_id": "unknown"
+    }
+  ],
+  "source": "allocations_file",
+  "stats": {
+    "nodes_with_allocations": 132,
+    "total_allocations": 138,
+    "total_nodes": 264
+  },
+  "unmatched_allocations": []
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "resource_id": "1057",
+    "reservations": [
+      {
+        "id": "res-block-1",
+        "lease_id": "lease-busy-1",
+        "start_date": "2025-10-30T10:00:00.000000",
+        "end_date": "2025-10-30T11:00:00.000000",
+        "extras": {"user_name": "test@example.com"}
+      }
+    ]
+  },
+  {
+    "resource_id": "1132",
+    "reservations": [
+      {
+        "id": "res-block-2",
+        "lease_id": "lease-busy-2",
+        "start_date": "2025-10-30T10:00:00.000000",
+        "end_date": "2025-10-30T11:00:00.000000",
+        "extras": {"user_name": "test@example.com"}
+      }
+    ]
+  },
+  {
+    "resource_id": "1133",
+    "reservations": [
+      {
+        "id": "res-block-3",
+        "lease_id": "lease-busy-3",
+        "start_date": "2025-10-30T10:00:00.000000",
+        "end_date": "2025-10-30T12:00:00.000000",
+        "extras": {"user_name": "test@example.com"}
+      }
+    ]
+  },
+  {
+    "resource_id": "1134",
+    "reservations": [
+      {
+        "id": "res-block-4",
+        "lease_id": "lease-busy-4",
+        "start_date": "2025-10-30T10:00:00.000000",
+        "end_date": "2025-10-30T12:00:00.000000",
+        "extras": {"user_name": "test@example.com"}
+      }
+    ]
+  },
+  {
+    "resource_id": "1135",
+    "reservations": [
+      {
+        "id": "res-block-5",
+        "lease_id": "lease-busy-5",
+        "start_date": "2025-10-30T10:00:00.000000",
+        "end_date": "2025-10-30T13:00:00.000000",
+        "extras": {"user_name": "test@example.com"}
+      }
+    ]
+  }
+]

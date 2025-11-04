@@ -5,3 +5,5 @@ git+https://github.com/chameleoncloud/python-blazarclient@chameleoncloud/2023.1
 python-blazarclient
 fastapi
 uvicorn
+openai>=1.0.0
+pandas>=2.0.0

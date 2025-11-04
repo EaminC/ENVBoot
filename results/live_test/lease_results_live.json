@@ -1,0 +1,37 @@
+{
+  "case": "limited_resources_subcase_A",
+  "inputs": {
+    "repo_path": ".",
+    "complexity_tier": "moderate",
+    "resource_request": {
+      "vcpus": 8,
+      "ram_gb": 16,
+      "gpus": 0,
+      "bare_metal": false
+    },
+    "duration_hours": 2.0,
+    "scheduling_config": {
+      "lookahead_hours": 72,
+      "alt_zones": [
+        "uc:chameleon",
+        "tacc:chameleon"
+      ]
+    }
+  },
+  "decisions": [
+    {
+      "type": "zone_change",
+      "from": "current",
+      "to": "uc:chameleon"
+    }
+  ],
+  "reservation": "ReservationPlan(zone='uc:chameleon', start=datetime.datetime(2025, 10, 16, 20, 6, 45, 12467, tzinfo=datetime.timezone.utc), end=datetime.datetime(2025, 10, 16, 22, 6, 45, 12467, tzinfo=datetime.timezone.utc), flavor='g1.kvm.8', count=1, reservation_id='93509e9b-3de5-4a01-b870-37cd39070f7a', lease_id='1e1077de-95b1-4aa0-a59f-2d5d0f06835f')",
+  "su_estimate_per_hour": 0.16666666666666666,
+  "su_estimate_total": 0.3333333333333333,
+  "slo": {
+    "start_by": "2025-10-16T20:06:45.012467+00:00",
+    "met": true
+  },
+  "smoke_test": null,
+  "complexity_tier": "ComplexityTier.MODERATE"
+}
