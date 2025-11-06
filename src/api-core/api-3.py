@@ -8,6 +8,8 @@ Exit code 0 if ok=true, nonzero otherwise.
 """
 
 import argparse
+import os as _os
+import sys as _sys
 import datetime
 import json
 import sys
@@ -15,6 +17,9 @@ import time
 from typing import Optional
 
 VERSION = "1.0.0"
+
+# Ensure repository root on path for `envboot` package resolution
+_sys.path.append(_os.path.abspath(_os.path.join(_os.path.dirname(__file__), "..", "..")))
 
 
 def get_lease_status_real(reservation_id: str) -> tuple:

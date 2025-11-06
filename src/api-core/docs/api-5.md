@@ -22,8 +22,23 @@ A JSON object. It includes:
 - error: Details when ok=false.
 - metrics.elapsed_ms and version.
 
-### Command
-python3 src/api-core/api-5.py --reservation-id sim-lease-20251105120000 --repo https://example.com/repo.git --workdir /tmp/envagent --dry-run
+### Commands
+Dry run:
+```bash
+python3 src/api-core/api-5.py \
+  --reservation-id <Real-lease-id> \
+  --repo https://github.com/EaminC/ENVBoot.git \
+  --workdir /tmp/envagent \
+  --dry-run
+```
+Real run:
+```bash
+python3 src/api-core/api-5.py \
+  --reservation-id <Real-lease-id> \
+  --repo https://github.com/EaminC/ENVBoot.git \
+  --branch callable-api \
+  --workdir /tmp/envagent
+```
 
 ### Example result
 {

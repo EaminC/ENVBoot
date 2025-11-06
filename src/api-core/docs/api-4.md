@@ -23,8 +23,15 @@ A JSON object. It includes:
 - error: Details when ok=false.
 - metrics.elapsed_ms and version.
 
-### Command
+### Commands
+Dry run:
+```bash
 python3 src/api-core/api-4.py --reservation-id sim-lease-20251105120000 --dry-run
+```
+Real run:
+```bash
+python3 src/api-core/api-4.py --reservation-id <REAL_LEASE_ID> --confirm
+```
 
 ### Example result
 {

@@ -31,7 +31,9 @@ A JSON object. It includes:
 - error: Details when ok=false.
 - metrics.elapsed_ms and version.
 
-### Command
+### Commands
+Dry run:
+```bash
 python3 src/api-core/api-6.py \
   --reservation-id sim-lease-20251105120000 \
   --image "Ubuntu 22.04" \
@@ -40,6 +42,19 @@ python3 src/api-core/api-6.py \
   --key-name mykey \
   --assign-floating-ip \
   --dry-run
+```
+Real run:
+```bash
+python3 src/api-core/api-6.py \
+  --reservation-id ce0891d0-0345-4931-b2b2-07235fb4bde1 \
+  --image "CC-Ubuntu20.04" \
+  --flavor baremetal \
+  --network sharednet1 \
+  --key-name Chris \
+  --assign-floating-ip \
+  --wait 900 \
+  --interval 15
+```
 
 ### Example result
 {

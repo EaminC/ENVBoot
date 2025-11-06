@@ -17,7 +17,7 @@ def _auth_from_env():
     if os.environ.get("OS_AUTH_TYPE", "") == "v3oidcpassword":
         client_secret = os.environ.get("OS_CLIENT_SECRET")
         if client_secret in (None, "", "none", "None"):
-            client_secret = None  # public client
+            client_secret = None  # public client (no secret)
 
         scope = os.environ.get("OS_OIDC_SCOPE", "openid profile email")
 
@@ -27,13 +27,13 @@ def _auth_from_env():
             protocol=os.environ["OS_PROTOCOL"],                     # "openid"
             discovery_endpoint=os.environ["OS_DISCOVERY_ENDPOINT"],
             client_id=os.environ["OS_CLIENT_ID"],
-            client_secret=os.environ.get("OS_CLIENT_SECRET", "none"),
+            client_secret=client_secret,
             access_token_type=os.environ.get("OS_ACCESS_TOKEN_TYPE", "access_token"),
             username=username,
             password=password,
             project_id=project_id,
             project_name=project_name,
-            scope=scope,   
+            scope=scope,
         )
     else:
         # Legacy password flow (non-OIDC)

@@ -99,4 +99,12 @@ There is an example script that automates these steps for a physical:host lease 
 
 bash scripts/test_api6_nova_physical_host.sh
 
-It creates a lease, waits, launches a server, prints the SSH info, and can clean up. Read the script header before running.
+It creates a lease, waits, launches a server, prints the SSH info, and can clean up. 
+
+The script is configurable with environment variables for easy reuse:
+```bash
+# Use your own parameters
+KEY_NAME=mykey IMAGE="Ubuntu 22.04" FLAVOR=m1.large bash scripts/test_api6_nova_physical_host.sh
+```
+
+See scripts/README.md for all available options and troubleshooting.

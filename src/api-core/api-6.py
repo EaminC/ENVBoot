@@ -11,12 +11,17 @@ Exit codes:
 """
 
 import argparse
+import os as _os
+import sys as _sys
 import json
 import sys
 import time
 from typing import Optional, List, Dict, Tuple
 
 VERSION = "1.0.0"
+
+# Ensure repository root on path for `envboot` package resolution
+_sys.path.append(_os.path.abspath(_os.path.join(_os.path.dirname(__file__), "..", "..")))
 
 def _extract_http_status(err: Exception) -> Optional[int]:
     """Best-effort extraction of HTTP status code from exception."""

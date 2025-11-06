@@ -5,14 +5,30 @@
 #
 # Prerequisites:
 # - OpenStack credentials sourced (OS_* environment variables)
-# - Keypair "Chris" exists
+# - Keypair exists (default: "Chris", override with KEY_NAME env var)
 # - Default security group allows TCP/22
-# - Image "CC-Ubuntu20.04" available
-# - Network "sharednet1" accessible
-# - Flavor "baremetal" available
+# - Image available (default: "CC-Ubuntu20.04", override with IMAGE env var)
+# - Network accessible (default: "sharednet1", override with NETWORK env var)
+# - Flavor available (default: "baremetal", override with FLAVOR env var)
+#
+# Environment variables (optional):
+#   KEY_NAME          SSH keypair name (default: Chris)
+#   IMAGE             OS image name/ID (default: CC-Ubuntu20.04)
+#   FLAVOR            Instance flavor (default: baremetal)
+#   NETWORK           Network name/ID (default: sharednet1)
+#   ZONE              Site/zone (default: uc)
+#   DURATION          Lease duration in minutes (default: 45)
+#   START_OFFSET      Minutes from now to start lease (default: 2)
+#   LEASE_WAIT        Seconds to wait for lease ACTIVE (default: 180)
+#   SERVER_WAIT       Seconds to wait for server ACTIVE (default: 900)
+#   SERVER_INTERVAL   Polling interval in seconds (default: 15)
 #
 # Usage:
+#   # Use defaults
 #   bash scripts/test_api6_nova_physical_host.sh
+#
+#   # Override parameters
+#   KEY_NAME=mykey IMAGE="Ubuntu 22.04" FLAVOR=m1.large bash scripts/test_api6_nova_physical_host.sh
 #
 # Outputs:
 #   - /tmp/api2_out.json (lease creation)
@@ -61,14 +77,35 @@ cleanup_on_exit() {
 
 trap cleanup_on_exit EXIT
 
+# Configuration (can be overridden via environment variables)
+KEY_NAME="${KEY_NAME:-Chris}"
+IMAGE="${IMAGE:-CC-Ubuntu20.04}"
+FLAVOR="${FLAVOR:-baremetal}"
+NETWORK="${NETWORK:-sharednet1}"
+ZONE="${ZONE:-uc}"
+DURATION="${DURATION:-45}"
+START_OFFSET="${START_OFFSET:-2}"  # minutes from now
+LEASE_WAIT="${LEASE_WAIT:-180}"    # seconds to wait for lease ACTIVE
+SERVER_WAIT="${SERVER_WAIT:-900}"  # seconds to wait for server ACTIVE
+SERVER_INTERVAL="${SERVER_INTERVAL:-15}"  # polling interval
+
+log_info "Configuration:"
+log_info "  Key name: $KEY_NAME"
+log_info "  Image: $IMAGE"
+log_info "  Flavor: $FLAVOR"
+log_info "  Network: $NETWORK"
+log_info "  Zone: $ZONE"
+log_info "  Duration: $DURATION minutes"
+echo ""
+
 # Step 1: Create physical:host lease
-log_info "Step 1/6: Creating physical:host lease (start ~2 min, duration 45 min, 1 node)..."
-START_TIME="$(date -u -d '+2 minutes' '+%Y-%m-%d %H:%M')"
+log_info "Step 1/6: Creating physical:host lease (start ~${START_OFFSET} min, duration ${DURATION} min, 1 node)..."
+START_TIME="$(date -u -d "+${START_OFFSET} minutes" '+%Y-%m-%d %H:%M')"
 
 python3 "$PROJECT_ROOT/src/api-core/api-2.py" \
-    --zone uc \
+    --zone "$ZONE" \
     --start "$START_TIME" \
-    --duration 45 \
+    --duration "$DURATION" \
     --nodes 1 \
     --resource-type physical:host \
     > /tmp/api2_out.json
@@ -100,11 +137,11 @@ log_info "  Start: $(jq -r '.data.start' /tmp/api2_out.json)"
 log_info "  End: $(jq -r '.data.end' /tmp/api2_out.json)"
 
 # Step 2: Wait for lease to become ACTIVE
-log_info "Step 2/6: Waiting for lease to become ACTIVE (timeout: 5 minutes)..."
+log_info "Step 2/6: Waiting for lease to become ACTIVE (timeout: $((LEASE_WAIT / 60)) minutes)..."
 
 python3 "$PROJECT_ROOT/src/api-core/api-3.py" \
     --reservation-id "$RES_ID" \
-    --wait 180 \
+    --wait "$LEASE_WAIT" \
     > /tmp/api3_out.json
 
 if [ $? -ne 0 ]; then
@@ -123,22 +160,22 @@ log_info "✓ Lease is now ACTIVE"
 
 # Step 3: Launch baremetal instance via Nova (using reservation.id hint)
 log_info "Step 3/6: Launching baremetal instance via api-6 (Nova path with reservation hint)..."
-log_info "  Image: CC-Ubuntu20.04"
-log_info "  Flavor: baremetal"
-log_info "  Network: sharednet1"
-log_info "  Keypair: Chris"
-log_info "  Wait timeout: 15 minutes (baremetal provisioning can be slow)"
+log_info "  Image: $IMAGE"
+log_info "  Flavor: $FLAVOR"
+log_info "  Network: $NETWORK"
+log_info "  Keypair: $KEY_NAME"
+log_info "  Wait timeout: $((SERVER_WAIT / 60)) minutes (baremetal provisioning can be slow)"
 
 python3 "$PROJECT_ROOT/src/api-core/api-6.py" \
     --reservation-id "$RES_ID" \
-    --image CC-Ubuntu20.04 \
-    --flavor baremetal \
-    --network sharednet1 \
-    --key-name Chris \
+    --image "$IMAGE" \
+    --flavor "$FLAVOR" \
+    --network "$NETWORK" \
+    --key-name "$KEY_NAME" \
     --sec-groups "default" \
     --assign-floating-ip \
-    --wait 900 \
-    --interval 15 \
+    --wait "$SERVER_WAIT" \
+    --interval "$SERVER_INTERVAL" \
     > /tmp/api6_out.json
 
 if [ $? -ne 0 ]; then
@@ -168,14 +205,14 @@ SERVER_STATUS=$(jq -r '.data.servers[0].status // empty' /tmp/api6_out.json)
 FIXED_IP=$(jq -r '.data.servers[0].fixed_ip // empty' /tmp/api6_out.json)
 FLOATING_IP=$(jq -r '.data.servers[0].floating_ip // empty' /tmp/api6_out.json)
 SSH_USER=$(jq -r '.data.servers[0].ssh_user // "ubuntu"' /tmp/api6_out.json)
-KEY_NAME=$(jq -r '.data.servers[0].key_name // "Chris"' /tmp/api6_out.json)
+KEY_NAME_USED=$(jq -r '.data.servers[0].key_name // empty' /tmp/api6_out.json)
 
 log_info "  Server ID: $SERVER_ID"
 log_info "  Status: $SERVER_STATUS"
 log_info "  Fixed IP: ${FIXED_IP:-<none>}"
 log_info "  Floating IP: ${FLOATING_IP:-<none>}"
 log_info "  SSH User: $SSH_USER"
-log_info "  Key Name: $KEY_NAME"
+log_info "  Key Name: $KEY_NAME_USED"
 
 if [ "$SERVER_STATUS" != "ACTIVE" ]; then
     log_warn "Server status is not ACTIVE (current: $SERVER_STATUS)"
@@ -211,9 +248,9 @@ echo "================================================================"
 echo ""
 echo "  Server is ready for SSH access:"
 echo ""
-echo "    ssh -o StrictHostKeyChecking=no -i ~/.ssh/Chris.pem ${SSH_USER}@${IP_TO_USE}"
+echo "    ssh -o StrictHostKeyChecking=no -i ~/.ssh/${KEY_NAME}.pem ${SSH_USER}@${IP_TO_USE}"
 echo ""
-echo "  (Adjust the private key path as needed for your keypair 'Chris')"
+echo "  (Adjust the private key path as needed for your keypair '${KEY_NAME}')"
 echo ""
 if [ -z "$FLOATING_IP" ]; then
     echo "  Note: Using fixed IP. Ensure you're on the tenant network or VPN."
@@ -269,7 +306,7 @@ echo "  Server details:"
 echo "    - Lease ID: $RES_ID"
 echo "    - Server ID: $SERVER_ID"
 echo "    - IP: $IP_TO_USE"
-echo "    - SSH: ssh -i ~/.ssh/Chris.pem ${SSH_USER}@${IP_TO_USE}"
+echo "    - SSH: ssh -i ~/.ssh/${KEY_NAME}.pem ${SSH_USER}@${IP_TO_USE}"
 echo ""
 echo "  To delete the lease when done:"
 echo "    python3 src/api-core/api-4.py --reservation-id $RES_ID --confirm"

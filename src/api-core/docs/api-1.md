@@ -21,8 +21,15 @@ A JSON object. It includes:
 - error: Details when ok=false.
 - metrics.elapsed_ms and version.
 
-### Command
+### Commands
+Dry run:
+```bash
 python3 src/api-core/api-1.py --zone uc --start "2025-11-05 12:00" --duration 60 --dry-run
+```
+Real run:
+```bash
+python3 src/api-core/api-1.py --zone uc --start "2025-11-05 12:00" --duration 60
+```
 
 ### Example result
 {
