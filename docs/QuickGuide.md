@@ -30,7 +30,12 @@ Use these steps end to end. Each step links to a short page.
 Real run (end to end)
 - Want a full example that uses a real lease? Read: docs/RealRun.md
 
+Troubleshooting
+- Getting errors? Read: docs/Troubleshooting.md
+- Explains dry-run vs real mode and common issues.
+
 Notes
 - Use UTC for times: YYYY-MM-DD HH:MM.
-- Dry-run is safe to try first.
+- Dry-run is safe to try first (no credentials needed).
+- Real mode needs OpenStack credentials (source your OpenRC file).
 - Output is JSON only. Save it to a file if helpful.

@@ -4,12 +4,16 @@ This guide walks you through a real lease. It creates resources, starts a server
 
 ### Before you start
 - Use UTC for times. Format: YYYY-MM-DD HH:MM.
-- Load your project environment (OpenRC). Example: source CHI-XXXX-openrc.sh.
+- **Load your project environment (OpenRC).** Example: source CHI-XXXX-openrc.sh
+  - This sets OS_AUTH_URL and other required environment variables.
+  - Without this, APIs 2, 3, 4, and 6 will fail in real mode (they need cloud credentials).
 - Know your SSH keypair name (as registered in the cloud).
 - Pick an image name, flavor, and network that exist at your site.
 - Make sure your security group allows SSH (TCP 22). The default group often works.
 
 Tip: Replace example values with your own. Do not paste secrets.
+
+Note: All APIs support --dry-run for safe testing without credentials or side effects.
 
 ### 1) Create a lease
 Create a lease that starts a few minutes from now and lasts one hour.

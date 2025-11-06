@@ -104,7 +104,7 @@ log_info "Step 2/6: Waiting for lease to become ACTIVE (timeout: 5 minutes)..."
 
 python3 "$PROJECT_ROOT/src/api-core/api-3.py" \
     --reservation-id "$RES_ID" \
-    --wait 300 \
+    --wait 180 \
     > /tmp/api3_out.json
 
 if [ $? -ne 0 ]; then
@@ -127,7 +127,7 @@ log_info "  Image: CC-Ubuntu20.04"
 log_info "  Flavor: baremetal"
 log_info "  Network: sharednet1"
 log_info "  Keypair: Chris"
-log_info "  Wait timeout: 10 minutes"
+log_info "  Wait timeout: 15 minutes (baremetal provisioning can be slow)"
 
 python3 "$PROJECT_ROOT/src/api-core/api-6.py" \
     --reservation-id "$RES_ID" \
@@ -137,8 +137,8 @@ python3 "$PROJECT_ROOT/src/api-core/api-6.py" \
     --key-name Chris \
     --sec-groups "default" \
     --assign-floating-ip \
-    --wait 600 \
-    --interval 10 \
+    --wait 900 \
+    --interval 15 \
     > /tmp/api6_out.json
 
 if [ $? -ne 0 ]; then
